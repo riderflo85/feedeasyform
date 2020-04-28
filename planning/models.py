@@ -8,15 +8,32 @@ class FoodQuantity(models.Model):
 
 
 class Categorie(models.Model):
-    name = models.CharField(max_length=45)
+    name = models.CharField(max_length=45, verbose_name='Nom de la catégorie')
 
+
+PRICE_SCALE = [
+    ('low', 'petit budget'),
+    ('meduim', 'moyen budget'),
+    ('high', 'gros budget')
+]
+
+LEVEL = [
+    ('easy', 'facile'),
+    ('meduim', 'moyen'),
+    ('chef', 'chef')
+]
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=45)
-    prepare_duration = models.CharField(max_length=45)
-    cooking_time = models.CharField(max_length=45)
-    step = models.TextField()
-    food_quantity = models.ManyToManyField(FoodQuantity)
-    categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE)
-    price_scale = models.CharField(max_length=45)
-    level = models.CharField(max_length=45)
+    name = models.CharField(max_length=45, verbose_name='Nom de la recette')
+    prepare_duration = models.CharField(
+        max_length=45, verbose_name='Temps de préparation')
+    cooking_time = models.CharField(
+        max_length=45, verbose_name='Temps de cuisson')
+    step = models.TextField(verbose_name='Étapes de la recette')
+    food_quantity = models.ManyToManyField(
+        FoodQuantity, verbose_name='Aliment et quantité')
+    categorie = models.ForeignKey(
+        Categorie, on_delete=models.CASCADE, verbose_name='Nom de la categorie de la recette')
+    price_scale = models.CharField(
+        max_length=45, choices=PRICE_SCALE, verbose_name='Fouchette de prix')
+    level = models.CharField(max_length=45, choices=LEVEL, verbose_name='Difficultée')

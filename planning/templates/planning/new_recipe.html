@@ -1,0 +1,97 @@
+{% extends 'planning/base.html' %}
+{% block form %}
+<section class="h-100">
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-12 col-lg-12 h-100">
+                <div class="h-100 d-flex flex-sm-column flex-lg-row justify-content-center align-items-center">
+                    <div class="border-box content-sign_in d-flex flex-sm-column flex-lg-row align-items-center">
+                        <div class="login-forms margin-device">
+                            <h1>Enregistrer une nouvelle recette</h1>
+                            {% if form_recipe.errors %}
+                            <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
+                            {% endif %}
+                            <form action="." method='post'>
+                                {% csrf_token %}
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_recipe.name.label }}
+                                    </div>
+                                    {{ form_recipe.name }}
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_recipe.prepare_duration.label }}
+                                    </div>
+                                    {{ form_recipe.prepare_duration }}
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_recipe.cooking_time.label }}
+                                    </div>
+                                    {{ form_recipe.cooking_time }}
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_recipe.step.label }}
+                                    </div>
+                                    {{ form_recipe.step }}
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_recipe.food_quantity.label }}
+                                    </div>
+                                    {{ form_recipe.food_quantity }}
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_recipe.categorie.label }}
+                                    </div>
+                                    {{ form_recipe.categorie }}
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                       {{ form_recipe.price_scale.label }}
+                                    </div>
+                                    {{ form_recipe.price_scale }}
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_recipe.level.label }}
+                                    </div>
+                                    {{ form_recipe.level }}
+                                </div>
+                                {{ form_recipe.identifiant }}
+                                <div class="form-group">
+                                    <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                </div>
+                            </form>
+                        </div><!-- .login-forms -->
+                    </div><!-- end .d-flex flex-sm-column... -->
+                    <div class="border-box content-sign_in d-flex flex-sm-column flex-lg-row align-items-center">
+                        <div class="login-forms margin-device">
+                            <h1>Enregistrer une nouvelle catégorie de recette</h1>
+                            {% if form_categ.errors %}
+                            <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
+                            {% endif %}
+                            <form action="." method='post'>
+                                {% csrf_token %}
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_categ.name.label }}
+                                    </div>
+                                    {{ form_categ.name }}
+                                </div>
+                                {{ form_categ.identifiant }}
+                                <div class="form-group">
+                                    <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                </div>
+                            </form>
+                        </div><!-- .login-forms -->
+                    </div><!-- end .d-flex flex-sm-column... -->
+                </div><!-- end .h-100 d-flex... -->
+            </div><!-- end .col-12 col-lg-12... -->
+        </div><!-- end .row -->
+    </div><!-- end .container-fluid -->
+</section>
+{% endblock form %}
