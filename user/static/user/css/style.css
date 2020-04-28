@@ -1,0 +1,18 @@
+body {
+    height: 100vh;
+    background-image: linear-gradient(to bottom, #ffbf00, #ff4000);
+}
+
+.border-box {
+    border: 0px solid;
+    border-radius: 30px;
+}
+
+.content-sign_in {
+    background-color: white;
+    padding: 20px;
+}
+
+.login-forms {
+    width: 700px;
+}
