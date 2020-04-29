@@ -1,11 +1,11 @@
 {% extends 'planning/base.html' %}
 
 {% block form %}
-<section class="h-100">
+<section class="my-5">
     <div class="container-fluid h-100">
         <div class="row h-100">
             <div class="col-12 col-lg-12 h-100">
-                <div class="h-100 d-flex flex-sm-column flex-lg-row justify-content-center align-items-center">
+                <div class="h-100 d-flex flex-column justify-content-center align-items-center">
                     <div class="border-box content-sign_in d-flex flex-sm-column flex-lg-row align-items-center">
                         <div class="login-forms margin-device">
                             <h1>Enregistrer un nouvel aliment</h1>
@@ -39,7 +39,7 @@
                             </form>
                         </div><!-- .login-forms -->
                     </div><!-- end .d-flex flex-sm-column... -->
-                    <div class="border-box content-sign_in d-flex flex-sm-column flex-lg-row align-items-center">
+                    <div class="border-box content-sign_in d-flex align-items-center mt-3">
                         <div class="login-forms margin-device">
                             <h1>Enregistrer un nouveau groupe d'aliment</h1>
                             {% if form_group.errors %}
