@@ -2,11 +2,13 @@ from django.db import models
 
 
 class Group(models.Model):
-    name = models.CharField(max_length=45)
+    name = models.CharField(
+        max_length=45, verbose_name="Nom du groupe de l'aliment")
 
 
 class Food(models.Model):
-    name = models.CharField(max_length=45)
-    description = models.TextField()
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)  # new table
+    name = models.CharField(max_length=45, verbose_name="Nom de l'aliment")
+    description = models.TextField(verbose_name="Description")
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, verbose_name="Groupe de l'aliment")
 
