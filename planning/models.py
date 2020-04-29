@@ -6,9 +6,15 @@ class FoodQuantity(models.Model):
     quantity = models.CharField(max_length=45)
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.food}: {self.quantity}"
+
 
 class Categorie(models.Model):
     name = models.CharField(max_length=45, verbose_name='Nom de la catégorie')
+
+    def __str__(self):
+        return self.name
 
 
 PRICE_SCALE = [
@@ -37,3 +43,6 @@ class Recipe(models.Model):
     price_scale = models.CharField(
         max_length=45, choices=PRICE_SCALE, verbose_name='Fouchette de prix')
     level = models.CharField(max_length=45, choices=LEVEL, verbose_name='Difficultée')
+
+    def __str__(self):
+        return self.name

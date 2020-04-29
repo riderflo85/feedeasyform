@@ -102,5 +102,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/'
-LOGIN_REDIRECT_URL = '/planning/'
+LOGIN_REDIRECT_URL = '/task'
 LOGOUT_REDIRECT_URL = '/'

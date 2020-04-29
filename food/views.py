@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.decorators import login_required
 from .models import Food, Group
 from .forms import FoodForm, GroupForm
 
 
+@login_required
 def create_food(request):
     if request.method == 'POST':
         if request.POST['identifiant'] == 'food':
