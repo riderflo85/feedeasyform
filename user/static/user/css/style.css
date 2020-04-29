@@ -19,3 +19,13 @@ body {
 .login-forms {
     width: 700px;
 }
+
+.db-box {
+    width: 100%;
+    height: calc(100vh - 60px);
+}
+
+.listing {
+    overflow: auto;
+    height: calc(100vh - 25vh);
+}
