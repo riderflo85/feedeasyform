@@ -7,6 +7,27 @@
                 <div class="h-100 d-flex flex-column justify-content-center align-items-center">
                     <div class="border-box content-sign_in d-flex align-items-center">
                         <div class="login-forms margin-device">
+                            <h1>Enregistrer un nouvel ustensile de cuisine</h1>
+                            {% if form_uten.errors %}
+                            <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
+                            {% endif %}
+                            <form action="." method='post'>
+                                {% csrf_token %}
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_uten.name.label }}
+                                    </div>
+                                    {{ form_uten.name }}
+                                </div>
+                                {{ form_uten.identifiant }}
+                                <div class="form-group">
+                                    <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                </div>
+                            </form>
+                        </div><!-- .login-forms -->
+                    </div><!-- end .d-flex flex-sm-column... -->
+                    <div class="border-box content-sign_in d-flex align-items-center mt-3">
+                        <div class="login-forms margin-device">
                             <h1>Enregistrer une nouvelle catégorie de recette</h1>
                             {% if form_categ.errors %}
                             <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
@@ -81,6 +102,12 @@
                                         {{ form_recipe.level.label }}
                                     </div>
                                     {{ form_recipe.level }}
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        {{ form_recipe.utensil.label }}
+                                    </div>
+                                    {{ form_recipe.utensil }}
                                 </div>
                                 {{ form_recipe.identifiant }}
                                 <div class="form-group">

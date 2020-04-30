@@ -1,6 +1,6 @@
 {% extends 'planning/base.html' %}
 {% block content %}
-<div class="container-fluid h-100vh d-flex justify-content-center align-items-center">
+<div class="container-fluid mt-3 d-flex justify-content-center align-items-center">
     <div class="row db-box">
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
@@ -80,6 +80,16 @@
                 <ul class="listing">
                     {% for recipe in recipes %}
                     <li>{{ recipe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
+            <div class="border-box content-sign_in">
+                <h3>Ustensiles de cuisine</h3>
+                <ul class="listing">
+                    {% for utensil in utensils %}
+                    <li>{{ utensil }}</li>
                     {% endfor %}
                 </ul>
             </div>
