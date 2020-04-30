@@ -4,7 +4,7 @@
     <div class="row db-box">
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Groupes d'aliments</h3>
+                <h3>Groupes d'aliments <button type="button" data-toggle="modal" data-target="#modalDeleteFoodGroup" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for f_group in food_group %}
                     <li>{{ f_group }}</li>
@@ -14,59 +14,17 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Aliments</h3>
+                <h3>Aliments <button type="button" data-toggle="modal" data-target="#modalDeleteFood" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for food in foods %}
                     <li>{{ food }}</li>
                     {% endfor %}
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
                 </ul>
             </div>
         </div>
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Categories de recettes</h3>
+                <h3>Categories de recettes <button type="button" data-toggle="modal" data-target="#modalDeleteRecipeCateg" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for r_categ in recipe_categ %}
                     <li>{{ r_categ }}</li>
@@ -76,7 +34,7 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Recettes</h3>
+                <h3>Recettes <button type="button" data-toggle="modal" data-target="#modalDeleteRecipe" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for recipe in recipes %}
                     <li>{{ recipe }}</li>
@@ -86,13 +44,163 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
             <div class="border-box content-sign_in">
-                <h3>Ustensiles de cuisine</h3>
+                <h3>Ustensiles de cuisine <button type="button" data-toggle="modal" data-target="#modalDeleteUtensil" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for utensil in utensils %}
                     <li>{{ utensil }}</li>
                     {% endfor %}
                 </ul>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal delete recipe -->
+<div class="modal fade" id="modalDeleteRecipe" tabindex="-1" role="dialog" aria-labelledby="modalDeleteRecipe" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteRecipeTitle">Supprimer une recette</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="recipe" class="col-sm-3 col-form-label text-center">Recette</label>
+                        <div class="col-sm-9">
+                            {{ del_recipe.recipe }}
+                        </div>
+                            {{ del_recipe.identifiant }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal delete recipe categorie -->
+<div class="modal fade" id="modalDeleteRecipeCateg" tabindex="-1" role="dialog" aria-labelledby="modalDeleteRecipeCateg" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteRecipeCategTitle">Supprimer une categorie de recette</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="categorie" class="col-sm-3 col-form-label text-center">Categories de recette</label>
+                        <div class="col-sm-9">
+                            {{ del_categ.categ }}
+                        </div>
+                            {{ del_categ.identifiant }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal delete food -->
+<div class="modal fade" id="modalDeleteFood" tabindex="-1" role="dialog" aria-labelledby="modalDeleteFood" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteFoodTitle">Supprimer un aliment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="food" class="col-sm-3 col-form-label text-center">Aliments</label>
+                        <div class="col-sm-9">
+                            {{ del_food.food }}
+                        </div>
+                            {{ del_food.identifiant }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal delete food group -->
+<div class="modal fade" id="modalDeleteFoodGroup" tabindex="-1" role="dialog" aria-labelledby="modalDeleteFoodGroup" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteFoodGroupTitle">Supprimer un groupe d'aliment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="group" class="col-sm-3 col-form-label text-center">Groupe de recette</label>
+                        <div class="col-sm-9">
+                            {{ del_group.group }}
+                        </div>
+                            {{ del_group.identifiant }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal delete utensil -->
+<div class="modal fade" id="modalDeleteUtensil" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUtensil" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteUtensilTitle">Supprimer un ustensil de cuisine</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="utensil" class="col-sm-3 col-form-label text-center">Ustensile de cuisine</label>
+                        <div class="col-sm-9">
+                            {{ del_utensil.utensil }}
+                        </div>
+                            {{ del_utensil.identifiant }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Valider</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

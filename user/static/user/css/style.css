@@ -28,3 +28,9 @@ body {
     overflow: auto;
     height: calc(100vh - 25vh);
 }
+
+hr {
+    margin-top: 5rem !important;
+    margin-bottom: 2rem !important;
+    border-top: 3px solid #17a2b8 !important;
+}

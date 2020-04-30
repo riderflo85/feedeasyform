@@ -3,8 +3,8 @@ from food.models import Food
 
 
 class FoodQuantity(models.Model):
-    quantity = models.CharField(max_length=45)
-    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    quantity = models.CharField(max_length=45, verbose_name="Quantité de l'aliment")
+    food = models.ForeignKey(Food, on_delete=models.CASCADE, verbose_name="Aliment")
 
     def __str__(self):
         return f"{self.food}: {self.quantity}"
