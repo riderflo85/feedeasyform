@@ -14,15 +14,15 @@
                             {% endif %}
                             <form action="." method='post'>
                                 {% csrf_token %}
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        {{ form_group.name.label }}
+                                <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_group.name.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form_group.name }}
                                     </div>
-                                    {{ form_group.name }}
                                 </div>
                                 {{ form_group.identifiant }}
                                 <div class="form-group">
-                                    <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                    <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
                                 </div>
                             </form>
                         </div><!-- .login-forms -->
@@ -35,27 +35,27 @@
                             {% endif %}
                             <form action="." method='post'>
                                 {% csrf_token %}
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        {{ form_food.name.label }}
+                                <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_food.name.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form_food.name }}
                                     </div>
-                                    {{ form_food.name }}
                                 </div>
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        {{ form_food.description.label }}
+                                <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_food.description.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form_food.description }}
                                     </div>
-                                    {{ form_food.description }}
                                 </div>
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        {{ form_food.group.label }}
+                                <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_food.group.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form_food.group }}
                                     </div>
-                                    {{ form_food.group }}
                                 </div>
                                 {{ form_food.identifiant }}
                                 <div class="form-group">
-                                    <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                    <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
                                 </div>
                             </form>
                         </div><!-- .login-forms -->
@@ -66,3 +66,11 @@
     </div><!-- end .container-fluid -->
 </section>
 {% endblock form %}
+
+{% block script %}
+<script>
+    $("input").addClass('form-control');
+    $("textarea").addClass('form-control');
+    $("select").addClass('form-control');
+</script>
+{% endblock script %}

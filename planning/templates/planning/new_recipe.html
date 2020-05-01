@@ -13,15 +13,15 @@
                             {% endif %}
                             <form action="." method='post'>
                                 {% csrf_token %}
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        {{ form_uten.name.label }}
+                                <div class="form-group row">
+                                    <label for="nameUten" class="col-sm-4 col-form-label">{{ form_uten.name.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form_uten.name }}
                                     </div>
-                                    {{ form_uten.name }}
                                 </div>
                                 {{ form_uten.identifiant }}
                                 <div class="form-group">
-                                    <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                    <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
                                 </div>
                             </form>
                         </div><!-- .login-forms -->
@@ -34,15 +34,15 @@
                             {% endif %}
                             <form action="." method='post'>
                                 {% csrf_token %}
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        {{ form_categ.name.label }}
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ form_categ.name.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form_categ.name }}
                                     </div>
-                                    {{ form_categ.name }}
                                 </div>
                                 {{ form_categ.identifiant }}
                                 <div class="form-group">
-                                    <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                    <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
                                 </div>
                             </form>
                         </div><!-- .login-forms -->
@@ -57,21 +57,21 @@
                                 {% endif %}
                                 <form action="." method='post'>
                                     {% csrf_token %}
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_food_quantity.quantity.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_food_quantity.quantity.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_food_quantity.quantity }}
                                         </div>
-                                        {{ form_food_quantity.quantity }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_food_quantity.food.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_food_quantity.food.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_food_quantity.food }}
                                         </div>
-                                        {{ form_food_quantity.food }}
                                     </div>
                                     {{ form_food_quantity.identifiant }}
                                     <div class="form-group">
-                                        <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                        <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
                                     </div>
                                 </form>
                             </div>
@@ -82,63 +82,63 @@
                                 {% endif %}
                                 <form action="." method='post'>
                                     {% csrf_token %}
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_recipe.name.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.name.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.name }}
                                         </div>
-                                        {{ form_recipe.name }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_recipe.prepare_duration.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.prepare_duration.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.prepare_duration }}
                                         </div>
-                                        {{ form_recipe.prepare_duration }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_recipe.cooking_time.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.cooking_time.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.cooking_time }}
                                         </div>
-                                        {{ form_recipe.cooking_time }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_recipe.step.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.step.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.step }}
                                         </div>
-                                        {{ form_recipe.step }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_recipe.food_quantity.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.food_quantity.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.food_quantity }}
                                         </div>
-                                        {{ form_recipe.food_quantity }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_recipe.categorie.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.categorie.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.categorie }}
                                         </div>
-                                        {{ form_recipe.categorie }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                        {{ form_recipe.price_scale.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.price_scale.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.price_scale }}
                                         </div>
-                                        {{ form_recipe.price_scale }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_recipe.level.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.level.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.level }}
                                         </div>
-                                        {{ form_recipe.level }}
                                     </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            {{ form_recipe.utensil.label }}
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.utensil.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.utensil }}
                                         </div>
-                                        {{ form_recipe.utensil }}
                                     </div>
                                     {{ form_recipe.identifiant }}
                                     <div class="form-group">
-                                        <input class="btn btn-danger float-right" type="submit" value="Valider le formulaire">
+                                        <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
                                     </div>
                                 </form>
                             </div>
@@ -150,3 +150,11 @@
     </div><!-- end .container-fluid -->
 </section>
 {% endblock form %}
+
+{% block script %}
+<script>
+    $("input").addClass('form-control');
+    $("textarea").addClass('form-control');
+    $("select").addClass('form-control');
+</script>
+{% endblock script %}
