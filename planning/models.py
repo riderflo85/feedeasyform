@@ -26,13 +26,13 @@ class Utensil(models.Model):
 
 PRICE_SCALE = [
     ('low', 'petit budget'),
-    ('meduim', 'moyen budget'),
+    ('medium', 'moyen budget'),
     ('high', 'gros budget')
 ]
 
 LEVEL = [
     ('easy', 'facile'),
-    ('meduim', 'moyen'),
+    ('medium', 'moyen'),
     ('chef', 'chef')
 ]
 
@@ -67,3 +67,23 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_price_scale(self):
+        type_price = {
+            'low': 'Petit budget',
+            'medium': 'Moyen budget',
+            'high': 'Gros budget'
+        }
+        return type_price[self.price_scale]
+    
+    def get_level(self):
+        level = {
+            'easy': 'Facile',
+            'medium': 'Moyen',
+            'chef': 'Chef'
+        }
+        return level[self.level]
+
+    def get_step(self):
+        steps = self.step.split('\n')
+        return steps

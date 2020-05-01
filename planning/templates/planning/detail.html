@@ -7,38 +7,138 @@
             <a href="{% url 'planning:databases' %}" class="btn btn-info">Retour</a>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-12 text-center">
-            {% if recipe %}
-            <h3>{{ recipe.name }}</h3>
-            <p class="lead">{{ recipe.prepare_duration }}</p>
-            <p class="lead">{{ recipe.cooking_time }}</p>
-            <p class="lead">{{ recipe.step }}</p>
-            {% for r_food in recipe.food_quantity.all %}
-            <p class="lead">{{ r_food }}</p>
-            {% endfor %}
-            <p class="lead">{{ recipe.categorie.name }}</p>
-            <p class="lead">{{ recipe.price_scale }}</p>
-            <p class="lead">{{ recipe.level }}</p>
-            {% for r_utensil in recipe.utensil.all %}
-            <p class="lead">{{ r_utensil.name }}</p>
-            {% endfor %}
-
-            {% elif group %}
-            <h3>{{ group.name }}</h3>
-
-            {% elif categorie %}
-            <h3>{{ categorie.name }}</h3>
-
-            {% elif utensil %}
-            <h3>{{ utensil.name }}</h3>
-
-            {% elif food %}
-            <h3>{{ food.name }}</h3>
-            <p class="lead">{{ food.description }}</p>
-            <p class="lead">{{ food.group.name }}</p>
-
-            {% endif %}
+    <div class="container">
+        <div class="row border-box content-sign_in">
+            <div class="col-12">
+                {% if recipe %}
+                <div class="form-group row">
+                    <label for="nameRecipe" class="col-sm-4 col-form-label"> </label>
+                    <div class="col-sm-8">
+                        <h3 class="form-control-plaintext" id="nameRecipe">{{ recipe.name }}</h3>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipePrepareDuration" class="col-sm-4 col-form-label border-label">Temps de preparation</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipePrepareDuration">{{ recipe.prepare_duration }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeCookingTime" class="col-sm-4 col-form-label border-label">Temps de cuisson</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipeCookingTime">{{ recipe.cooking_time }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeStep" class="col-sm-4 col-form-label border-label">Étapes de la recette</label>
+                    <div class="col-sm-8">
+                        <ol>
+                            {% for step in recipe.get_step %}
+                            <li>{{ step }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeFoodQuant" class="col-sm-4 col-form-label border-label">Aliments et quantités</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for r_food in recipe.food_quantity.all %}
+                            <li>{{ r_food }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeCateg" class="col-sm-4 col-form-label border-label">Catégorie de la recette</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipeCateg">{{ recipe.categorie.name }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Fourchette de prix</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.get_price_scale }}</P>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeLevel" class="col-sm-4 col-form-label border-label">Niveau de difficultée</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipeLevel">{{ recipe.get_level }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeFoodQuant" class="col-sm-4 col-form-label border-label">Ustensiles de cuisine</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for r_utensil in recipe.utensil.all %}
+                            <li>{{ r_utensil.name }}</li>
+                            {% endfor %}
+                            </ul>
+                    </div>
+                </div>
+                {% elif group %}
+                <div class="form-group row">
+                    <label for="nameGroup" class="col-sm-4 col-form-label"> </label>
+                    <div class="col-sm-8">
+                        <h3 class="form-control-plaintext" id="nameGroup">{{ group.name }}</h3>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="GroupFood" class="col-sm-4 col-form-label border-label">Aliments appartenant au groupe</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for food in group.food_set.all %}
+                            <li><a href="/planning/detail/food/{{ food.pk }}" class="lead">{{ food.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% elif categorie %}
+                <div class="form-group row">
+                    <label for="nameGroup" class="col-sm-4 col-form-label"> </label>
+                    <div class="col-sm-8">
+                        <h3 class="form-control-plaintext" id="nameGroup">{{ group.name }}</h3>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="CategRecipe" class="col-sm-4 col-form-label border-label">Recettes appartenant à cette categorie</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for recipe in categorie.recipe_set.all %}
+                            <li><a href="/planning/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% elif utensil %}
+                <div class="form-group row">
+                    <label for="nameUtensil" class="col-sm-4 col-form-label">Nom de l'ustensile de cuisine</label>
+                    <div class="col-sm-8">
+                        <h3 class="form-control-plaintext" id="nameUtensil">{{ utensil.name }}</h3>
+                    </div>
+                </div>
+                {% elif food %}
+                <div class="form-group row">
+                    <label for="nameFood" class="col-sm-4 col-form-label"> </label>
+                    <div class="col-sm-8">
+                        <h3 class="form-control-plaintext" id="nameFood">{{ food.name }}</h3>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="descriptionFood" class="col-sm-4 col-form-label border-label">Description de l'aliment</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="descriptionFood">{{ food.description }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="groupFood" class="col-sm-4 col-form-label border-label">Groupe d'aliment</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="groupFood">{{ food.group.name }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
