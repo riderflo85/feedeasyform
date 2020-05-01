@@ -1,3 +1,4 @@
+from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm, CategorieForm, UtensilForm, FoodQuantityForm, \
@@ -106,3 +107,26 @@ def show_and_update_db(request):
         }
 
         return render(request, 'planning/databases.html', context)
+
+# @login_required
+class RecipeDetailView(DetailView):
+    model = Recipe
+    template_name = "planning/detail.html"
+
+
+class CategorieDetailView(DetailView):
+    model = Categorie
+    template_name = "planning/detail.html"
+
+
+class UtensilDetailView(DetailView):
+    model = Utensil
+    template_name = "planning/detail.html"
+
+class FoodDetailView(DetailView):
+    model = Food
+    template_name = "planning/detail.html"
+
+class GroupDetailView(DetailView):
+    model = Group
+    template_name = "planning/detail.html"

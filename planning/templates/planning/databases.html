@@ -7,7 +7,7 @@
                 <h3>Groupes d'aliments <button type="button" data-toggle="modal" data-target="#modalDeleteFoodGroup" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for f_group in food_group %}
-                    <li>{{ f_group }}</li>
+                    <li><a href="/planning/detail/group/{{ f_group.pk }}" class="link">{{ f_group }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -17,7 +17,7 @@
                 <h3>Aliments <button type="button" data-toggle="modal" data-target="#modalDeleteFood" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for food in foods %}
-                    <li>{{ food }}</li>
+                    <li><a href="/planning/detail/food/{{ food.pk }}" class="link">{{ food }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -27,7 +27,7 @@
                 <h3>Categories de recettes <button type="button" data-toggle="modal" data-target="#modalDeleteRecipeCateg" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for r_categ in recipe_categ %}
-                    <li>{{ r_categ }}</li>
+                    <li><a href="/planning/detail/categorie/{{ r_categ.pk }}" class="link">{{ r_categ }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -37,7 +37,7 @@
                 <h3>Recettes <button type="button" data-toggle="modal" data-target="#modalDeleteRecipe" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for recipe in recipes %}
-                    <li>{{ recipe }}</li>
+                    <li><a href="/planning/detail/recipe/{{ recipe.pk }}" class="link">{{ recipe }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -47,7 +47,7 @@
                 <h3>Ustensiles de cuisine <button type="button" data-toggle="modal" data-target="#modalDeleteUtensil" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
                 <ul class="listing">
                     {% for utensil in utensils %}
-                    <li>{{ utensil }}</li>
+                    <li><a href="/planning/detail/utensil/{{ utensil.pk }}" class="link">{{ utensil }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
