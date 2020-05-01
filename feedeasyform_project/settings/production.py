@@ -7,7 +7,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['feedeasyforms.herokuapp.com']
 
 MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
 
