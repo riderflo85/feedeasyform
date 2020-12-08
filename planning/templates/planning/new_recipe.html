@@ -50,32 +50,7 @@
                     <div class="border-box content-sign_in d-flex align-items-center mt-3">
                         <div class="login-forms margin-device">
                             <h1>Enregistrer une nouvelle recette</h1>
-                            <div class="form-one">
-                                <h3 class="text-info">Commencer par remplir et valider ce formulaire !!!</h3>
-                                {% if form_food_quantity.errors %}
-                                <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
-                                {% endif %}
-                                <form action="." method='post'>
-                                    {% csrf_token %}
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_food_quantity.quantity.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_food_quantity.quantity }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_food_quantity.food.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_food_quantity.food }}
-                                        </div>
-                                    </div>
-                                    {{ form_food_quantity.identifiant }}
-                                    <div class="form-group">
-                                        <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <hr>
+                            
                             <div class="">
                                 {% if form_recipe.errors %}
                                 <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
@@ -89,9 +64,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.prepare_duration.label }}</label>
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.preparation_time.label }}</label>
                                         <div class="col-sm-8">
-                                            {{ form_recipe.prepare_duration }}
+                                            {{ form_recipe.preparation_time }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -101,15 +76,21 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.food.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.food }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-4 col-form-label">{{ form_recipe.step.label }}</label>
                                         <div class="col-sm-8">
                                             {{ form_recipe.step }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.food_quantity.label }}</label>
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.portion.label }}</label>
                                         <div class="col-sm-8">
-                                            {{ form_recipe.food_quantity }}
+                                            {{ form_recipe.portion }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
