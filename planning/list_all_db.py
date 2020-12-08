@@ -1,4 +1,4 @@
-from .models import Recipe, Categorie, Utensil
+from .models import Recipe, CategorieRecipe, Utensil
 
 
 def list_all_recipe():
@@ -12,7 +12,7 @@ def list_all_recipe():
 def list_all_categ():
     categories = []
 
-    for categ in Categorie.objects.all():
+    for categ in CategorieRecipe.objects.all():
         categories.append((categ.pk, categ.name))
 
     return categories

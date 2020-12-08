@@ -27,7 +27,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'feedeasyform_db',
+            'NAME': 'feedeasy_form_db',
             'USER': os.environ.get('USER_DB'),
             'PASSWORD': os.environ.get('PWD_DB'),
             'HOST': os.environ.get('HOST_DB'),

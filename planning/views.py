@@ -1,11 +1,12 @@
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import RecipeForm, CategorieForm, UtensilForm, FoodQuantityForm, \
+
+from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
     DeleteRecipeForm, DeleteCategForm, DeleteUtensilForm
-from .models import Recipe, Categorie, Utensil
-from food.models import Food, Group
-from food.forms import DeleteFoodForm, DeleteGroupForm
+from .models import Recipe, CategorieRecipe, Utensil
+from food.models import Food, FoodGroup
+from food.forms import DeleteFoodForm, DeleteFoodGroupForm
 
 
 @login_required
@@ -16,8 +17,8 @@ def create_recipe(request):
             if form.is_valid():
                 form.save()
                 return redirect(reverse('planning:new_recipe'))
-        elif request.POST['identifiant'] == 'categorie':
-            form = CategorieForm(request.POST)
+        elif request.POST['identifiant'] == 'categorie_recipe':
+            form = CategorieRecipeForm(request.POST)
             if form.is_valid():
                 form.save()
                 return redirect(reverse('planning:new_recipe'))
@@ -26,22 +27,20 @@ def create_recipe(request):
             if form.is_valid():
                 form.save()
                 return redirect(reverse('planning:new_recipe'))
-        elif request.POST['identifiant'] == 'food_quantity':
-            form = FoodQuantityForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect(reverse('planning:new_recipe'))
+        # elif request.POST['identifiant'] == 'food_quantity':
+        #     form = FoodQuantityForm(request.POST)
+        #     if form.is_valid():
+        #         form.save()
+        #         return redirect(reverse('planning:new_recipe'))
 
     else:
         form_recipe = RecipeForm()
-        form_categorie = CategorieForm()
+        form_categorie = CategorieRecipeForm()
         form_utensil = UtensilForm()
-        form_food_quantity = FoodQuantityForm()
         context = {
             'form_recipe': form_recipe,
             'form_categ': form_categorie,
             'form_uten': form_utensil,
-            'form_food_quantity': form_food_quantity,
         }
         return render(request, 'planning/new_recipe.html', context)
 
@@ -59,7 +58,7 @@ def show_and_update_db(request):
             form = DeleteCategForm(request.POST)
             if form.is_valid():
                 categ = form.cleaned_data['categ']
-                Categorie.objects.get(pk=int(categ)).delete()
+                CategorieRecipe.objects.get(pk=int(categ)).delete()
         
         elif request.POST['identifiant'] == 'utensil':
             form = DeleteUtensilForm(request.POST)
@@ -74,21 +73,21 @@ def show_and_update_db(request):
                 Food.objects.get(pk=int(food)).delete()
 
         elif request.POST['identifiant'] == 'group':
-            form = DeleteGroupForm(request.POST)
+            form = DeleteFoodGroupForm(request.POST)
             if form.is_valid():
                 group = form.cleaned_data['group']
-                Group.objects.get(pk=int(group)).delete()
+                FoodGroup.objects.get(pk=int(group)).delete()
         
         return redirect(reverse('planning:databases'))
 
     else:
         foods = Food.objects.all()
-        food_group = Group.objects.all()
+        food_group = FoodGroup.objects.all()
         recipes = Recipe.objects.all()
-        recipe_categ = Categorie.objects.all()
+        recipe_categ = CategorieRecipe.objects.all()
         utensils = Utensil.objects.all()
         form_del_food = DeleteFoodForm()
-        form_del_group = DeleteGroupForm()
+        form_del_group = DeleteFoodGroupForm()
         form_del_recipe = DeleteRecipeForm()
         form_del_categ = DeleteCategForm()
         form_del_utensil = DeleteUtensilForm()
@@ -115,7 +114,7 @@ class RecipeDetailView(DetailView):
 
 
 class CategorieDetailView(DetailView):
-    model = Categorie
+    model = CategorieRecipe
     template_name = "planning/detail.html"
 
 
@@ -128,5 +127,5 @@ class FoodDetailView(DetailView):
     template_name = "planning/detail.html"
 
 class GroupDetailView(DetailView):
-    model = Group
+    model = FoodGroup
     template_name = "planning/detail.html"

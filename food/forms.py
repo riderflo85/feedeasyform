@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.utils.functional import lazy
-from .models import Food, Group
+from .models import Food, FoodGroup
 from .list_all_db import list_all_food, list_all_group
 
 
@@ -16,20 +16,20 @@ class FoodForm(ModelForm):
 
     class Meta:
         model = Food
-        fields = ['name', 'description', 'group', 'identifiant']
+        fields = '__all__'
 
 
-class GroupForm(ModelForm):
+class FoodGroupForm(ModelForm):
 
     identifiant = forms.CharField(
-        initial='group',
+        initial='food_group',
         widget=forms.TextInput(
             attrs={'class': 'd-none'}
         ),
     )
 
     class Meta:
-        model = Group
+        model = FoodGroup
         fields = ['name', 'identifiant']
 
 
@@ -49,7 +49,7 @@ class DeleteFoodForm(forms.Form):
     )
 
 
-class DeleteGroupForm(forms.Form):
+class DeleteFoodGroupForm(forms.Form):
     group = forms.ChoiceField(
         label="Supprimer un groupe d'aliment",
         choices=lazy(list_all_group, tuple),

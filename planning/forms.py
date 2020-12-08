@@ -1,22 +1,22 @@
 from django import forms
 from django.forms import ModelForm
 from django.utils.functional import lazy
-from .models import Recipe, Categorie, Utensil, FoodQuantity
+from .models import Recipe, CategorieRecipe, Utensil
 from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil
 
 
-class FoodQuantityForm(ModelForm):
+# class FoodQuantityForm(ModelForm):
 
-    identifiant = forms.CharField(
-        initial='food_quantity',
-        widget=forms.TextInput(
-            attrs={'class': 'd-none'}
-        ),
-    )
+#     identifiant = forms.CharField(
+#         initial='food_quantity',
+#         widget=forms.TextInput(
+#             attrs={'class': 'd-none'}
+#         ),
+#     )
 
-    class Meta:
-        model = FoodQuantity
-        fields = ['food', 'quantity', 'identifiant']
+#     class Meta:
+#         model = FoodQuantity
+#         fields = ['food', 'quantity', 'identifiant']
 
 class RecipeForm(ModelForm):
 
@@ -31,29 +31,30 @@ class RecipeForm(ModelForm):
         model = Recipe
         fields = [
             'name',
-            'prepare_duration',
+            'preparation_time',
             'cooking_time',
             'step',
-            'food_quantity',
+            'portion',
+            'food',
             'categorie',
             'price_scale',
             'level',
-            'utensil',
+            'utensils',
             'identifiant',
         ]
 
 
-class CategorieForm(ModelForm):
+class CategorieRecipeForm(ModelForm):
 
     identifiant = forms.CharField(
-        initial='categorie',
+        initial='categorie_recipe',
         widget=forms.TextInput(
             attrs={'class': 'd-none'}
         ),
     )
 
     class Meta:
-        model = Categorie
+        model = CategorieRecipe
         fields = ['name', 'identifiant']
 
 

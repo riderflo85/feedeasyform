@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
-from .models import Food, Group
-from .forms import FoodForm, GroupForm
+
+from .forms import FoodForm, FoodGroupForm
 
 
 @login_required
@@ -14,7 +14,7 @@ def create_food(request):
                 print(new_food.name)
                 return redirect(reverse('food:new_food'))
         else:
-            form = GroupForm(request.POST)
+            form = FoodGroupForm(request.POST)
             if form.is_valid():
                 new_group = form.save()
                 print(new_group.name)
@@ -22,7 +22,7 @@ def create_food(request):
 
     else:
         form_food = FoodForm()
-        form_group = GroupForm()
+        form_group = FoodGroupForm()
         context = {
             'form_food': form_food,
             'form_group': form_group

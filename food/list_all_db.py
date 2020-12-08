@@ -1,4 +1,4 @@
-from .models import Food, Group
+from .models import Food, FoodGroup
 
 
 def list_all_food():
@@ -12,7 +12,7 @@ def list_all_food():
 def list_all_group():
     groups = []
 
-    for group in Group.objects.all():
+    for group in FoodGroup.objects.all():
         groups.append((group.pk, group.name))
 
     return groups
