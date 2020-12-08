@@ -1,14 +1,14 @@
 {% extends 'planning/base.html' %}
 {% block content %}
 
-<div class="container-fluid h-100vh">
-    <div class="row">
+<div class="container-fluid h-100vh scrollable">
+    <div class="row mt-3">
         <div class="col-2 mb-5">
             <a href="{% url 'planning:databases' %}" class="btn btn-info">Retour</a>
         </div>
     </div>
-    <div class="container">
-        <div class="row border-box content-sign_in">
+    <div class="container mb-5">
+        <div class="row border-box content-sign_in fix-height">
             <div class="col-12">
                 {% if recipe %}
                 <div class="form-group row">
@@ -125,18 +125,20 @@
                         <h3 class="form-control-plaintext" id="nameFood">{{ food.name }}</h3>
                     </div>
                 </div>
+                {% for field, val in food.list_fields %}
                 <div class="form-group row">
-                    <label for="descriptionFood" class="col-sm-4 col-form-label border-label">Description de l'aliment</label>
+                    <label for="descriptionFood" class="col-sm-4 col-form-label border-label">{{ field }}</label>
+                    {% if field == "groupe de l'ingredient" %}
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="descriptionFood">{{ food.description }}</p>
+                        <a href="/planning/detail/group/{{ food.pk }}" class="form-control-plaintext text-primary" id="descriptionFood">{{ food.id_group.name }}</a>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="groupFood" class="col-sm-4 col-form-label border-label">Groupe d'aliment</label>
+                    {% else %}
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="groupFood">{{ food.group.name }}</p>
+                        <p class="form-control-plaintext" id="descriptionFood">{{ val }}</p>
                     </div>
+                    {% endif %}
                 </div>
+                {% endfor %}
                 {% endif %}
             </div>
         </div>

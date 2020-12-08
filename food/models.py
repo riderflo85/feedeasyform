@@ -8,6 +8,9 @@ class FoodGroup(models.Model):
         verbose_name="nom du groupe d'ingredient"
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Food(models.Model):
     name = models.CharField(
@@ -103,6 +106,15 @@ class Food(models.Model):
 
     def __str__(self):
         return self.name
+
+    def list_fields(self):
+        """
+        Return a iterator for get the all fields and values.
+        """
+
+        for field in self._meta.fields:
+            yield (field.verbose_name, field.value_to_string(self))
+
 
 # class Group(models.Model):
 #     name = models.CharField(
