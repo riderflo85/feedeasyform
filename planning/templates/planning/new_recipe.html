@@ -1,4 +1,5 @@
 {% extends 'planning/base.html' %}
+{% load static %}
 {% block form %}
 <section class="my-5">
     <div class="container-fluid h-100">
@@ -76,9 +77,29 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.food.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_recipe.food }}
+                                        <div class="col-sm-4 col-form-label">
+                                            <label class="col-form-label">Ingrédients</label>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#searchFoodModal">+</button>
+                                        </div>
+                                        <div class="col-sm-8" id="contentFoodsCol">
+                                            <div class="d-flex food-col">
+                                                <div class="d-flex mx-2 food-div">
+                                                    <p class="m-0">bla</p>
+                                                    <i class="fas fa-minus-circle trash-food"></i>
+                                                </div>
+                                                <div class="d-flex mx-2 food-div">
+                                                    <p class="m-0">bla</p>
+                                                    <i class="fas fa-minus-circle trash-food"></i>
+                                                </div>
+                                                <div class="d-flex mx-2 food-div">
+                                                    <p class="m-0">bla</p>
+                                                    <i class="fas fa-minus-circle trash-food"></i>
+                                                </div>
+                                                <div class="d-flex mx-2 food-div">
+                                                    <p class="m-0">blamnzbphzvzegzergezrgergaergerzhrbqz</p>
+                                                    <i class="fas fa-minus-circle trash-food"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -112,9 +133,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.utensil.label }}</label>
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.utensils.label }}</label>
                                         <div class="col-sm-8">
-                                            {{ form_recipe.utensil }}
+                                            {{ form_recipe.utensils }}
                                         </div>
                                     </div>
                                     {{ form_recipe.identifiant }}
@@ -122,6 +143,11 @@
                                         <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
                                     </div>
                                 </form>
+                                <div class="d-none" id="allFoods">
+                                    {% for food in foods %}
+                                    <p data-name="{{ food.name }}" data-id="{{ food.pk }}"></p>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div><!-- .login-forms -->
                     </div><!-- end .d-flex flex-sm-column... -->
@@ -129,13 +155,39 @@
             </div><!-- end .col-12 col-lg-12... -->
         </div><!-- end .row -->
     </div><!-- end .container-fluid -->
+    <!-- Modal search food -->
+    <div class="modal fade" id="searchFoodModal" tabindex="-1" aria-labelledby="searchFoodModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchFoodModal">Recherche d'ingrédients</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="searchFood">
+                                <i class="fas fa-search-plus"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Chercher un aliment" aria-label="SearchFood" aria-describedby="searchFood" id="searchInput">
+                    </div>
+                    <div class="display-result" id="searchResult">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-success">Validé la recherche</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock form %}
 
 {% block script %}
-<script>
-    $("input").addClass('form-control');
-    $("textarea").addClass('form-control');
-    $("select").addClass('form-control');
-</script>
+<script src="{% static 'user/js/script.js' %}"></script>
 {% endblock script %}

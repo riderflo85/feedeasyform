@@ -35,7 +35,7 @@ class RecipeForm(ModelForm):
             'cooking_time',
             'step',
             'portion',
-            'food',
+            # 'food',
             'categorie',
             'price_scale',
             'level',

@@ -15,7 +15,8 @@ def create_recipe(request):
         if request.POST['identifiant'] == 'recipe':
             form = RecipeForm(request.POST)
             if form.is_valid():
-                form.save()
+                print(form.cleaned_data)
+                # form.save()
                 return redirect(reverse('planning:new_recipe'))
         elif request.POST['identifiant'] == 'categorie_recipe':
             form = CategorieRecipeForm(request.POST)
@@ -41,6 +42,7 @@ def create_recipe(request):
             'form_recipe': form_recipe,
             'form_categ': form_categorie,
             'form_uten': form_utensil,
+            'foods': Food.objects.all()
         }
         return render(request, 'planning/new_recipe.html', context)
 

@@ -44,3 +44,23 @@ hr {
 .scrollable {
     overflow: auto;
 }
+
+.food-col {
+    justify-content: space-between;
+    overflow-x: overlay;
+}
+
+.food-div {
+    align-items: center;
+    border: 1.5px solid #28a745;
+    border-radius: 20px;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    background-color: #d6f5dd;
+}
+
+.trash-food {
+    color: #dc3545;
+    margin-left: 5px;
+    cursor: pointer;
+}
