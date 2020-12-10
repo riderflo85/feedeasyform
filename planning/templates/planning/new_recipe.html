@@ -79,10 +79,12 @@
                                     <div class="form-group row">
                                         <div class="col-sm-4 col-form-label">
                                             <label class="col-form-label">Ingrédients</label>
-                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#searchFoodModal">+</button>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#searchFoodModal">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
                                         </div>
-                                        <div class="col-sm-8" id="contentFoodsCol">
-                                            <div class="d-flex food-col">
+                                        <div class="col-sm-8 food-col" id="contentFoodsCol">
+                                            <div class="d-flex mb-2">
                                                 <div class="d-flex mx-2 food-div">
                                                     <p class="m-0">bla</p>
                                                     <i class="fas fa-minus-circle trash-food"></i>
@@ -100,6 +102,7 @@
                                                     <i class="fas fa-minus-circle trash-food"></i>
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -157,7 +160,7 @@
     </div><!-- end .container-fluid -->
     <!-- Modal search food -->
     <div class="modal fade" id="searchFoodModal" tabindex="-1" aria-labelledby="searchFoodModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="searchFoodModal">Recherche d'ingrédients</h5>
@@ -174,13 +177,52 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Chercher un aliment" aria-label="SearchFood" aria-describedby="searchFood" id="searchInput">
                     </div>
-                    <div class="display-result" id="searchResult">
-
+                    <div class="display-result form-group row" id="searchResult">
+                        <label class="col-sm-4" for="foodsResult">Sélectionner un ou plusieurs ingrédients <small>(utiliser la touche Shift ou Ctrl pour faire une sélection multiple et <strong class="text-info">cliquer sur le bouton bleu pour valider</strong> )</small></label>
+                        <div class="col-sm-8">
+                            <select name="foods" id="foodsResult" multiple>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 mt-3 d-flex-between">
+                            <label for="quantityFormBloc">
+                                Quantité souhaitée 
+                                <small>(la saisie sera possible une fois que vous aurez validé votre sélection via le bouton bleu)</small>
+                                <small class="text-danger"> merci de séparer la quantité et l'unité par un point virgule. ';'</small>
+                                <br/>
+                                <br/>
+                                exemple:
+                                <br/> 
+                                <strong class="text-success">500 ; g</strong>
+                                <br/> 
+                                <strong class="text-success">10 ; l</strong> <small>(litre)</small>
+                                <br/> 
+                                <strong class="text-success">3 ; u</strong> <small>(u = unité)</small>
+                            </label>
+                            <button class="btn btn-success btn-valid-quantity" id="btnValideFormQuantity" disabled>Valider</button>
+                        </div>
+                        <div class="col-sm-8 mt-3" id="quantityFormBloc">
+                        </div>
+                        <div class="col-sm-4 mt-3">
+                            <p>Ingédients ajoutés</p>
+                        </div>
+                        <div class="col-sm-8 mt-3">
+                            <ul id="selectedFoods">
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-success">Validé la recherche</button>
+                    <button class="btn btn-danger" id="btnClear">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-info" id="btnAddFood" disabled>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnValideSearch">
+                        <i class="fas fa-check"></i>
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
             </div>
         </div>

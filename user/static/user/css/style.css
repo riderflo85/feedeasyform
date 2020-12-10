@@ -47,7 +47,9 @@ hr {
 
 .food-col {
     justify-content: space-between;
-    overflow-x: overlay;
+    overflow-x: auto;
+    padding-bottom: 0.5vh;
+    padding-right: 10px;
 }
 
 .food-div {
@@ -63,4 +65,23 @@ hr {
     color: #dc3545;
     margin-left: 5px;
     cursor: pointer;
+}
+
+.display-result {
+    margin-top: 2vh;
+}
+
+#foodsResult {
+    height: 30vh;
+}
+
+.d-flex-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.btn-valid-quantity {
+    width: 50%;
+    align-self: flex-end;
 }
