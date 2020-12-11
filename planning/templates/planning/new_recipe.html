@@ -178,7 +178,16 @@
                         <input type="text" class="form-control" placeholder="Chercher un aliment" aria-label="SearchFood" aria-describedby="searchFood" id="searchInput">
                     </div>
                     <div class="display-result form-group row" id="searchResult">
-                        <label class="col-sm-4" for="foodsResult">Sélectionner un ou plusieurs ingrédients <small>(utiliser la touche Shift ou Ctrl pour faire une sélection multiple et <strong class="text-info">cliquer sur le bouton bleu pour valider</strong> )</small></label>
+                        <div class="col-sm-4 d-flex-between">
+                            <label for="foodsResult">
+                                Sélectionner un ou plusieurs ingrédients 
+                                <small>
+                                    (utiliser la touche Shift ou Ctrl pour faire une sélection multiple et 
+                                    <strong class="text-info">cliquer sur le bouton bleu pour valider</strong> )
+                                </small>
+                            </label>
+                            <button type="button" class="btn btn-info btn-valid-quantity" id="btnAddFood" disabled>Valider</button>
+                        </div>
                         <div class="col-sm-8">
                             <select name="foods" id="foodsResult" multiple>
                             </select>
@@ -200,29 +209,34 @@
                             </label>
                             <button class="btn btn-success btn-valid-quantity" id="btnValideFormQuantity" disabled>Valider</button>
                         </div>
-                        <div class="col-sm-8 mt-3" id="quantityFormBloc">
+                        <div class="col-sm-8 mt-3">
+                            <div class="my-d-none" id="quantityFormBloc">
+
+                            </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                        <div class="col-sm-4 mt-5">
                             <p>Ingédients ajoutés</p>
                         </div>
-                        <div class="col-sm-8 mt-3">
-                            <ul id="selectedFoods">
-                            </ul>
+                        <div class="col-sm-8 mt-5">
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">Quantité</th>
+                                        <th scope="col">Unité</th>
+                                        <th scope="col">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="my-d-none" id="selectedFoods">
+                                    
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" id="btnClear">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                    <button type="button" class="btn btn-info" id="btnAddFood" disabled>
-                        <i class="fas fa-plus"></i>
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnValideSearch">
-                        <i class="fas fa-check"></i>
-                        <i class="fas fa-search"></i>
-                    </button>
+                    <button class="btn btn-danger" id="btnClear">Tout effacer</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnValideSearch">Sauvegarder</button>
                 </div>
             </div>
         </div>

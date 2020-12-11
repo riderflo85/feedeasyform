@@ -85,3 +85,7 @@ hr {
     width: 50%;
     align-self: flex-end;
 }
+
+.my-d-none {
+    display: none;
+}
