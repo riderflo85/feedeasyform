@@ -51,7 +51,7 @@
                     <div class="border-box content-sign_in d-flex align-items-center mt-3">
                         <div class="login-forms margin-device">
                             <h1>Enregistrer une nouvelle recette</h1>
-                            
+
                             <div class="">
                                 {% if form_recipe.errors %}
                                 <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
@@ -84,25 +84,19 @@
                                             </button>
                                         </div>
                                         <div class="col-sm-8 food-col" id="contentFoodsCol">
-                                            <div class="d-flex mb-2">
-                                                <div class="d-flex mx-2 food-div">
-                                                    <p class="m-0">bla</p>
-                                                    <i class="fas fa-minus-circle trash-food"></i>
-                                                </div>
-                                                <div class="d-flex mx-2 food-div">
-                                                    <p class="m-0">bla</p>
-                                                    <i class="fas fa-minus-circle trash-food"></i>
-                                                </div>
-                                                <div class="d-flex mx-2 food-div">
-                                                    <p class="m-0">bla</p>
-                                                    <i class="fas fa-minus-circle trash-food"></i>
-                                                </div>
-                                                <div class="d-flex mx-2 food-div">
-                                                    <p class="m-0">blamnzbphzvzegzergezrgergaergerzhrbqz</p>
-                                                    <i class="fas fa-minus-circle trash-food"></i>
-                                                </div>
-                                            </div>
-                                            
+                                            <table class="table table-bordered table-sm">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Nom</th>
+                                                        <th scope="col">Quantité</th>
+                                                        <th scope="col">Unité</th>
+                                                        <th scope="col">#</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="allUsedFoods">
+                                                    
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -218,7 +212,7 @@
                             <p>Ingédients ajoutés</p>
                         </div>
                         <div class="col-sm-8 mt-5">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-sm">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Nom</th>

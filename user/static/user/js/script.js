@@ -64,9 +64,9 @@ function displayFoodsAndQuantity(parentNode, fieldsInput) {
         const parsedData = field.input.val().split(';');
         const item = `
         <tr id="${field.input.data('id')}" data-id="${field.input.data('id')}">
-            <td>${field.label}</td>
-            <td>${parsedData[0].trim()}</td>
-            <td>${parsedData[1].trim()}</td>
+            <td data-name="${field.label}">${field.label}</td>
+            <td data-quantity="${parsedData[0].trim()}">${parsedData[0].trim()}</td>
+            <td data-unity="${parsedData[1].trim()}">${parsedData[1].trim()}</td>
             <td>
                 <button class="btn btn-danger btn-sm" id="clearFoodTable-${field.input.data('id')}">
                     <i class="fas fa-minus"></i>
@@ -90,6 +90,65 @@ function displayFoodsAndQuantity(parentNode, fieldsInput) {
 }
 
 
+function saveSearchFoods() {
+    const dataTable = $("#selectedFoods");
+    let foods = []; // ex: {id: 1, name: foodName, quantity: 1, unity: g}
+
+    for (const tr of dataTable.children()) {
+        let foodInformations = {
+            id: $(tr).data('id'),
+        };
+
+        for (const td of $(tr).children().slice(0,3)) {
+            const dataAttr = Object.entries($(td).data())[0];
+            foodInformations[dataAttr[0]] = dataAttr[1];
+        }
+        foods.push(foodInformations);
+    }
+
+    return foods;
+}
+
+
+function displayResultSearchFood(parentNode, foods) {
+    for (const food of foods) {
+        const item = `
+        <tr id="recap-${food.id}" data-id="${food.id}">
+            <td data-name="${food.name}">${food.name}</td>
+            <td data-quantity="${food.quantity}">${food.quantity}</td>
+            <td data-unity="${food.unity}">${food.unity}</td>
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" id="clearFoodTableRecap-${food.id}">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </td>
+        </tr>`;
+        $(item).appendTo(parentNode);
+
+        const btnClearFoodTableRecap = $(`#clearFoodTableRecap-${food.id}`);
+
+        btnClearFoodTableRecap.on('click', () => {
+            console.log('test');
+            const thisField = $(`#recap-${food.id}`);
+            thisField.fadeOut(500, () => {
+                thisField.remove();
+            }); 
+        });
+    }
+}
+
+
+function clearForms(form, area, table) {
+    form.fadeOut(500, () => {
+        form.empty();
+        area.empty();
+    });
+    table.fadeOut(500, () => {
+        table.empty();
+    });
+}
+
+
 $(document).ready(() => {
     addClassStyle();
 
@@ -102,14 +161,14 @@ $(document).ready(() => {
     const btnValideFormQuantity = $("#btnValideFormQuantity");
     const quantityFormBloc = $("#quantityFormBloc");
     const selectArea = $("#foodsResult");
-    const fomrQuantity = $("#quantityFormBloc");
+    const formQuantity = $("#quantityFormBloc");
     let quantityInput;
 
 
     selectArea.focus(() => {
         btnAddFood.removeAttr('disabled');
-        fomrQuantity.fadeOut(500, () => {
-            fomrQuantity.empty();
+        formQuantity.fadeOut(500, () => {
+            formQuantity.empty();
         });
     });
 
@@ -123,8 +182,8 @@ $(document).ready(() => {
 
     
     inputSearch.focus(() => {
-        fomrQuantity.fadeOut(500, () => {
-            fomrQuantity.empty();
+        formQuantity.fadeOut(500, () => {
+            formQuantity.empty();
         });
     });
 
@@ -142,13 +201,7 @@ $(document).ready(() => {
 
 
     btnClearFoodSelected.on('click', () => {
-        fomrQuantity.fadeOut(500, () => {
-            fomrQuantity.empty();
-            selectArea.empty();
-        });
-        listingFood.fadeOut(500, () => {
-            listingFood.empty();
-        });
+        clearForms(formQuantity, selectArea, listingFood);
     });
 
 
@@ -156,6 +209,14 @@ $(document).ready(() => {
         displayFoodsAndQuantity(listingFood, quantityInput);
         btnAddFood.attr('disabled', 'true');
         $(event.target).attr('disabled', 'true');
+    });
+
+
+    btnValideSearch.on('click', () => {
+        const foodsTable = $("#allUsedFoods");
+        const foods = saveSearchFoods();
+        displayResultSearchFood(foodsTable, foods);
+        clearForms(formQuantity, selectArea, listingFood);
     });
 
 });
