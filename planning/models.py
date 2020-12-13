@@ -46,6 +46,14 @@ class PriceScale(models.Model):
         return self.name
 
 
+class OriginRecipe(models.Model):
+    name = models.CharField(
+        max_length=150,
+        unique=True,
+        verbose_name="origine de la recette (pays/culture...)"
+    )
+
+
 class Recipe(models.Model):
     name = models.CharField(
         max_length=55,
@@ -67,6 +75,10 @@ class Recipe(models.Model):
         verbose_name="nombre de portions pour la recette",
         default=1
     )
+    point = models.IntegerField(
+        verbose_name="point de la recette",
+        default=1
+    )
     food = models.ManyToManyField(
         Food,
         through="FoodAndQuantity",
@@ -76,6 +88,11 @@ class Recipe(models.Model):
         CategorieRecipe,
         on_delete=models.CASCADE,
         verbose_name="categorie de la recette"
+    )
+    origin = models.ForeignKey(
+        OriginRecipe,
+        on_delete=models.CASCADE,
+        verbose_name="origine de la recette"
     )
     price_scale = models.ForeignKey(
         PriceScale,
