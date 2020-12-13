@@ -3,7 +3,7 @@ from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
 
 from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
-    DeleteRecipeForm, DeleteCategForm, DeleteUtensilForm
+    DeleteRecipeForm, DeleteCategForm, DeleteUtensilForm, OriginRecipeForm
 from .models import Recipe, CategorieRecipe, Utensil
 from food.models import Food, FoodGroup
 from food.forms import DeleteFoodForm, DeleteFoodGroupForm
@@ -28,6 +28,11 @@ def create_recipe(request):
             if form.is_valid():
                 form.save()
                 return redirect(reverse('planning:new_recipe'))
+        elif request.POST['identifiant'] == 'origin_recipe':
+            form = OriginRecipeForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('planning:new_recipe'))
         # elif request.POST['identifiant'] == 'food_quantity':
         #     form = FoodQuantityForm(request.POST)
         #     if form.is_valid():
@@ -38,11 +43,13 @@ def create_recipe(request):
         form_recipe = RecipeForm()
         form_categorie = CategorieRecipeForm()
         form_utensil = UtensilForm()
+        form_origin_recipe = OriginRecipeForm()
         context = {
             'form_recipe': form_recipe,
             'form_categ': form_categorie,
             'form_uten': form_utensil,
-            'foods': Food.objects.all()
+            'foods': Food.objects.all(),
+            'form_origin_recipe': form_origin_recipe,
         }
         return render(request, 'planning/new_recipe.html', context)
 

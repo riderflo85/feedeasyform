@@ -1,7 +1,9 @@
 from django import forms
+from django.db.models import fields
 from django.forms import ModelForm
+from django.forms.models import model_to_dict
 from django.utils.functional import lazy
-from .models import Recipe, CategorieRecipe, Utensil
+from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
 from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil
 
 
@@ -17,6 +19,23 @@ from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil
 #     class Meta:
 #         model = FoodQuantity
 #         fields = ['food', 'quantity', 'identifiant']
+
+class OriginRecipeForm(ModelForm):
+
+    identifiant = forms.CharField(
+        initial='origin_recipe',
+        widget=forms.TextInput(
+            attrs={'class': 'd-none'}
+        ),
+    )
+
+    class Meta:
+        model = OriginRecipe
+        fields = [
+            'name',
+            'identifiant'
+        ]
+
 
 class RecipeForm(ModelForm):
 
@@ -35,8 +54,10 @@ class RecipeForm(ModelForm):
             'cooking_time',
             'step',
             'portion',
+            'point',
             # 'food',
             'categorie',
+            'origin',
             'price_scale',
             'level',
             'utensils',

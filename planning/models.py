@@ -53,6 +53,9 @@ class OriginRecipe(models.Model):
         verbose_name="origine de la recette (pays/culture...)"
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Recipe(models.Model):
     name = models.CharField(
