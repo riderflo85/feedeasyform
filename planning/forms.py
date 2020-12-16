@@ -3,8 +3,8 @@ from django.forms import ModelForm, widgets
 from django.utils.functional import lazy
 
 from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
-from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil
-from .validator import validate_utensils
+from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil, \
+    list_all_origin_recipe
 
 
 # class FoodQuantityForm(ModelForm):
@@ -100,6 +100,22 @@ class UtensilForm(ModelForm):
     class Meta:
         model = Utensil
         fields = ['name', 'identifiant']
+
+
+class DeleteOriginRecipe(forms.Form):
+    origin = forms.ChoiceField(
+        label='Supprimer une origine de recette',
+        choices=lazy(list_all_origin_recipe, tuple),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    identifiant = forms.CharField(
+        initial='origin_recipe',
+        widget=forms.TextInput(
+            attrs={'class': 'd-none'}
+        )
+    )
 
 
 class DeleteRecipeForm(forms.Form):

@@ -1,4 +1,4 @@
-from .models import Recipe, CategorieRecipe, Utensil
+from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
 
 
 def list_all_recipe():
@@ -24,3 +24,11 @@ def list_all_utensil():
         utensils.append((utensil.pk, utensil.name))
     
     return utensils
+
+def list_all_origin_recipe():
+    origins = []
+
+    for origin in OriginRecipe.objects.all():
+        origins.append((origin.pk, origin.name))
+
+    return origins
