@@ -38,11 +38,6 @@ def create_recipe(request):
             if form.is_valid():
                 form.save()
                 return redirect(reverse('planning:new_recipe'))
-        # elif request.POST['identifiant'] == 'food_quantity':
-        #     form = FoodQuantityForm(request.POST)
-        #     if form.is_valid():
-        #         form.save()
-        #         return redirect(reverse('planning:new_recipe'))
 
     else:
         form_recipe = RecipeForm()

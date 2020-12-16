@@ -7,19 +7,6 @@ from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil, \
     list_all_origin_recipe
 
 
-# class FoodQuantityForm(ModelForm):
-
-#     identifiant = forms.CharField(
-#         initial='food_quantity',
-#         widget=forms.TextInput(
-#             attrs={'class': 'd-none'}
-#         ),
-#     )
-
-#     class Meta:
-#         model = FoodQuantity
-#         fields = ['food', 'quantity', 'identifiant']
-
 class OriginRecipeForm(ModelForm):
 
     identifiant = forms.CharField(

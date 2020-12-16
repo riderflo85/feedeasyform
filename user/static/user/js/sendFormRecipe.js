@@ -115,14 +115,6 @@ function submitForm(foods, utensils, successCb, errorCb) {
     } else {
         errorCb();
     }
-
-    // form.submit((event) => {
-    //     if (dataForRequest.foods.length === 0) {
-    //         event.preventDefault();
-    //     } else {
-    //         // 
-    //     }
-    // });
 }
 
 
