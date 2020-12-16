@@ -56,8 +56,8 @@ hr {
     margin-top: 2vh;
 }
 
-#foodsResult {
-    height: 30vh;
+.h-30vh {
+    height: 30vh !important;
 }
 
 .d-flex-between {

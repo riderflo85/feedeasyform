@@ -128,7 +128,6 @@ function displayResultSearchFood(parentNode, foods) {
         const btnClearFoodTableRecap = $(`#clearFoodTableRecap-${food.id}`);
 
         btnClearFoodTableRecap.on('click', () => {
-            console.log('test');
             const thisField = $(`#recap-${food.id}`);
             thisField.fadeOut(500, () => {
                 thisField.remove();
@@ -159,7 +158,6 @@ $(document).ready(() => {
     const btnClearFoodSelected = $("#btnClear");
     const btnValideSearch = $("#btnValideSearch");
     const btnValideFormQuantity = $("#btnValideFormQuantity");
-    const quantityFormBloc = $("#quantityFormBloc");
     const selectArea = $("#foodsResult");
     const formQuantity = $("#quantityFormBloc");
     let quantityInput;

@@ -73,16 +73,16 @@
                         <div class="login-forms margin-device">
                             <h1>Enregistrer une nouvelle recette</h1>
 
-                            <div class="">
+                            <div>
                                 {% if form_recipe.errors %}
                                 <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
                                 {% endif %}
-                                <form action="." method='post'>
+                                <form method="POST" id="formNewRecipe">
                                     {% csrf_token %}
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.name.label }}</label>
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.name_recipe.label }}</label>
                                         <div class="col-sm-8">
-                                            {{ form_recipe.name }}
+                                            {{ form_recipe.name_recipe }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -163,19 +163,47 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.utensils.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_recipe.utensils }}
+                                        <div class="col-sm-4 col-form-label">
+                                            <label class="col-form-label">Ustensiles nécessaire à la recette</label>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#utensilModal">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-8 food-col" id="contentUtensilCol">
+                                            <table class="table table-bordered table-sm">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Nom</th>
+                                                        <th scope="col">#</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="allUsedUtensils">
+                                                    
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     {{ form_recipe.identifiant }}
                                     <div class="form-group">
-                                        <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
+                                        <div class="alert alert-danger float-left my-d-none" role="alert" id="errorAlert">
+                                            Le formulaire est incorrect ou incomplet !
+                                            <br>
+                                            <small>Merci de corriger les erreurs</small>
+                                        </div>
+                                        <div class="alert alert-success float-left my-d-none" role="alert" id="successAlert">
+                                            Création de la nouvelle recette en cours...
+                                        </div>
+                                        <button class="btn btn-danger float-right" type="button" id="sendRecipeForm">Valider le formulaire</button>
                                     </div>
                                 </form>
                                 <div class="d-none" id="allFoods">
                                     {% for food in foods %}
                                     <p data-name="{{ food.name }}" data-id="{{ food.pk }}"></p>
+                                    {% endfor %}
+                                </div>
+                                <div class="d-none" id="allUtensils">
+                                    {% for utensil in utensils %}
+                                    <p data-name="{{ utensil.name }}" data-id="{{ utensil.pk }}"></p>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -185,6 +213,68 @@
             </div><!-- end .col-12 col-lg-12... -->
         </div><!-- end .row -->
     </div><!-- end .container-fluid -->
+    <!-- Modal add utensils -->
+    <div class="modal fade" id="utensilModal" tabindex="-1" aria-labelledby="utensilModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="utensilModal">Recherche d'ustensiles de cuisine</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="searchUtensil">
+                                <i class="fas fa-search-plus"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Chercher un ustensile" aria-label="SearchUtensil" aria-describedby="searchUtensil" id="searchUtensilInput">
+                    </div>
+                    <div class="display-result form-group row" id="searchUtensilResult">
+                        <div class="col-sm-4 d-flex-between">
+                            <label for="utensilsResult">
+                                Sélectionner un ou plusieurs ustensile(s) 
+                                <small>
+                                    (utiliser la touche Shift ou Ctrl pour faire une sélection multiple et 
+                                    <strong class="text-info">cliquer sur le bouton bleu pour valider</strong> )
+                                </small>
+                            </label>
+                            <button type="button" class="btn btn-info btn-valid-quantity" id="btnAddUtensil" disabled>Valider</button>
+                        </div>
+                        <div class="col-sm-8">
+                            <select name="utensils" class="h-30vh" id="utensilsResult" multiple>
+                                {% for utensil in utensils %}
+                                <option value="{{ utensil.pk }}:{{ utensil.name }}">{{ utensil.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-4 mt-5">
+                            <p>Ustensiles ajoutés</p>
+                        </div>
+                        <div class="col-sm-8 mt-5">
+                            <table class="table table-bordered table-sm">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="my-d-none" id="selectedUtensils">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" id="btnUtensilClear">Tout effacer</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnValideSearchUtensil">Sauvegarder</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal search food -->
     <div class="modal fade" id="searchFoodModal" tabindex="-1" aria-labelledby="searchFoodModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -216,7 +306,7 @@
                             <button type="button" class="btn btn-info btn-valid-quantity" id="btnAddFood" disabled>Valider</button>
                         </div>
                         <div class="col-sm-8">
-                            <select name="foods" id="foodsResult" multiple>
+                            <select name="foods" class="h-30vh" id="foodsResult" multiple>
                             </select>
                         </div>
                         <div class="col-sm-4 mt-3 d-flex-between">
@@ -272,5 +362,8 @@
 {% endblock form %}
 
 {% block script %}
+<script src="{% static 'user/js/secureajax.js' %}"></script>
+<script src="{% static 'user/js/sendFormRecipe.js' %}"></script>
+<script src="{% static 'user/js/addUtensils.js' %}"></script>
 <script src="{% static 'user/js/script.js' %}"></script>
 {% endblock script %}

@@ -1,10 +1,10 @@
 from django import forms
-from django.db.models import fields
-from django.forms import ModelForm
-from django.forms.models import model_to_dict
+from django.forms import ModelForm, widgets
 from django.utils.functional import lazy
+
 from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
 from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil
+from .validator import validate_utensils
 
 
 # class FoodQuantityForm(ModelForm):
@@ -42,25 +42,34 @@ class RecipeForm(ModelForm):
     identifiant = forms.CharField(
         initial='recipe',
         widget=forms.TextInput(
-            attrs={'class': 'd-none'}
+            attrs={
+                'class': 'd-none',
+                'id': 'id_identifiant_recipe'
+            }
         ),
+    )
+
+    name_recipe = forms.CharField(
+        label='Nom de la recette',
+        required=True,
+        widget=forms.TextInput(
+            attrs={'id': 'id_name_recipe'}
+        )
     )
 
     class Meta:
         model = Recipe
         fields = [
-            'name',
+            'name_recipe',
             'preparation_time',
             'cooking_time',
             'step',
             'portion',
             'point',
-            # 'food',
             'categorie',
             'origin',
             'price_scale',
             'level',
-            'utensils',
             'identifiant',
         ]
 

@@ -13,11 +13,15 @@ from food.forms import DeleteFoodForm, DeleteFoodGroupForm
 def create_recipe(request):
     if request.method == 'POST':
         if request.POST['identifiant'] == 'recipe':
+            print(request.POST)
             form = RecipeForm(request.POST)
             if form.is_valid():
                 print(form.cleaned_data)
                 # form.save()
                 return redirect(reverse('planning:new_recipe'))
+            else:
+                print(form.errors)
+                # print('in the error form bloc', request.POST)
         elif request.POST['identifiant'] == 'categorie_recipe':
             form = CategorieRecipeForm(request.POST)
             if form.is_valid():
@@ -49,6 +53,7 @@ def create_recipe(request):
             'form_categ': form_categorie,
             'form_uten': form_utensil,
             'foods': Food.objects.all(),
+            'utensils': Utensil.objects.all(),
             'form_origin_recipe': form_origin_recipe,
         }
         return render(request, 'planning/new_recipe.html', context)
