@@ -23,9 +23,6 @@ class CategorieRecipe(models.Model):
     def __str__(self):
         return self.name
 
-    def get_recipe_categorie(self):
-        return Recipe.objects.filter(categorie__name=self.name)
-
 
 class Level(models.Model):
     name = models.CharField(

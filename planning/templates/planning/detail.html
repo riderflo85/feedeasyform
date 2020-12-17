@@ -123,7 +123,7 @@
                     <label for="CategRecipe" class="col-sm-4 col-form-label border-label">Recettes appartenant à cette categorie</label>
                     <div class="col-sm-8">
                         <ul>
-                            {% for recipe in categorierecipe.get_recipe_categorie %}
+                            {% for recipe in categorierecipe.recipe_set.all %}
                             <li><a href="/planning/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
                             {% endfor %}
                         </ul>
