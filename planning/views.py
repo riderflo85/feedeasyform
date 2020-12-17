@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
@@ -6,6 +7,8 @@ from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
     DeleteRecipeForm, DeleteCategForm, DeleteUtensilForm, OriginRecipeForm, \
     DeleteOriginRecipe
 from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
+from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
+    parse_foods_and_utensils
 from food.models import Food, FoodGroup
 from food.forms import DeleteFoodForm, DeleteFoodGroupForm
 
@@ -14,15 +17,21 @@ from food.forms import DeleteFoodForm, DeleteFoodGroupForm
 def create_recipe(request):
     if request.method == 'POST':
         if request.POST['identifiant'] == 'recipe':
-            print(request.POST)
             form = RecipeForm(request.POST)
             if form.is_valid():
-                print(form.cleaned_data)
-                # form.save()
-                return redirect(reverse('planning:new_recipe'))
+                new_recipe = form.save()
+                foods, utensils = parse_foods_and_utensils(
+                    request.POST['foods'],
+                    request.POST['utensils'],
+                )
+                complet_recipe_with_foods_and_utensils(
+                    new_recipe,
+                    foods,
+                    utensils
+                )
+                return JsonResponse({'success': True})
             else:
-                print(form.errors)
-                # print('in the error form bloc', request.POST)
+                return JsonResponse({'success': False, 'error': form.errors})
         elif request.POST['identifiant'] == 'categorie_recipe':
             form = CategorieRecipeForm(request.POST)
             if form.is_valid():

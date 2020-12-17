@@ -42,12 +42,12 @@ function formatedDataForRequest(data) {
     let foods = "?";
 
     for (const utensil of newData.utensils) {
-        utensils = utensils.concat("&", utensil);
+        utensils = utensils.concat("&u=", utensil);
     }
 
     for (const food of newData.foods) {
         const foodInformations = `${food.id}:${food.name}:${food.quantity}`;
-        foods = foods.concat("&", foodInformations);
+        foods = foods.concat("&f=", foodInformations);
     }
 
     newData.foods = foods;
@@ -96,7 +96,7 @@ function submitForm(foods, utensils, successCb, errorCb) {
         dataForRequest['foods'] = foods;
         dataForRequest['utensils'] = utensils;
         console.log(dataForRequest);
-        successCb();
+        
 
         const dataFormated = formatedDataForRequest(dataForRequest);
         $.ajax({
@@ -105,10 +105,14 @@ function submitForm(foods, utensils, successCb, errorCb) {
             dataType: "json",
             data: dataFormated,
             success: (data) => {
-                console.log(data);
+                successCb();
+                if (data.success) {
+                    setTimeout(() => document.location.reload(), 3000);
+                }
             },
             error: (error) => {
                 console.log(error);
+                errorCb();
             }
         });
 
@@ -143,7 +147,10 @@ $(document).ready(() => {
         const utensils = getSelectedUtensils(tableUtensilsFormRecipe);
 
         submitForm(foods, utensils,
-            () => {successMsg.fadeIn(500);},
+            () => {
+                successMsg.fadeIn(500);
+                btnSendRequest.attr('disabled', 'true');
+            },
             () => {errorMsg.fadeIn(500);}
         );
     });

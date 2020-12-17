@@ -36,7 +36,7 @@ class RecipeForm(ModelForm):
         ),
     )
 
-    name_recipe = forms.CharField(
+    name = forms.CharField(
         label='Nom de la recette',
         required=True,
         widget=forms.TextInput(
@@ -47,7 +47,7 @@ class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
         fields = [
-            'name_recipe',
+            'name',
             'preparation_time',
             'cooking_time',
             'step',

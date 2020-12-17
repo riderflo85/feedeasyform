@@ -20,7 +20,7 @@
     <nav class="nav bg-dark">
         {% if user.is_authenticated %}
         <a class="nav-link text-light" href="{% url 'planning:new_recipe' %}">Nouvelle recette</a>
-        <a class="nav-link text-light" href="{% url 'food:new_food' %}">Nouveau aliment</a>
+        <!-- <a class="nav-link text-light" href="{% url 'food:new_food' %}">Nouveau aliment</a> -->
         <a class="nav-link text-light" href="{% url 'planning:databases' %}">Base de données</a>
         <a class="nav-link text-light" href="{% url 'user:logout' %}">Déconnexion</a>
         {% else %}
