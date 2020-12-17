@@ -25,19 +25,19 @@ class Command(BaseCommand):
         )
         csvfile_path = directory + 'table_ustensils_cuisine.csv'
 
-#         try:
-        with open(csvfile_path, newline='') as csvfile:
-            utensils = csv.DictReader(csvfile)
+        try:
+            with open(csvfile_path, newline='') as csvfile:
+                utensils = csv.DictReader(csvfile)
 
-            for line in utensils:
-                utensil = Utensil(name=line['Ustensils cuisine'])
-                utensil.save()
+                for line in utensils:
+                    utensil = Utensil(name=line['Ustensils cuisine'])
+                    utensil.save()
 
-                if kwargs['verbose']:
-                    self.stdout.write(
-                        f"{self.style.SUCCESS(utensil)} ajouté à la base de données"
-                    )
+                    if kwargs['verbose']:
+                        self.stdout.write(
+                            f"{self.style.SUCCESS(utensil)} ajouté à la base de données"
+                        )
 
-#         except:
-#             self.stderr.write(self.style.ERROR('Une erreur est survenu. \
-# \nIl est possible que les ustensils existe déjà dans la base de données.'))
+        except:
+            self.stderr.write(self.style.ERROR('Une erreur est survenu. \
+\nIl est possible que les ustensils existe déjà dans la base de données.'))
