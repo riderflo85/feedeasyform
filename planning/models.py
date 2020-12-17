@@ -23,6 +23,9 @@ class CategorieRecipe(models.Model):
     def __str__(self):
         return self.name
 
+    def get_recipe_categorie(self):
+        return Recipe.objects.filter(categorie__name=self.name)
+
 
 class Level(models.Model):
     name = models.CharField(
@@ -144,94 +147,3 @@ class FoodAndQuantity(models.Model):
         max_length=100,
         verbose_name="quantitee de l'ingredient avec l'unite de mesure"
     )
-
-
-# from django.db import models
-# from food.models import Food
-
-
-# class FoodQuantity(models.Model):
-#     quantity = models.CharField(max_length=45, verbose_name="Quantité de l'aliment")
-#     food = models.ForeignKey(Food, on_delete=models.CASCADE, verbose_name="Aliment")
-
-#     def __str__(self):
-#         return f"{self.food}: {self.quantity}"
-
-
-# class Categorie(models.Model):
-#     name = models.CharField(max_length=45, verbose_name='Nom de la catégorie')
-
-#     def __str__(self):
-#         return self.name
-
-
-# class Utensil(models.Model):
-#     name = models.CharField(max_length=45, verbose_name="Nom de l'ustensile de cuisine")
-
-#     def __str__(self):
-#         return self.name
-
-
-# PRICE_SCALE = [
-#     ('low', 'petit budget'),
-#     ('medium', 'moyen budget'),
-#     ('high', 'gros budget')
-# ]
-
-# LEVEL = [
-#     ('easy', 'facile'),
-#     ('medium', 'moyen'),
-#     ('chef', 'chef')
-# ]
-
-# class Recipe(models.Model):
-#     name = models.CharField(max_length=45, verbose_name='Nom de la recette')
-
-#     prepare_duration = models.CharField(
-#         max_length=45, verbose_name='Temps de préparation')
-
-#     cooking_time = models.CharField(
-#         max_length=45, verbose_name='Temps de cuisson')
-
-#     step = models.TextField(verbose_name='Étapes de la recette')
-
-#     food_quantity = models.ManyToManyField(
-#         FoodQuantity, verbose_name='Aliment et quantité')
-
-#     categorie = models.ForeignKey(
-#         Categorie,
-#         on_delete=models.CASCADE,
-#         verbose_name='Nom de la categorie de la recette'
-#     )
-
-#     price_scale = models.CharField(
-#         max_length=45, choices=PRICE_SCALE, verbose_name='Fouchette de prix')
-
-#     level = models.CharField(
-#         max_length=45, choices=LEVEL, verbose_name='Difficultée')
-        
-#     utensil = models.ManyToManyField(
-#         Utensil, verbose_name='Ustensile de cuisine')
-
-#     def __str__(self):
-#         return self.name
-    
-#     def get_price_scale(self):
-#         type_price = {
-#             'low': 'Petit budget',
-#             'medium': 'Moyen budget',
-#             'high': 'Gros budget'
-#         }
-#         return type_price[self.price_scale]
-    
-#     def get_level(self):
-#         level = {
-#             'easy': 'Facile',
-#             'medium': 'Moyen',
-#             'chef': 'Chef'
-#         }
-#         return level[self.level]
-
-#     def get_step(self):
-#         steps = self.step.split('\n')
-#         return steps

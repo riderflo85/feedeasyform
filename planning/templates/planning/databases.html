@@ -65,6 +65,36 @@
     </div>
 </div>
 
+<!-- Modal delete origin recipe -->
+<div class="modal fade" id="modalDeleteOrigin" tabindex="-1" role="dialog" aria-labelledby="modalDeleteOrigin" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteOriginTitle">Supprimer une origine de recette</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="origin" class="col-sm-3 col-form-label text-center">Origine de recette</label>
+                        <div class="col-sm-9">
+                            {{ del_origin.origin }}
+                        </div>
+                            {{ del_origin.identifiant }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Modal delete recipe -->
 <div class="modal fade" id="modalDeleteRecipe" tabindex="-1" role="dialog" aria-labelledby="modalDeleteRecipe" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

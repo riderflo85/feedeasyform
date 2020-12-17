@@ -96,6 +96,12 @@ def show_and_update_db(request):
             if form.is_valid():
                 group = form.cleaned_data['group']
                 FoodGroup.objects.get(pk=int(group)).delete()
+
+        elif request.POST['identifiant'] == 'origin_recipe':
+            form = DeleteOriginRecipe(request.POST)
+            if form.is_valid():
+                origin = form.cleaned_data['origin']
+                OriginRecipe.objects.get(pk=int(origin)).delete()
         
         return redirect(reverse('planning:databases'))
 
@@ -130,7 +136,6 @@ def show_and_update_db(request):
 
         return render(request, 'planning/databases.html', context)
 
-# @login_required
 class RecipeDetailView(DetailView):
     model = Recipe
     template_name = "planning/detail.html"
