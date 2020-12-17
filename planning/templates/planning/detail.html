@@ -20,13 +20,23 @@
                 <div class="form-group row">
                     <label for="RecipePrepareDuration" class="col-sm-4 col-form-label border-label">Temps de preparation</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipePrepareDuration">{{ recipe.prepare_duration }}</p>
+                        <p class="form-control-plaintext" id="RecipePrepareDuration">{{ recipe.preparation_time }}</p>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="RecipeCookingTime" class="col-sm-4 col-form-label border-label">Temps de cuisson</label>
                     <div class="col-sm-8">
                         <p class="form-control-plaintext" id="RecipeCookingTime">{{ recipe.cooking_time }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeFoodQuant" class="col-sm-4 col-form-label border-label">Aliments et quantités</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for r_food in recipe.get_all_foods %}
+                            <li>{{ r_food.food.name }} <strong>{{ r_food.quantity }}</strong></li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -40,38 +50,46 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="RecipeFoodQuant" class="col-sm-4 col-form-label border-label">Aliments et quantités</label>
-                    <div class="col-sm-8">
-                        <ul>
-                            {% for r_food in recipe.food_quantity.all %}
-                            <li>{{ r_food }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label for="RecipeCateg" class="col-sm-4 col-form-label border-label">Catégorie de la recette</label>
                     <div class="col-sm-8">
                         <p class="form-control-plaintext" id="RecipeCateg">{{ recipe.categorie.name }}</p>
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Nombre de portions</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.portion }}</P>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Nombre de ponts</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.point }}</P>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Fourchette de prix</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.get_price_scale }}</P>
+                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.price_scale.name }}</P>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="RecipeLevel" class="col-sm-4 col-form-label border-label">Niveau de difficultée</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipeLevel">{{ recipe.get_level }}</p>
+                        <p class="form-control-plaintext" id="RecipeLevel">{{ recipe.level.name }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Origine de la recette</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.origin.name }}</P>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="RecipeFoodQuant" class="col-sm-4 col-form-label border-label">Ustensiles de cuisine</label>
                     <div class="col-sm-8">
                         <ul>
-                            {% for r_utensil in recipe.utensil.all %}
+                            {% for r_utensil in recipe.utensils.all %}
                             <li>{{ r_utensil.name }}</li>
                             {% endfor %}
                             </ul>

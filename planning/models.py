@@ -119,6 +119,15 @@ class Recipe(models.Model):
         steps = self.step.split('\n')
         return steps
 
+    def get_all_foods(self):
+        foods = []
+
+        for food in self.food.all():
+            f = FoodAndQuantity.objects.get(food=food, recipe=self)
+            foods.append(f)
+
+        return foods
+
 
 class FoodAndQuantity(models.Model):
     recipe = models.ForeignKey(
