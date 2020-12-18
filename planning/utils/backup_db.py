@@ -1,5 +1,7 @@
+import json
+
 from planning.models import Utensil, CategorieRecipe, Level, PriceScale, \
-    OriginRecipe, Recipe, FoodAndQuantity
+    OriginRecipe, Recipe
 from food.models import FoodGroup
 
 
@@ -17,7 +19,7 @@ def get_utensils():
     return utensils
 
 
-def get_categories_utensil():
+def get_categories_recipe():
     """
     Get all recipe categories in the database.
     return ['name_categ', ...]
@@ -95,11 +97,12 @@ def get_recipes():
         'preparation_time': '...',
         'cooking_time': '...',
         'step': '...',
+        'tip': '...',
         'portion': '...',
         'point': '...',
         'food': [
             {
-                'name_food': '...',
+                'name': '...',
                 'quantity': '...',
             },
             ...
@@ -108,7 +111,7 @@ def get_recipes():
         'origin': '...',
         'price_scale': '...',
         'level': '...',
-        'utensils': '...'
+        'utensils': '[name_utensil, ...]'
     }, ...]
     """
 
@@ -117,13 +120,51 @@ def get_recipes():
     for recipe in Recipe.objects.all():
         foods = []
         utensils = []
-        categ = CategorieRecipe.objects.get(pk=recipe.categorie).name
-        origin = OriginRecipe.objects.get(pk=recipe.origin).name
-        price_scale = PriceScale.objects.get(pk=recipe.price_scale).name
-        level = Level.objects.get(pk=recipe.level).name
+        categ = CategorieRecipe.objects.get(pk=recipe.categorie.pk).name
+        origin = OriginRecipe.objects.get(pk=recipe.origin.pk).name
+        price_scale = PriceScale.objects.get(pk=recipe.price_scale.pk).name
+        level = Level.objects.get(pk=recipe.level.pk).name
 
-        
+        for utensil in recipe.utensils.all():
+            utensils.append(utensil.name)
+
+        for food in recipe.foodandquantity_set.all():
+            foods.append({
+                'name': food.food.name,
+                'quantity': food.quantity
+            })
 
         data = {
-
+            'name': recipe.name,
+            'preparation_time': recipe.preparation_time,
+            'cooking_time': recipe.cooking_time,
+            'step': recipe.step,
+            'tip': recipe.tip,
+            'portion': recipe.portion,
+            'point': recipe.point,
+            'food': foods,
+            'categorie': categ,
+            'origin': origin,
+            'price_scale': price_scale,
+            'level': level,
+            'utensils': utensils
         }
+
+        recipes.append(data)
+    
+    return recipes
+
+
+def generate_json_file():
+    all_data = {
+        'utensils': get_utensils(),
+        'recipe_categories': get_categories_recipe(),
+        'levels': get_levels(),
+        'price_scales': get_price_scales(),
+        'origins_recipe': get_origins_recipe(),
+        'food_groups': get_food_groups(),
+        'recipes': get_recipes()
+    }
+
+    with open('database.json', 'w') as database_file:
+        json.dump(all_data, database_file, indent=4, ensure_ascii=False)
