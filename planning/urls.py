@@ -18,4 +18,5 @@ urlpatterns = [
           views.GroupDetailView.as_view(), name="detailgroup"),
      path('detail/origin/<int:pk>/',
           views.OriginRecipeDetailView.as_view(), name="detailorigin"),
+     path('backup_database/', views.download_json_backup, name="backup_db"),
 ]

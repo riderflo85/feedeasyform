@@ -1,4 +1,4 @@
-import json
+import json, os
 
 from planning.models import Utensil, CategorieRecipe, Level, PriceScale, \
     OriginRecipe, Recipe
@@ -165,6 +165,10 @@ def generate_json_file():
         'food_groups': get_food_groups(),
         'recipes': get_recipes()
     }
+    file_name = 'database.json'
 
-    with open('database.json', 'w') as database_file:
-        json.dump(all_data, database_file, indent=4, ensure_ascii=False)
+    if file_name not in os.listdir('.'):
+        with open('database.json', 'w') as database_file:
+            json.dump(all_data, database_file, indent=4, ensure_ascii=False)
+    
+    return file_name

@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
@@ -9,6 +9,7 @@ from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
 from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
 from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
     parse_foods_and_utensils
+from .utils.backup_db import generate_json_file
 from food.models import Food, FoodGroup
 from food.forms import DeleteFoodForm, DeleteFoodGroupForm
 
@@ -135,6 +136,15 @@ def show_and_update_db(request):
         }
 
         return render(request, 'planning/databases.html', context)
+
+@login_required
+def download_json_backup(request):
+    file_name = generate_json_file()
+    return FileResponse(
+        open(file_name, 'rb'),
+        as_attachment=True,
+        content_type="application/json"
+    )
 
 class RecipeDetailView(DetailView):
     model = Recipe
