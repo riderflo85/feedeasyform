@@ -51,6 +51,7 @@ class RecipeForm(ModelForm):
             'preparation_time',
             'cooking_time',
             'step',
+            'tip',
             'portion',
             'point',
             'categorie',

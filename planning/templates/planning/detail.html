@@ -50,6 +50,16 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="RecipeTip" class="col-sm-4 col-form-label border-label">Astuces pour la recette</label>
+                    <div class="col-sm-8">
+                        <ol>
+                            {% for tip in recipe.get_tip %}
+                            <li>{{ tip }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="RecipeCateg" class="col-sm-4 col-form-label border-label">Catégorie de la recette</label>
                     <div class="col-sm-8">
                         <p class="form-control-plaintext" id="RecipeCateg">{{ recipe.categorie.name }}</p>

@@ -74,6 +74,9 @@ class Recipe(models.Model):
     step = models.TextField(
         verbose_name="étapes de préparation de la recette"
     )
+    tip = models.TextField(
+        verbose_name="astuces divers"
+    )
     portion = models.IntegerField(
         verbose_name="nombre de portions pour la recette",
         default=1
@@ -118,6 +121,10 @@ class Recipe(models.Model):
     def get_step(self):
         steps = self.step.split('\n')
         return steps
+
+    def get_tip(self):
+        tips = self.tip.split('\n')
+        return tips
 
     def get_all_foods(self):
         foods = []

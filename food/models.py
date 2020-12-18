@@ -103,6 +103,16 @@ class Food(models.Model):
         null=True,
         verbose_name="vitamine E (mg/100g)"
     )
+    metric_unit = models.CharField(
+        max_length=25,
+        default="kg",
+        verbose_name="unité métrique de base"
+    )
+    imperial_unit = models.CharField(
+        max_length=25,
+        default="lb",
+        verbose_name="unité impériale de base"
+    )
 
     def __str__(self):
         return self.name
@@ -114,21 +124,3 @@ class Food(models.Model):
 
         for field in self._meta.fields:
             yield (field.verbose_name, field.value_to_string(self))
-
-
-# class Group(models.Model):
-#     name = models.CharField(
-#         max_length=45, verbose_name="Nom du groupe de l'aliment")
-    
-#     def __str__(self):
-#         return self.name
-
-
-# class Food(models.Model):
-#     name = models.CharField(max_length=45, verbose_name="Nom de l'aliment")
-#     description = models.TextField(verbose_name="Description")
-#     group = models.ForeignKey(
-#         Group, on_delete=models.CASCADE, verbose_name="Groupe de l'aliment")
-
-#     def __str__(self):
-#         return self.name
