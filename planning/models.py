@@ -10,6 +10,9 @@ class Season(models.Model):
         verbose_name="saison de l'année"
     )
 
+    def __str__(self):
+        return self.name
+
 
 class DietaryPlan(models.Model):
     name = models.CharField(
@@ -20,6 +23,9 @@ class DietaryPlan(models.Model):
     description = models.TextField(
         verbose_name="courte description"
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Utensil(models.Model):

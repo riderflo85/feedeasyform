@@ -1,0 +1,22 @@
+[
+    {
+        "name": "omnivore",
+        "desc": "vous mangez de tout"
+    },
+    {
+        "name": "végétarien",
+        "desc": "ni viande, ni poisson"
+    },
+    {
+        "name": "végan",
+        "desc": "aucun produit d’origine animal"
+    },
+    {
+        "name": "flexitarien",
+        "desc": "vous mangez parfois de la viande"
+    },
+    {
+        "name": "paléo",
+        "desc": "aucune céréale, aucun produit laitier ou industriel"
+    }
+]
