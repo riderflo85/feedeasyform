@@ -1,11 +1,10 @@
 from django import forms
-from django.forms import ModelForm, fields, widgets
-from django.forms.models import model_to_dict
+from django.forms import ModelForm
 from django.utils.functional import lazy
 
 from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe, DietaryPlan
 from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil, \
-    list_all_origin_recipe
+    list_all_origin_recipe, list_all_diet
 
 
 class OriginRecipeForm(ModelForm):
@@ -166,6 +165,22 @@ class DeleteUtensilForm(forms.Form):
     )
     identifiant = forms.CharField(
         initial='utensil',
+        widget=forms.TextInput(
+                attrs={'class': 'd-none'}
+        ),
+    )
+
+
+class DeleteDietForm(forms.Form):
+    diet = forms.ChoiceField(
+        label='Supprimer un régime alimentaire',
+        choices=lazy(list_all_diet, tuple),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    identifiant = forms.CharField(
+        initial='diet',
         widget=forms.TextInput(
                 attrs={'class': 'd-none'}
         ),

@@ -5,8 +5,9 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
     DeleteRecipeForm, DeleteCategForm, DeleteUtensilForm, OriginRecipeForm, \
-    DeleteOriginRecipe, DietaryPlanForm
-from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
+    DeleteOriginRecipe, DietaryPlanForm, DeleteDietForm
+from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe, \
+    DietaryPlan, Season
 from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
     parse_foods_and_utensils
 from .utils.backup_db import generate_json_file
@@ -110,7 +111,13 @@ def show_and_update_db(request):
             if form.is_valid():
                 origin = form.cleaned_data['origin']
                 OriginRecipe.objects.get(pk=int(origin)).delete()
-        
+
+        elif request.POST['identifiant'] == 'diet':
+            form = DeleteDietForm(request.POST)
+            if form.is_valid():
+                diet = form.cleaned_data['diet']
+                DietaryPlan.objects.get(pk=int(diet)).delete()
+
         return redirect(reverse('planning:databases'))
 
     else:
@@ -120,12 +127,14 @@ def show_and_update_db(request):
         recipe_categ = CategorieRecipe.objects.all()
         utensils = Utensil.objects.all()
         origin_recipes = OriginRecipe.objects.all()
+        dietarys_plan = DietaryPlan.objects.all()
         form_del_food = DeleteFoodForm()
         form_del_group = DeleteFoodGroupForm()
         form_del_recipe = DeleteRecipeForm()
         form_del_categ = DeleteCategForm()
         form_del_utensil = DeleteUtensilForm()
         form_del_origin = DeleteOriginRecipe()
+        form_del_diet = DeleteDietForm()
 
         context = {
             'foods': foods,
@@ -134,12 +143,14 @@ def show_and_update_db(request):
             'recipe_categ': recipe_categ,
             'utensils': utensils,
             'origin_recipes': origin_recipes,
+            'diets': dietarys_plan,
             'del_food': form_del_food,
             'del_group': form_del_group,
             'del_recipe': form_del_recipe,
             'del_categ': form_del_categ,
             'del_utensil': form_del_utensil,
-            'del_origin': form_del_origin
+            'del_origin': form_del_origin,
+            'del_diet': form_del_diet
         }
 
         return render(request, 'planning/databases.html', context)
@@ -178,3 +189,8 @@ class GroupDetailView(DetailView):
 class OriginRecipeDetailView(DetailView):
     model = OriginRecipe
     template_name = "planning/detail.html"
+
+
+class DietDetailView(DetailView):
+    model = DietaryPlan
+    template_engine = "planning/detail.html"
