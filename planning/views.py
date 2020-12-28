@@ -209,4 +209,4 @@ class OriginRecipeDetailView(DetailView):
 
 class DietDetailView(DetailView):
     model = DietaryPlan
-    template_engine = "planning/detail.html"
+    template_name = "planning/detail.html"

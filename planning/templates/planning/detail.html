@@ -172,6 +172,23 @@
                         <h3 class="form-control-plaintext" id="nameUtensil">{{ utensil.name }}</h3>
                     </div>
                 </div>
+                {% elif dietaryplan %}
+                <div class="form-group row">
+                    <label for="nameDiet" class="col-sm-4 col-form-label">Nom du régime alimentaire</label>
+                    <div class="col-sm-8">
+                        <h3 class="form-control-plaintext" id="nameDiet">{{ dietaryplan.name }}</h3>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="dietPlan" class="col-sm-4 col-form-label border-label">Recettes appartenant à ce régime alimentaire</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for recipe in dietaryplan.recipe_set.all %}
+                            <li><a href="/planning/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
                 {% elif originrecipe %}
                 <div class="form-group row">
                     <label for="nameOrigin" class="col-sm-4 col-form-label"> </label>
