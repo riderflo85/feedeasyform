@@ -2,6 +2,23 @@ from django.db import models
 
 from food.models import Food
 
+
+class Season(models.Model):
+    name = models.CharField(
+        max_length=45,
+        unique=True,
+        verbose_name="saison de l'année"
+    )
+
+
+class DietaryPlan(models.Model):
+    name = models.CharField(
+        max_length=45,
+        unique=True,
+        verbose_name="régime alimentaire"
+    )
+
+
 class Utensil(models.Model):
     name = models.CharField(
         max_length=45,
@@ -84,6 +101,11 @@ class Recipe(models.Model):
     point = models.IntegerField(
         verbose_name="point de la recette",
         default=1
+    )
+    atypical_recipe_city = models.CharField(
+        max_length=255,
+        null=True,
+        verbose_name="recette atypique de la ville de"
     )
     food = models.ManyToManyField(
         Food,
