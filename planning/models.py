@@ -145,14 +145,12 @@ class Recipe(models.Model):
         Utensil,
         verbose_name="ustensils nécessaire pour la recette"
     )
-    season = models.ForeignKey(
+    season = models.ManyToManyField(
         Season,
-        on_delete=models.CASCADE,
         verbose_name="saison de la recette"
     )
-    dietary_plan = models.ForeignKey(
+    dietary_plan = models.ManyToManyField(
         DietaryPlan,
-        on_delete=models.CASCADE,
         verbose_name="régime alimentaire de la recette"
     )
 
