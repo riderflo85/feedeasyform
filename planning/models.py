@@ -17,6 +17,9 @@ class DietaryPlan(models.Model):
         unique=True,
         verbose_name="régime alimentaire"
     )
+    description = models.TextField(
+        verbose_name="courte description"
+    )
 
 
 class Utensil(models.Model):
