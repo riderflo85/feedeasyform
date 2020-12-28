@@ -136,6 +136,16 @@ class Recipe(models.Model):
         Utensil,
         verbose_name="ustensils nécessaire pour la recette"
     )
+    season = models.ForeignKey(
+        Season,
+        on_delete=models.CASCADE,
+        verbose_name="saison de la recette"
+    )
+    dietary_plan = models.ForeignKey(
+        DietaryPlan,
+        on_delete=models.CASCADE,
+        verbose_name="régime alimentaire de la recette"
+    )
 
     def __str__(self):
         return self.name
