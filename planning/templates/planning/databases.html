@@ -5,6 +5,7 @@
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
                 <h3>Groupes d'aliments <button type="button" data-toggle="modal" data-target="#modalDeleteFoodGroup" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <small>Total: {{ food_group|length }}</small>
                 <ul class="listing">
                     {% for f_group in food_group %}
                     <li><a href="/planning/detail/group/{{ f_group.pk }}" class="link">{{ f_group }}</a></li>
@@ -15,6 +16,7 @@
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
                 <h3>Aliments <button type="button" data-toggle="modal" data-target="#modalDeleteFood" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <small>Total: {{ foods|length }}</small>
                 <ul class="listing">
                     {% for food in foods %}
                     <li><a href="/planning/detail/food/{{ food.pk }}" class="link">{{ food }}</a></li>
@@ -25,6 +27,7 @@
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
                 <h3>Categories de recettes <button type="button" data-toggle="modal" data-target="#modalDeleteRecipeCateg" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <small>Total: {{ recipe_categ|length }}</small>
                 <ul class="listing">
                     {% for r_categ in recipe_categ %}
                     <li><a href="/planning/detail/categorie/{{ r_categ.pk }}" class="link">{{ r_categ }}</a></li>
@@ -34,7 +37,12 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Recettes <button type="button" data-toggle="modal" data-target="#modalDeleteRecipe" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <h3>Recettes 
+                    <button type="button" data-toggle="modal" data-target="#modalDeleteRecipe" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </h3>
+                <small>Total: {{ recipes|length }}</small>
                 <ul class="listing">
                     {% for recipe in recipes %}
                     <li><a href="/planning/detail/recipe/{{ recipe.pk }}" class="link">{{ recipe }}</a></li>
@@ -45,6 +53,7 @@
         <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
             <div class="border-box content-sign_in">
                 <h3>Ustensiles de cuisine <button type="button" data-toggle="modal" data-target="#modalDeleteUtensil" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <small>Total: {{ utensils|length }}</small>
                 <ul class="listing">
                     {% for utensil in utensils %}
                     <li><a href="/planning/detail/utensil/{{ utensil.pk }}" class="link">{{ utensil }}</a></li>
@@ -55,6 +64,7 @@
         <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
             <div class="border-box content-sign_in">
                 <h3>Origine des recettes <button type="button" data-toggle="modal" data-target="#modalDeleteOrigin" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <small>Total: {{ origin_recipes|length }}</small>
                 <ul class="listing">
                     {% for origin in origin_recipes %}
                     <li><a href="/planning/detail/origin/{{ origin.pk }}" class="link">{{ origin }}</a></li>
@@ -65,6 +75,7 @@
         <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
             <div class="border-box content-sign_in">
                 <h3>Régimes alimentaire <button type="button" data-toggle="modal" data-target="#modalDeleteDiet" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <small>Total: {{ diets|length }}</small>
                 <ul class="listing">
                     {% for diet in diets %}
                     <li><a href="/planning/detail/diet/{{ diet.pk }}" class="link">{{ diet }}</a></li>
