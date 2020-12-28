@@ -71,6 +71,33 @@
                     </div><!-- end .d-flex flex-sm-column... -->
                     <div class="border-box content-sign_in d-flex align-items-center mt-3">
                         <div class="login-forms margin-device">
+                            <h1>Enregistrer un nouveau régime alimentaire</h1>
+                            {% if form_diet.errors %}
+                            <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
+                            {% endif %}
+                            <form action="." method='post'>
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ form_diet.name.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form_diet.name }}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ form_diet.description.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form_diet.description }}
+                                    </div>
+                                </div>
+                                {{ form_diet.identifiant }}
+                                <div class="form-group">
+                                    <button class="btn btn-danger float-right" type="submit">Valider le formulaire</button>
+                                </div>
+                            </form>
+                        </div><!-- .login-forms -->
+                    </div><!-- end .d-flex flex-sm-column... -->
+                    <div class="border-box content-sign_in d-flex align-items-center mt-3">
+                        <div class="login-forms margin-device">
                             <h1>Enregistrer une nouvelle recette</h1>
 
                             <div>

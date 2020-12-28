@@ -1,8 +1,9 @@
 from django import forms
-from django.forms import ModelForm, widgets
+from django.forms import ModelForm, fields, widgets
+from django.forms.models import model_to_dict
 from django.utils.functional import lazy
 
-from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
+from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe, DietaryPlan
 from .list_all_db import list_all_recipe, list_all_categ, list_all_utensil, \
     list_all_origin_recipe
 
@@ -56,6 +57,9 @@ class RecipeForm(ModelForm):
             'point',
             'categorie',
             'origin',
+            'season',
+            'dietary_plan',
+            'atypical_recipe_city',
             'price_scale',
             'level',
             'identifiant',
@@ -88,6 +92,20 @@ class UtensilForm(ModelForm):
     class Meta:
         model = Utensil
         fields = ['name', 'identifiant']
+
+
+class DietaryPlanForm(ModelForm):
+
+    identifiant = forms.CharField(
+        initial='diet',
+        widget=forms.TextInput(
+            attrs={'class': 'd-none'}
+        ),
+    )
+
+    class Meta:
+        model = DietaryPlan
+        fields = ['name', 'description', 'identifiant']
 
 
 class DeleteOriginRecipe(forms.Form):

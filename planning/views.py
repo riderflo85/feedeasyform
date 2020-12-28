@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
     DeleteRecipeForm, DeleteCategForm, DeleteUtensilForm, OriginRecipeForm, \
-    DeleteOriginRecipe
+    DeleteOriginRecipe, DietaryPlanForm
 from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe
 from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
     parse_foods_and_utensils
@@ -48,16 +48,23 @@ def create_recipe(request):
             if form.is_valid():
                 form.save()
                 return redirect(reverse('planning:new_recipe'))
+        elif request.POST['identifiant'] == 'diet':
+            form = DietaryPlanForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('planning:new_recipe'))
 
     else:
         form_recipe = RecipeForm()
         form_categorie = CategorieRecipeForm()
         form_utensil = UtensilForm()
         form_origin_recipe = OriginRecipeForm()
+        form_diet = DietaryPlanForm()
         context = {
             'form_recipe': form_recipe,
             'form_categ': form_categorie,
             'form_uten': form_utensil,
+            'form_diet': form_diet,
             'foods': Food.objects.all(),
             'utensils': Utensil.objects.all(),
             'form_origin_recipe': form_origin_recipe,
