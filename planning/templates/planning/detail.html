@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Nombre de ponts</label>
+                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Nombre de points</label>
                     <div class="col-sm-8">
                         <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.point }}</P>
                     </div>
@@ -90,9 +90,35 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Origine de la recette</label>
+                    <label for="RecipeOrigin" class="col-sm-4 col-form-label border-label">Origine de la recette</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.origin.name }}</P>
+                        <p class="form-control-plaintext" id="RecipeOrigin">{{ recipe.origin.name }}</P>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeAtypical" class="col-sm-4 col-form-label border-label">Recette atypique de la ville de</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="RecipeAtypical">{{ recipe.atypical_recipe_city }}</P>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeSeason" class="col-sm-4 col-form-label border-label">Saison(s) de la recette</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for season in recipe.season.all %}
+                            <li>{{ season.name }}</li>
+                            {% endfor %}
+                            </ul>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeDiet" class="col-sm-4 col-form-label border-label">Régime(s) alimentaire de la recette</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for diet in recipe.dietary_plan.all %}
+                            <li>{{ diet.name }}</li>
+                            {% endfor %}
+                            </ul>
                     </div>
                 </div>
                 <div class="form-group row">
