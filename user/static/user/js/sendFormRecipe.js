@@ -40,6 +40,8 @@ function formatedDataForRequest(data) {
     let newData = data;
     let utensils = "?";
     let foods = "?";
+    let diets = "?";
+    let seasons = "?";
 
     for (const utensil of newData.utensils) {
         utensils = utensils.concat("&u=", utensil);
@@ -50,8 +52,18 @@ function formatedDataForRequest(data) {
         foods = foods.concat("&f=", foodInformations);
     }
 
+    for (const diet of newData.dietary_plan) {
+        diets = diets.concat("&d=", diet);
+    }
+
+    for (const season of newData.season) {
+        seasons = seasons.concat("&s=", season);
+    }
+
     newData.foods = foods;
     newData.utensils = utensils;
+    newData.dietary_plan = diets;
+    newData.season = seasons;
 
     return newData;
 }
@@ -95,8 +107,6 @@ function submitForm(foods, utensils, successCb, errorCb) {
     if (undefinedCounterField === 0) {
         dataForRequest['foods'] = foods;
         dataForRequest['utensils'] = utensils;
-        console.log(dataForRequest);
-        
 
         const dataFormated = formatedDataForRequest(dataForRequest);
         $.ajax({
@@ -105,9 +115,12 @@ function submitForm(foods, utensils, successCb, errorCb) {
             dataType: "json",
             data: dataFormated,
             success: (data) => {
-                successCb();
                 if (data.success) {
+                    successCb();
                     setTimeout(() => document.location.reload(), 3000);
+                } else {
+                    errorCb();
+                    console.warn(data);
                 }
             },
             error: (error) => {

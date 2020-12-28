@@ -1,4 +1,4 @@
-from planning.models import Food, FoodAndQuantity, Utensil
+from planning.models import Food, FoodAndQuantity, Utensil, Season, DietaryPlan
 
 
 def parse_foods_and_utensils(foods, utensils):
@@ -46,12 +46,30 @@ def parse_foods_and_utensils(foods, utensils):
     return parsed_foods, parsed_utensils
 
 
+def parse_diets_and_seasons(diets, seasons):
+    """
+    Parsed the diets and seasons for the new recipe.
+    diets -> str : '?&d=id&d=id...'
+    seasons -> str : '?&s=id&s=id...'
+
+    return diets -> list : [id, ...]
+    return seasons -> list : [id, ...]
+    """
+    parsed_diets = diets.replace('?&d=', '').split('&d=')
+    parsed_seasons = seasons.replace('?&s=', '').split('&s=')
+
+    return parsed_diets, parsed_seasons
+
+
 def complet_recipe_with_foods_and_utensils(instance_recipe, foods, utensils):
     """
     Add the foods and utensils in the new recipe.
     instance_recipe -> <class 'planning.models.Recipe'>
-    foods -> str : '?&id:nameFoods:quantityAndUnity&id:nameFoods:...'
-    utensils -> str : '?&id:name&id:name&...'
+    foods -> list : [
+        {'id': int, 'quantity': string},
+        ...
+    ]
+    utensils -> list : [id, ...]
     """
     
     recipe = instance_recipe
@@ -71,4 +89,29 @@ def complet_recipe_with_foods_and_utensils(instance_recipe, foods, utensils):
 
     recipe.utensils.set(instances_utensil)
     recipe.save()
-    
+
+
+def added_season_and_diet(instance_recipe, diets, seasons):
+    """
+    Add the dietary plan and season in the new recipe.
+    instance_recipe -> <class 'planning.models.Recipe'>
+    diets -> list : [id, ...]
+    seasons -> list : [id, ...]
+    """
+
+    recipe = instance_recipe
+    instance_diets = set()
+    instance_seasons = set()
+
+    for diet in diets:
+        d = DietaryPlan.objects.get(pk=int(diet))
+        instance_diets.add(d)
+
+    for season in seasons:
+        s = Season.objects.get(pk=int(season))
+        instance_seasons.add(s)
+
+    recipe.dietary_plan.set(instance_diets)
+    recipe.season.set(instance_seasons)
+
+    recipe.save()

@@ -160,6 +160,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.atypical_recipe_city.label }}
+                                            <br>
+                                            <small>(pas obligatoire)</small>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.atypical_recipe_city }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-4 col-form-label">{{ form_recipe.portion.label }}</label>
                                         <div class="col-sm-8">
                                             {{ form_recipe.portion }}
@@ -181,6 +190,32 @@
                                         <label class="col-sm-4 col-form-label">{{ form_recipe.origin.label }}</label>
                                         <div class="col-sm-8">
                                             {{ form_recipe.origin }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ diet_field.label }}
+                                            <br>
+                                            <small>(sélection multiple avec la touche Shift ou Ctrl)</small>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <select name="dietary_plan" required id="id_dietary_plan" multiple class="form-control">
+                                                {% for diet in diet_field.diets %}
+                                                <option value="{{ diet.0 }}">{{ diet.1 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ season_field.label }}
+                                            <br>
+                                            <small>(sélection multiple avec la touche Shift ou Ctrl)</small>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <select name="season" required id="id_season" multiple class="form-control">
+                                                {% for season in season_field.seasons %}
+                                                <option value="{{ season.0 }}">{{ season.1 }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">

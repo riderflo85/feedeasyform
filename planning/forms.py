@@ -35,12 +35,18 @@ class RecipeForm(ModelForm):
             }
         ),
     )
-
     name = forms.CharField(
         label='Nom de la recette',
         required=True,
         widget=forms.TextInput(
             attrs={'id': 'id_name_recipe'}
+        )
+    )
+    atypical_recipe_city = forms.CharField(
+        label='Recette atypique de la ville de',
+        required=False,
+        widget=forms.TextInput(
+            attrs={'id': 'id_atypical_recipe_city'}
         )
     )
 
@@ -56,8 +62,6 @@ class RecipeForm(ModelForm):
             'point',
             'categorie',
             'origin',
-            'season',
-            'dietary_plan',
             'atypical_recipe_city',
             'price_scale',
             'level',

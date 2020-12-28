@@ -9,8 +9,9 @@ from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
 from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe, \
     DietaryPlan, Season
 from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
-    parse_foods_and_utensils
+    parse_foods_and_utensils, added_season_and_diet, parse_diets_and_seasons
 from .utils.backup_db import generate_json_file
+from .list_all_db import list_all_diet, list_all_season
 from food.models import Food, FoodGroup
 from food.forms import DeleteFoodForm, DeleteFoodGroupForm
 
@@ -26,11 +27,16 @@ def create_recipe(request):
                     request.POST['foods'],
                     request.POST['utensils'],
                 )
+                diets, seasons = parse_diets_and_seasons(
+                    request.POST['dietary_plan'],
+                    request.POST['season']
+                )
                 complet_recipe_with_foods_and_utensils(
                     new_recipe,
                     foods,
                     utensils
                 )
+                added_season_and_diet(new_recipe, diets, seasons)
                 return JsonResponse({'success': True})
             else:
                 return JsonResponse({'success': False, 'error': form.errors})
@@ -61,6 +67,14 @@ def create_recipe(request):
         form_utensil = UtensilForm()
         form_origin_recipe = OriginRecipeForm()
         form_diet = DietaryPlanForm()
+        form_recipe_diet_field = {
+            'label': "Régime alimentaire de la recette",
+            'diets': list_all_diet()
+        }
+        form_recipe_season_field = {
+            'label': "Saison de la recette",
+            'seasons': list_all_season()
+        }
         context = {
             'form_recipe': form_recipe,
             'form_categ': form_categorie,
@@ -69,6 +83,8 @@ def create_recipe(request):
             'foods': Food.objects.all(),
             'utensils': Utensil.objects.all(),
             'form_origin_recipe': form_origin_recipe,
+            'diet_field': form_recipe_diet_field,
+            'season_field': form_recipe_season_field
         }
         return render(request, 'planning/new_recipe.html', context)
 

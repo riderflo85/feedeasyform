@@ -1,4 +1,5 @@
-from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe, DietaryPlan
+from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe, \
+    DietaryPlan, Season
 
 
 def list_all_recipe():
@@ -40,3 +41,11 @@ def list_all_diet():
         diets.append((diet.pk, diet.name))
 
     return diets
+
+def list_all_season():
+    seasons = []
+
+    for season in Season.objects.all():
+        seasons.append((season.pk, season.name))
+    
+    return seasons
