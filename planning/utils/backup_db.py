@@ -1,7 +1,7 @@
 import json, os
 
 from planning.models import Utensil, CategorieRecipe, Level, PriceScale, \
-    OriginRecipe, Recipe
+    OriginRecipe, Recipe, DietaryPlan
 from food.models import FoodGroup
 
 
@@ -75,6 +75,20 @@ def get_origins_recipe():
     return origins
 
 
+def get_dietary_plan():
+    """
+    Get all the dietary plan in the database.
+    return ['name_diet', ...]
+    """
+
+    diets = []
+
+    for diet in DietaryPlan.objects.all():
+        diets.append(diet.name)
+
+    return diets
+
+
 def get_food_groups():
     """
     Get all food group in the database.
@@ -100,6 +114,7 @@ def get_recipes():
         'tip': '...',
         'portion': '...',
         'point': '...',
+        'atypical_recipe_city': '...',
         'food': [
             {
                 'name': '...',
@@ -111,7 +126,9 @@ def get_recipes():
         'origin': '...',
         'price_scale': '...',
         'level': '...',
-        'utensils': '[name_utensil, ...]'
+        'utensils': [name_utensil, ...],
+        'season': [name_season, ...],
+        'dietary_plan': [name_diet, ...]
     }, ...]
     """
 
@@ -120,6 +137,8 @@ def get_recipes():
     for recipe in Recipe.objects.all():
         foods = []
         utensils = []
+        seasons = []
+        diets = []
         categ = CategorieRecipe.objects.get(pk=recipe.categorie.pk).name
         origin = OriginRecipe.objects.get(pk=recipe.origin.pk).name
         price_scale = PriceScale.objects.get(pk=recipe.price_scale.pk).name
@@ -134,6 +153,12 @@ def get_recipes():
                 'quantity': food.quantity
             })
 
+        for season in recipe.season.all():
+            seasons.append(season.name)
+
+        for diet in recipe.dietary_plan.all():
+            diets.append(diet.name)
+
         data = {
             'name': recipe.name,
             'preparation_time': recipe.preparation_time,
@@ -142,12 +167,15 @@ def get_recipes():
             'tip': recipe.tip,
             'portion': recipe.portion,
             'point': recipe.point,
+            'atypical_recipe_city': recipe.atypical_recipe_city,
             'food': foods,
             'categorie': categ,
             'origin': origin,
             'price_scale': price_scale,
             'level': level,
-            'utensils': utensils
+            'utensils': utensils,
+            'season': seasons,
+            'dietary_plan': diets
         }
 
         recipes.append(data)
@@ -163,7 +191,8 @@ def generate_json_file():
         'price_scales': get_price_scales(),
         'origins_recipe': get_origins_recipe(),
         'food_groups': get_food_groups(),
-        'recipes': get_recipes()
+        'recipes': get_recipes(),
+        'diets': get_dietary_plan()
     }
     file_name = 'database.json'
 
