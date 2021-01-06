@@ -1,4 +1,5 @@
 {% extends 'planning/base.html' %}
+{% load static %}
 {% block content %}
 
 <div class="container-fluid h-100vh scrollable">
@@ -11,10 +12,57 @@
         <div class="row border-box content-sign_in fix-height">
             <div class="col-12">
                 {% if recipe %}
+                <div class="d-none">
+                    <div id="dataCategs">
+                        {% for categ in categs %}
+                        <i data-id="{{ categ.pk }}" data-name="{{ categ.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="allFoods">
+                        {% for food in foods %}
+                        <i data-id="{{ food.pk }}" data-name="{{ food.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="allUtensils">
+                        {% for utensil in utensils %}
+                        <i data-id="{{ utensil.pk }}" data-name="{{ utensil.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="dataPriceScale">
+                        {% for price in price_scale %}
+                        <i data-id="{{ price.pk }}" data-name="{{ price.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="dataLevels">
+                        {% for level in levels %}
+                        <i data-id="{{ level.pk }}" data-name="{{ level.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="dataOrigins">
+                        {% for origin in origins %}
+                        <i data-id="{{ origin.pk }}" data-name="{{ origin.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="dataDiets">
+                        {% for diet in diets %}
+                        <i data-id="{{ diet.pk }}" data-name="{{ diet.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="dataSeasons">
+                        {% for season in seasons %}
+                        <i data-id="{{ season.pk }}" data-name="{{ season.name }}"></i>
+                        {% endfor %}
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="nameRecipe" class="col-sm-4 col-form-label"> </label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-8 d-flex justify-content-between align-items-center">
                         <h3 class="form-control-plaintext" id="nameRecipe">{{ recipe.name }}</h3>
+                        <div class="btn-bloc-edit d-flex justify-content-around align-items-center">
+                            <button type="button" class="btn btn-primary btn-sm" id="btnEditRecipe">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -30,19 +78,37 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="RecipeFoodQuant" class="col-sm-4 col-form-label border-label">Aliments et quantités</label>
-                    <div class="col-sm-8">
-                        <ul>
+                    <div class="col-sm-4 col-form-label border-label">
+                        <label for="RecipeFoodQuant">Aliments et quantités</label>
+                        <button type="button" class="btn btn-success btn-sm" id="btnAddFoods" data-toggle="modal" data-target="#searchFoodModal">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="col-sm-8" id="divFoods">
+                        <ul id="listingFoods">
                             {% for r_food in recipe.get_all_foods %}
-                            <li>{{ r_food.food.name }} <strong>{{ r_food.quantity }}</strong></li>
+                            <li data-food_id="{{ r_food.food.pk }}">{{ r_food.food.name }} <strong>{{ r_food.quantity }}</strong></li>
                             {% endfor %}
                         </ul>
+                        <table class="table table-bordered table-sm d-none" id="allUsedFoods">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Quantité</th>
+                                    <th scope="col">Unité</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="updatedFoods">
+                                
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="RecipeStep" class="col-sm-4 col-form-label border-label">Étapes de la recette</label>
                     <div class="col-sm-8">
-                        <ol>
+                        <ol id="listingSteps">
                             {% for step in recipe.get_step %}
                             <li>{{ step }}</li>
                             {% endfor %}
@@ -52,7 +118,7 @@
                 <div class="form-group row">
                     <label for="RecipeTip" class="col-sm-4 col-form-label border-label">Astuces pour la recette</label>
                     <div class="col-sm-8">
-                        <ol>
+                        <ol id="listingTips">
                             {% for tip in recipe.get_tip %}
                             <li>{{ tip }}</li>
                             {% endfor %}
@@ -62,19 +128,19 @@
                 <div class="form-group row">
                     <label for="RecipeCateg" class="col-sm-4 col-form-label border-label">Catégorie de la recette</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipeCateg">{{ recipe.categorie.name }}</p>
+                        <p class="form-control-plaintext" id="RecipeCateg" data-id_categ="{{ recipe.categorie.pk }}">{{ recipe.categorie.name }}</p>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Nombre de portions</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.portion }}</P>
+                        <p class="form-control-plaintext" id="RecipePortion">{{ recipe.portion }}</P>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Nombre de points</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.point }}</P>
+                        <p class="form-control-plaintext" id="RecipePoint">{{ recipe.point }}</P>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -98,37 +164,210 @@
                 <div class="form-group row">
                     <label for="RecipeAtypical" class="col-sm-4 col-form-label border-label">Recette atypique de la ville de</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipeAtypical">{{ recipe.atypical_recipe_city }}</P>
+                        <p class="form-control-plaintext" id="RecipeTypical">{{ recipe.atypical_recipe_city }}</P>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="RecipeSeason" class="col-sm-4 col-form-label border-label">Saison(s) de la recette</label>
                     <div class="col-sm-8">
-                        <ul>
+                        <ul id="RecipeSeason">
                             {% for season in recipe.season.all %}
                             <li>{{ season.name }}</li>
                             {% endfor %}
-                            </ul>
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="RecipeDiet" class="col-sm-4 col-form-label border-label">Régime(s) alimentaire de la recette</label>
                     <div class="col-sm-8">
-                        <ul>
+                        <ul id="RecipeDiet">
                             {% for diet in recipe.dietary_plan.all %}
                             <li>{{ diet.name }}</li>
                             {% endfor %}
-                            </ul>
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="RecipeFoodQuant" class="col-sm-4 col-form-label border-label">Ustensiles de cuisine</label>
-                    <div class="col-sm-8">
-                        <ul>
+                    <div class="col-sm-4 col-form-label border-label">
+                        <label for="RecipeFoodQuant">Ustensiles de cuisine</label>
+                        <button type="button" class="btn btn-success btn-sm" id="btnModalUtensils" data-toggle="modal" data-target="#utensilModal">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="col-sm-8" id="divUtensils">
+                        <ul id="RecipeUtensils">
                             {% for r_utensil in recipe.utensils.all %}
-                            <li>{{ r_utensil.name }}</li>
+                            <li data-utensil_id="{{ r_utensil.pk }}">{{ r_utensil.name }}</li>
                             {% endfor %}
-                            </ul>
+                        </ul>
+                        <table class="table table-bordered table-sm d-none" id="tableUpdatedUtensils">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allUsedUtensils">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group row" id="formActions">
+                    <label for="validationUpdated" class="col-sm-4 col-form-label border-label">Actions sur le formulaire</label>
+                    <div class="col-sm-8 d-flex justify-content-around align-items-center">
+                        <button type="button" class="btn btn-secondary btn-sm" id="btnCancelEdit">
+                            <i class="fas fa-times"></i>
+                            Annuler
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" id="btnSaveEdit">
+                            <i class="fas fa-check"></i>
+                            Valider
+                        </button>
+                    </div>
+                </div>
+                <!-- Modal add utensils -->
+                <div class="modal fade" id="utensilModal" tabindex="-1" aria-labelledby="utensilModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="utensilModal">Recherche d'ustensiles de cuisine</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="searchUtensil">
+                                            <i class="fas fa-search-plus"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Chercher un ustensile" aria-label="SearchUtensil" aria-describedby="searchUtensil" id="searchUtensilInput">
+                                </div>
+                                <div class="display-result form-group row" id="searchUtensilResult">
+                                    <div class="col-sm-4 d-flex-between">
+                                        <label for="utensilsResult">
+                                            Sélectionner un ou plusieurs ustensile(s) 
+                                            <small>
+                                                (utiliser la touche Shift ou Ctrl pour faire une sélection multiple et 
+                                                <strong class="text-info">cliquer sur le bouton bleu pour valider</strong> )
+                                            </small>
+                                        </label>
+                                        <button type="button" class="btn btn-info btn-valid-quantity" id="btnAddUtensil" disabled>Valider</button>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select name="utensils" class="h-30vh form-control" id="utensilsResult" multiple>
+                                            {% for utensil in utensils %}
+                                            <option value="{{ utensil.pk }}:{{ utensil.name }}">{{ utensil.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 mt-5">
+                                        <p>Ustensiles ajoutés</p>
+                                    </div>
+                                    <div class="col-sm-8 mt-5">
+                                        <table class="table table-bordered table-sm">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">Nom</th>
+                                                    <th scope="col">#</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="my-d-none" id="selectedUtensils">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" id="btnUtensilClear">Tout effacer</button>
+                                <button type="button" class="btn btn-success" data-dismiss="modal" id="btnValideSearchUtensil">Sauvegarder</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal search food -->
+                <div class="modal fade" id="searchFoodModal" tabindex="-1" aria-labelledby="searchFoodModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="searchFoodModal">Recherche d'ingrédients</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="searchFood">
+                                            <i class="fas fa-search-plus"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Chercher un aliment" aria-label="SearchFood" aria-describedby="searchFood" id="searchInput">
+                                </div>
+                                <div class="display-result form-group row" id="searchResult">
+                                    <div class="col-sm-4 d-flex-between">
+                                        <label for="foodsResult">
+                                            Sélectionner un ou plusieurs ingrédients 
+                                            <small>
+                                                (utiliser la touche Shift ou Ctrl pour faire une sélection multiple et 
+                                                <strong class="text-info">cliquer sur le bouton bleu pour valider</strong> )
+                                            </small>
+                                        </label>
+                                        <button type="button" class="btn btn-info btn-valid-quantity" id="btnAddFood" disabled>Valider</button>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <select name="foods" class="h-30vh" id="foodsResult" multiple>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 mt-3 d-flex-between">
+                                        <label for="quantityFormBloc">
+                                            Quantité souhaitée 
+                                            <small>(la saisie sera possible une fois que vous aurez validé votre sélection via le bouton bleu)</small>
+                                            <small class="text-danger"> merci de séparer la quantité et l'unité par un point virgule. ';'</small>
+                                            <br/>
+                                            <br/>
+                                            exemple:
+                                            <br/> 
+                                            <strong class="text-success">500 ; g</strong>
+                                            <br/> 
+                                            <strong class="text-success">10 ; l</strong> <small>(litre)</small>
+                                            <br/> 
+                                            <strong class="text-success">3 ; u</strong> <small>(u = unité)</small>
+                                        </label>
+                                        <button class="btn btn-success btn-valid-quantity" id="btnValideFormQuantity" disabled>Valider</button>
+                                    </div>
+                                    <div class="col-sm-8 mt-3">
+                                        <div class="my-d-none" id="quantityFormBloc">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 mt-5">
+                                        <p>Ingédients ajoutés</p>
+                                    </div>
+                                    <div class="col-sm-8 mt-5">
+                                        <table class="table table-bordered table-sm">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">Nom</th>
+                                                    <th scope="col">Quantité</th>
+                                                    <th scope="col">Unité</th>
+                                                    <th scope="col">#</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="my-d-none" id="selectedFoods">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" id="btnClear">Tout effacer</button>
+                                <button type="button" class="btn btn-success" data-dismiss="modal" id="btnValideSearch">Sauvegarder</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {% elif foodgroup %}
@@ -234,3 +473,10 @@
 </div>
 
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'user/js/secureajax.js' %}"></script>
+<script src="{% static 'user/js/updateRecipe.js' %}"></script>
+<script src="{% static 'user/js/addUtensils.js' %}"></script>
+<script src="{% static 'user/js/script.js' %}"></script>
+{% endblock script %}

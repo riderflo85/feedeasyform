@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
     DeleteRecipeForm, DeleteCategForm, DeleteUtensilForm, OriginRecipeForm, \
     DeleteOriginRecipe, DietaryPlanForm, DeleteDietForm
-from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe, \
+from .models import Level, PriceScale, Recipe, CategorieRecipe, Utensil, OriginRecipe, \
     DietaryPlan, Season
 from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
     parse_foods_and_utensils, added_season_and_diet, parse_diets_and_seasons
@@ -183,6 +183,19 @@ def download_json_backup(request):
 class RecipeDetailView(DetailView):
     model = Recipe
     template_name = "planning/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categs'] = CategorieRecipe.objects.all()
+        context['foods'] = Food.objects.all()
+        context['utensils'] = Utensil.objects.all()
+        context['price_scale'] = PriceScale.objects.all()
+        context['levels'] = Level.objects.all()
+        context['origins'] = OriginRecipe.objects.all()
+        context['diets'] = DietaryPlan.objects.all()
+        context['seasons'] = Season.objects.all()
+
+        return context
 
 
 class CategorieDetailView(DetailView):
