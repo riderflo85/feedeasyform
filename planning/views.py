@@ -22,6 +22,7 @@ def create_recipe(request):
     if request.method == 'POST':
         if request.POST['identifiant'] == 'recipe':
             form = RecipeForm(request.POST)
+            print(request.POST)
             if form.is_valid():
                 new_recipe = form.save()
                 foods, utensils = parse_foods_and_utensils(

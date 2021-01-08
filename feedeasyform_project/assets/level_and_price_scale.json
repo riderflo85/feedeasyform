@@ -1,12 +1,12 @@
 {
     "level": [
-        "facile",
-        "moyen",
-        "difficile"
+        "Facile",
+        "Moyen",
+        "Difficile"
     ],
     "price_scale": [
-        "petit budget",
-        "moyen budget",
-        "gros budget"
+        "Petit budget",
+        "Moyen budget",
+        "Gros budget"
     ]
 }
