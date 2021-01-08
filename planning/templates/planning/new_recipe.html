@@ -99,7 +99,6 @@
                     <div class="border-box content-sign_in d-flex align-items-center mt-3">
                         <div class="login-forms margin-device">
                             <h1>Enregistrer une nouvelle recette</h1>
-
                             <div>
                                 {% if form_recipe.errors %}
                                 <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
@@ -110,6 +109,12 @@
                                         <label class="col-sm-4 col-form-label">{{ form_recipe.name.label }}</label>
                                         <div class="col-sm-8">
                                             {{ form_recipe.name }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.portion.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.portion }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -125,38 +130,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-4 col-form-label">
-                                            <label class="col-form-label">Ingrédients</label>
-                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#searchFoodModal">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <div class="col-sm-8 food-col" id="contentFoodsCol">
-                                            <table class="table table-bordered table-sm">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th scope="col">Nom</th>
-                                                        <th scope="col">Quantité</th>
-                                                        <th scope="col">Unité</th>
-                                                        <th scope="col">#</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="allUsedFoods">
-                                                    
-                                                </tbody>
-                                            </table>
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.level.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.level }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.step.label }}</label>
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.price_scale.label }}</label>
                                         <div class="col-sm-8">
-                                            {{ form_recipe.step }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.tip.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_recipe.tip }}
+                                            {{ form_recipe.price_scale }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -169,27 +151,21 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.portion.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_recipe.portion }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label class="col-sm-4 col-form-label">{{ form_recipe.categorie.label }}</label>
                                         <div class="col-sm-8">
                                             {{ form_recipe.categorie }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.point.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_recipe.point }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label class="col-sm-4 col-form-label">{{ form_recipe.origin.label }}</label>
                                         <div class="col-sm-8">
                                             {{ form_recipe.origin }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.point.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.point }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -219,18 +195,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.price_scale.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_recipe.price_scale }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.level.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form_recipe.level }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <div class="col-sm-4 col-form-label">
                                             <label class="col-form-label">Ustensiles nécessaire à la recette</label>
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#utensilModal">
@@ -249,6 +213,40 @@
                                                     
                                                 </tbody>
                                             </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-4 col-form-label">
+                                            <label class="col-form-label">Ingrédients</label>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#searchFoodModal">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-8 food-col" id="contentFoodsCol">
+                                            <table class="table table-bordered table-sm">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Nom</th>
+                                                        <th scope="col">Quantité</th>
+                                                        <th scope="col">Unité</th>
+                                                        <th scope="col">#</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="allUsedFoods">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.step.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.step }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.tip.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.tip }}
                                         </div>
                                     </div>
                                     {{ form_recipe.identifiant }}

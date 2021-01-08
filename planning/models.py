@@ -114,7 +114,7 @@ class Recipe(models.Model):
     atypical_recipe_city = models.CharField(
         max_length=255,
         null=True,
-        verbose_name="recette atypique de la ville de"
+        verbose_name="recette typique de la ville de"
     )
     food = models.ManyToManyField(
         Food,
