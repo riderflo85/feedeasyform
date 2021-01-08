@@ -142,12 +142,18 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.atypical_recipe_city.label }}
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.source.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.source }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.typical_recipe_city.label }}
                                             <br>
                                             <small>(pas obligatoire)</small>
                                         </label>
                                         <div class="col-sm-8">
-                                            {{ form_recipe.atypical_recipe_city }}
+                                            {{ form_recipe.typical_recipe_city }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -247,6 +253,12 @@
                                         <label class="col-sm-4 col-form-label">{{ form_recipe.tip.label }}</label>
                                         <div class="col-sm-8">
                                             {{ form_recipe.tip }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ form_recipe.image.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form_recipe.image }}
                                         </div>
                                     </div>
                                     {{ form_recipe.identifiant }}

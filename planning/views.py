@@ -208,7 +208,7 @@ class RecipeDetailView(DetailView):
         recipe.tip = request.POST['tips']
         recipe.point = request.POST['point']
         recipe.portion = request.POST['portion']
-        recipe.atypical_recipe_city = request.POST['typical']
+        recipe.typical_recipe_city = request.POST['typical']
         recipe.categorie = CategorieRecipe.objects.get(
             pk=int(request.POST['categ'])
         )

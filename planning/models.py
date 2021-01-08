@@ -111,10 +111,22 @@ class Recipe(models.Model):
         verbose_name="point de la recette",
         default=1
     )
-    atypical_recipe_city = models.CharField(
+    typical_recipe_city = models.CharField(
         max_length=255,
         null=True,
         verbose_name="recette typique de la ville de"
+    )
+    source = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name="source de la recette"
+    )
+    image = models.ImageField(
+        upload_to="recipe/picture/%Y/%m/%d",
+        blank=True,
+        null=True,
+        verbose_name="image de la recette"
     )
     food = models.ManyToManyField(
         Food,

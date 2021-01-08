@@ -114,7 +114,7 @@ def get_recipes():
         'tip': '...',
         'portion': '...',
         'point': '...',
-        'atypical_recipe_city': '...',
+        'typical_recipe_city': '...',
         'food': [
             {
                 'name': '...',
@@ -167,7 +167,7 @@ def get_recipes():
             'tip': recipe.tip,
             'portion': recipe.portion,
             'point': recipe.point,
-            'atypical_recipe_city': recipe.atypical_recipe_city,
+            'typical_recipe_city': recipe.typical_recipe_city,
             'food': foods,
             'categorie': categ,
             'origin': origin,
