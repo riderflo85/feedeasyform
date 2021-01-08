@@ -1,74 +1,3 @@
-function getFoods() {
-    const dataTable = $("#allUsedFoods");
-    let foods = []; // ex: {id: 1, name: foodName, quantity: 1, unity: g}
-
-    for (const tr of dataTable.children()) {
-        let foodInformations = {
-            id: $(tr).data('id'),
-        };
-
-        for (const td of $(tr).children().slice(0,3)) {
-            const dataAttr = Object.entries($(td).data())[0];
-            foodInformations[dataAttr[0]] = dataAttr[1];
-        }
-
-        foodInformations = {
-            id: foodInformations.id,
-            name: foodInformations.name,
-            quantity: foodInformations.quantity+" "+foodInformations.unity
-        };
-        foods.push(foodInformations);
-    }
-
-    return foods;
-}
-
-
-function getSelectedUtensils(table) {
-    let utensils = [];
-
-    for (const field of table.children()) {
-        const data = `${$($(field).children()[0]).data('id')}:${$($(field).children()[0]).data('name')}`;
-        utensils.push(data);
-    }
-
-    return utensils;
-}
-
-
-function formatedDataForRequest(data) {
-    let newData = data;
-    let utensils = "?";
-    let foods = "?";
-    let diets = "?";
-    let seasons = "?";
-
-    for (const utensil of newData.utensils) {
-        utensils = utensils.concat("&u=", utensil);
-    }
-
-    for (const food of newData.foods) {
-        const foodInformations = `${food.id}:${food.name}:${food.quantity}`;
-        foods = foods.concat("&f=", foodInformations);
-    }
-
-    for (const diet of newData.dietary_plan) {
-        diets = diets.concat("&d=", diet);
-    }
-
-    for (const season of newData.season) {
-        seasons = seasons.concat("&s=", season);
-    }
-
-    newData.foods = foods;
-    newData.utensils = utensils;
-    newData.dietary_plan = diets;
-    newData.season = seasons;
-
-    return newData;
-}
-
-
 function submitForm(foods, utensils, successCb, errorCb) {
     const parentNodeFoodsTable = $("#contentFoodsCol");
     const form = $("#formNewRecipe")[0];
@@ -108,6 +37,7 @@ function submitForm(foods, utensils, successCb, errorCb) {
         dataForRequest['foods'] = foods;
         dataForRequest['utensils'] = utensils;
 
+        // formatedDataForRequest is defined in the parsedRequestData.js file.
         const dataFormated = formatedDataForRequest(dataForRequest);
         $.ajax({
             url: "/planning/new_recipe/",
@@ -150,13 +80,14 @@ $(document).ready(() => {
     const errorMsg = $("#errorAlert");
     const successMsg = $("#successAlert");
     const tableUtensilsFormRecipe = $("#allUsedUtensils");
+    const tableFoodsFormRecipe = $("#allUsedFoods");
 
 
     btnSendRequest.on('click', () => {
         successMsg.fadeOut(200);
         errorMsg.fadeOut(200);
 
-        const foods = getFoods();
+        const foods = getFoods(tableFoodsFormRecipe);
         const utensils = getSelectedUtensils(tableUtensilsFormRecipe);
 
         submitForm(foods, utensils,

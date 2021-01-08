@@ -115,3 +115,78 @@ def added_season_and_diet(instance_recipe, diets, seasons):
     recipe.season.set(instance_seasons)
 
     recipe.save()
+
+
+def updated_recipe_foods_and_utensils(instance_recipe, foods, utensils):
+    """
+    Update the foods and utensils in the recipe.
+    instance_recipe -> <class 'planning.models.Recipe'>
+    foods -> list : [
+        {'id': int, 'quantity': string},
+        ...
+    ]
+    utensils -> list : [id, ...]
+    """
+
+    recipe = instance_recipe
+    instances_utensils = set()
+    utensils_in_recipe = recipe.utensils.all()
+    foods_quant_in_recipe = FoodAndQuantity.objects.filter(recipe=recipe)
+    foods_request = []
+
+    # Added or updated the food and quantity
+    for food in foods:
+        f = Food.objects.get(pk=int(food['id_food']))
+        foods_request.append(f)
+        try:
+            fq_exist = foods_quant_in_recipe.filter(food=f)[0]
+            fq_exist.quantity = food['quantity']
+            fq_exist.save()
+        except:
+            fq = FoodAndQuantity()
+            fq.quantity = food['quantity']
+            fq.food = f
+            fq.recipe = recipe
+            fq.save()
+
+    # Remove the food_quant if the food is removed to the recipe
+    for food_quant in foods_quant_in_recipe:
+        if food_quant.food not in foods_request:
+            food_quant.delete()
+
+    for utensil in utensils:
+        if utensil not in utensils_in_recipe:
+            u = Utensil.objects.get(pk=int(utensil['id_utensil']))
+            instances_utensils.add(u)
+
+    recipe.utensils.set(instances_utensils)
+
+
+def updated_season_and_diet(instance_recipe, diets, seasons):
+    """
+    Update the dietary plan and season in the recipe.
+    instance_recipe -> <class 'planning.models.Recipe'>
+    diets -> list : [id, ...]
+    seasons -> list : [id, ...]
+    """
+
+    recipe = instance_recipe
+    instance_diets = set()
+    instance_seasons = set()
+    recipe_diets = recipe.dietary_plan.all()
+    recipe_seasons = recipe.season.all()
+
+    for diet in diets:
+        if diet not in recipe_diets:
+            d = DietaryPlan.objects.get(pk=int(diet))
+            instance_diets.add(d)
+
+    for season in seasons:
+        if season not in recipe_seasons:
+            s = Season.objects.get(pk=int(season))
+            instance_seasons.add(s)
+
+    recipe.dietary_plan.set(instance_diets)
+    recipe.season.set(instance_seasons)
+
+    recipe.save()

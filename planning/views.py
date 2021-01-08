@@ -9,7 +9,8 @@ from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
 from .models import Level, PriceScale, Recipe, CategorieRecipe, Utensil, OriginRecipe, \
     DietaryPlan, Season
 from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
-    parse_foods_and_utensils, added_season_and_diet, parse_diets_and_seasons
+    parse_foods_and_utensils, added_season_and_diet, parse_diets_and_seasons, \
+        updated_recipe_foods_and_utensils, updated_season_and_diet
 from .utils.backup_db import generate_json_file
 from .list_all_db import list_all_diet, list_all_season
 from food.models import Food, FoodGroup
@@ -196,6 +197,44 @@ class RecipeDetailView(DetailView):
         context['seasons'] = Season.objects.all()
 
         return context
+
+    def post(self, *args, **kwargs):
+        recipe = Recipe.objects.get(pk=kwargs['pk'])
+        request = self.request
+        recipe.name = request.POST['name']
+        recipe.preparation_time = request.POST['prepTime']
+        recipe.cooking_time = request.POST['cookTime']
+        recipe.step = request.POST['steps']
+        recipe.tip = request.POST['tips']
+        recipe.point = request.POST['point']
+        recipe.portion = request.POST['portion']
+        recipe.atypical_recipe_city = request.POST['typical']
+        recipe.categorie = CategorieRecipe.objects.get(
+            pk=int(request.POST['categ'])
+        )
+        recipe.price_scale = PriceScale.objects.get(
+            pk=int(request.POST['price'])
+        )
+        recipe.level = Level.objects.get(
+            pk=int(request.POST['level'])
+        )
+        recipe.origin = OriginRecipe.objects.get(
+            pk=int(request.POST['origin'])
+        )
+        recipe.save()
+
+        foods, utensils = parse_foods_and_utensils(
+            request.POST['foods'],
+            request.POST['utensils'],
+        )
+        diets, seasons = parse_diets_and_seasons(
+            request.POST['dietary_plan'],
+            request.POST['season']
+        )
+        updated_recipe_foods_and_utensils(recipe, foods, utensils)
+        updated_season_and_diet(recipe, diets, seasons)
+
+        return JsonResponse({'test': 'ok'})
 
 
 class CategorieDetailView(DetailView):

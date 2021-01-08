@@ -159,34 +159,38 @@ function newFieldOrigin(selectOrigin) {
 }
 
 
-function newFieldSeason(selectedSeason) {
+function newFieldSeason(seasonBloc) {
     const dataSeason = $("#dataSeasons");
-    let field = "<select type='text' name='SeasonRecipe' id='id_season' required class='form-control'>'>$forReplaceByAllSeason$</select>";
+    let field = "<select type='text' name='SeasonRecipe' id='id_season' required class='form-control' multiple>$forReplaceByAllSeason$</select>";
     let options = "";
 
     for (const season of dataSeason.children()) {
-        if ($(selectedSeason).contents()[0].data != $(season).data('name')) {
-            options = options.concat(`<option value="${$(season).data('id')}">${$(season).data('name')}</option>`);
-        } else {
-            options = options.concat(`<option value="${$(season).data('id')}" selected>${$(season).data('name')}</option>`);
+        let isSelected = "";
+        for (const liBalise of seasonBloc.contents().filter(function() {return this.nodeName === 'LI'})) {
+            if ($(liBalise).text() === $(season).data('name')) {
+                isSelected = "selected";
+            }
         }
+        options = options.concat(`<option value="${$(season).data('id')}" ${isSelected}>${$(season).data('name')}</option>`);
     }
 
-    return field.replace('$forReplaceByAllSeason$', options);
+    return field.replace('$forReplaceByAllSeason$', options)
 }
 
 
-function newFieldDiet(selectedDiet) {
+function newFieldDiet(dietBloc) {
     const dataDiet = $("#dataDiets");
-    let field = "<select type='text' name='DietRecipe' id='id_dietary' required class='form-control'>'>$forReplaceByAllDiet$</select>";
+    let field = "<select type='text' name='DietRecipe' id='id_dietary' required class='form-control' multiple>$forReplaceByAllDiet$</select>";
     let options = "";
 
     for (const diet of dataDiet.children()) {
-        if ($(selectedDiet).contents()[0].data != $(diet).data('name')) {
-            options = options.concat(`<option value="${$(diet).data('id')}">${$(diet).data('name')}</option>`);
-        } else {
-            options = options.concat(`<option value="${$(diet).data('id')}" selected>${$(diet).data('name')}</option>`);
+        let isSelected = "";
+        for (const liBalise of dietBloc.contents().filter(function() {return this.nodeName === 'LI'})) {
+            if ($(liBalise).text() === $(diet).data('name')) {
+                isSelected = "selected";
+            }
         }
+        options = options.concat(`<option value="${$(diet).data('id')}" ${isSelected}>${$(diet).data('name')}</option>`);
     }
 
     return field.replace('$forReplaceByAllDiet$', options);
@@ -209,9 +213,9 @@ function getAllFields() {
     const categ = $('#RecipeCateg');
     const categField = newFieldCateg(categ);
     const portion = $('#RecipePortion');
-    const portionField = `<input type='text' name='portion' id='id_portion' required class='form-control' value="${portion.contents()[0].data}">`;
+    const portionField = `<input type='number' name='portion' id='id_portion' required class='form-control' value="${portion.contents()[0].data}">`;
     const point = $('#RecipePoint');
-    const pointField = `<input type='text' name='point' id='id_point' required class='form-control' value="${point.contents()[0].data}">`;
+    const pointField = `<input type='number' name='point' id='id_point' required class='form-control' value="${point.contents()[0].data}">`;
     const price = $('#RecipePriceScale');
     const priceField = newFieldPrice(price);
     const level = $('#RecipeLevel');
@@ -220,8 +224,8 @@ function getAllFields() {
     const originField = newFieldOrigin(origin);
     const typical = $('#RecipeTypical');
     const typicalField = typical.contents().length === 0 ?
-        "<input type='text' name='typical' id='id_typical' required class='form-control'>"
-        : `<input type='text' name='typical' id='id_typical' required class='form-control' value="${typical.contents()[0].data}">`;
+        "<input type='text' name='typical' id='id_typical' class='form-control'>"
+        : `<input type='text' name='typical' id='id_typical' class='form-control' value="${typical.contents()[0].data}">`;
     const season = $('#RecipeSeason');
     const seasonField = newFieldSeason(season);
     const diet = $('#RecipeDiet');
@@ -301,7 +305,7 @@ function getAllFields() {
             originHTML: season[0].outerHTML,
             field: seasonField
         },
-        diet: {
+        dietary_plan: {
             data: diet,
             originHTML: diet[0].outerHTML,
             field: dietField
@@ -319,20 +323,22 @@ function getAllFields() {
 
 
 function displayAllFields(fields) {
-    for (const field of Object.keys(fields)) {
+    for (const field in fields) {
+        const thisField = $(fields[field].field);
+
         if (field === 'utensil') {
             fields[field].data.remove();
             const table = $('#tableUpdatedUtensils');
             const tbodyTable = $('#allUsedUtensils');
             table.removeClass('d-none');
-            $(fields[field].field).appendTo(tbodyTable);
+            thisField.appendTo(tbodyTable);
 
             for (const ids of fields[field].idBtnAndTr) {
                 const btnRemoveUtensil = $(ids.idBtn);
                 btnRemoveUtensil.on('click', () => {
                     const thisFieldTable = $(ids.idTr);
-                    thisFieldTable.fadeOut(500, () => {
-                        thisFieldTable.remove();
+                    thisFieldTable.fadeOut(500, function() {
+                        $(this).remove();
                     });
                 });
             }
@@ -341,26 +347,65 @@ function displayAllFields(fields) {
             const tableFoods = $('#allUsedFoods');
             const tbodyTableFoods = $('#updatedFoods');
             tableFoods.removeClass('d-none');
-            $(fields[field].field).appendTo(tbodyTableFoods);
+            thisField.appendTo(tbodyTableFoods);
 
             for (const ids of fields[field].idBtnAndTr) {
                 const btnRemoveFood = $(ids.idBtn);
                 btnRemoveFood.on('click', () => {
                     const thisFieldBodyTable = $(ids.idTr);
-                    thisFieldBodyTable.fadeOut(500, () => {
-                        thisFieldBodyTable.remove();
+                    thisFieldBodyTable.fadeOut(500, function() {
+                        $(this).remove();
                     });
                 });
             }
         } else {
             fields[field].data.replaceWith(fields[field].field);
+            $(`#${thisField.attr('id')}`).on('focus', function() {
+                $(this).removeClass('is-invalid');
+            });
         }
     }
 }
 
 
+function validateUpdatedData(fields) {
+    let data = {};
+    let invalidFields = [];
+
+    for (const field in fields) {
+        if (field === 'utensil') {
+            const utensilsTable = $('#allUsedUtensils');
+            // getSelectedUtensils is defined in the getSelectedUtensils.js file
+            const utensils = getSelectedUtensils(utensilsTable);
+            data['utensils'] = utensils;
+
+        } else if (field === 'foodsAndQuant') {
+            const foodsTable = $('#updatedFoods');
+            // getFoods is defined in the getFoods.js file
+            const foods = getFoods(foodsTable);
+            data['foods'] = foods;
+
+        } else {
+            const el = $(`#${$(fields[field].field).attr('id')}`);
+            if (el.val().length > 0) {
+                data[field] = el.val();
+            } else {
+                if (field === 'typical') {
+                    data[field] = "";
+                } else {
+                    const invalid = $(`#${el.attr('id')}`).addClass('is-invalid');
+                    invalidFields.push(invalid);
+                }
+            }
+        }
+    }
+
+    return [data, invalidFields];
+}
+
+
 function cancelUpdate(fields) {
-    for (const field of Object.keys(fields)) {
+    for (const field in fields) {
         const id = $(fields[field].field).attr('id');
 
         if (field === 'utensil') {
@@ -380,7 +425,56 @@ function cancelUpdate(fields) {
 }
 
 
+function sendUpdatedData(recipeInformations, loadindCb, successCb, errorCb) {
+    loadindCb();
+
+    $.ajax({
+        url: window.location.pathname,
+        type: 'POST',
+        dataType: 'json',
+        data: recipeInformations,
+        success: (response) => {
+            if (response.test === 'ok') {
+                successCb();
+            } else {
+                console.log(response);
+                errorCb;
+            }
+        },
+        error: (error) => {
+            console.warn(error);
+            errorCb;
+        }
+    });
+}
+
+
+function addLoadingToBtn(btnSave, btnCancel) {
+    btnSave.attr('disabled', 'true');
+    btnSave.html('Enregistrement...');
+    $('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').appendTo(btnSave);
+    btnCancel.attr('disabled', 'true');
+}
+
+
+function removeLoadingToBtn(btnSave, btnCancel) {
+    btnSave.attr('disabled', 'false');
+    btnSave.html('<i class="fas fa-check"></i> Valider');
+    btnCancel.attr('disabled', 'false');
+}
+
+
 $(document).ready(() => {
+    let csrftoken = getCookie('csrftoken');
+
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
     const btnEditRecipe = $('#btnEditRecipe');
     const btnCancelEdit = $('#btnCancelEdit');
     const btnSaveEdit = $('#btnSaveEdit');
@@ -421,13 +515,29 @@ $(document).ready(() => {
     });
 
 
-    btnSaveEdit.on('click', () => {
-        btnCancelEdit.fadeOut(500);
-        formActions.fadeOut(500);
-        btnAddUtensils.fadeOut(500);
-        btnAddFoods.fadeOut(500);
-        btnSaveEdit.fadeOut(500, () => {
-            btnEditRecipe.fadeIn(500);
-        });
+    btnSaveEdit.on('click', function() {
+        const [dataUpdated, invalidFields] = validateUpdatedData(allFields);
+        if (invalidFields.length === 0) {
+            // formatedDataForRequest is defined in the parsedRequestData.js file.
+            const formatedData = formatedDataForRequest(dataUpdated);
+
+            sendUpdatedData(formatedData,
+                () => {
+                    // loadinb call back
+                    addLoadingToBtn($(this), btnCancelEdit);
+                },
+                () => {
+                    // success call back
+                    setTimeout(() => document.location.reload(), 1000);
+                },
+                () => {
+                    // error call back
+                    removeLoadingToBtn($(this), btnCancelEdit);
+                }
+            );
+
+        } else {
+            // does not send data
+        }
     });
 });
