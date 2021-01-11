@@ -220,6 +220,8 @@ function getAllFields() {
     const priceField = newFieldPrice(price);
     const level = $('#RecipeLevel');
     const levelField = newFieldLevel(level);
+    const source = $('#RecipeSource');
+    const sourceField = `<input type='text' name='source' id='id_source' required class='form-control' value="${source.contents()[0].data}">`;
     const origin = $('#RecipeOrigin');
     const originField = newFieldOrigin(origin);
     const typical = $('#RecipeTypical');
@@ -289,6 +291,11 @@ function getAllFields() {
             data: level,
             originHTML: level[0].outerHTML,
             field: levelField
+        },
+        source: {
+            data: source,
+            originHTML: source[0].outerHTML,
+            field: sourceField
         },
         origin: {
             data: origin,
