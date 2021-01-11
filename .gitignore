@@ -2,3 +2,6 @@
 .vscode
 .DS_Store
 feedeasyform_project/media
+food/migrations/00*
+planning/migrations/00*
+user/migrations/00*
