@@ -55,7 +55,16 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="nameRecipe" class="col-sm-4 col-form-label"> </label>
+                    <div class="col-sm-4 col-form-label">
+                        <div id="imgBloc">
+                            <img src="{{ recipe.image.url }}" alt="picture-{{ recipe.name }}" class="img-fluid" id="imgRecipe">
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <button type="button" class="btn btn-primary btn-sm" id="btnChangeImage"><i class="fas fa-image"></i> <i class="fas fa-sync-alt"></i></button>
+                            <button type="button" class="btn btn-secondary btn-sm d-none" id="btnCancleNewImage"><i class="fas fa-times"></i></button>
+                            <button type="button" class="btn btn-success btn-sm d-none" id="btnSaveNewImage"><i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
                     <div class="col-sm-8 d-flex justify-content-between align-items-center">
                         <h3 class="form-control-plaintext" id="nameRecipe">{{ recipe.name }}</h3>
                         <div class="btn-bloc-edit d-flex justify-content-around align-items-center">
@@ -162,7 +171,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="RecipeAtypical" class="col-sm-4 col-form-label border-label">Recette atypique de la ville de</label>
+                    <label for="RecipeAtypical" class="col-sm-4 col-form-label border-label">Recette typique de la ville de</label>
                     <div class="col-sm-8">
                         <p class="form-control-plaintext" id="RecipeTypical">{{ recipe.typical_recipe_city }}</P>
                     </div>
@@ -480,6 +489,7 @@
 <script src="{% static 'user/js/getFoodsTable.js' %}"></script>
 <script src="{% static 'user/js/getUtensilsTable.js' %}"></script>
 <script src="{% static 'user/js/updateRecipe.js' %}"></script>
+<script src="{% static 'user/js/updateRecipeImage.js' %}"></script>
 <script src="{% static 'user/js/addUtensils.js' %}"></script>
 <script src="{% static 'user/js/script.js' %}"></script>
 {% endblock script %}

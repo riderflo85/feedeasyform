@@ -78,3 +78,9 @@ hr {
 .btn-bloc-edit {
     width: 20%;
 }
+
+#imgBloc {
+    height: 10rem;
+    width: 10rem;
+    margin: auto;
+}

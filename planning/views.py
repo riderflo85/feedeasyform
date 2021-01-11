@@ -201,40 +201,51 @@ class RecipeDetailView(DetailView):
     def post(self, *args, **kwargs):
         recipe = Recipe.objects.get(pk=kwargs['pk'])
         request = self.request
-        recipe.name = request.POST['name']
-        recipe.preparation_time = request.POST['prepTime']
-        recipe.cooking_time = request.POST['cookTime']
-        recipe.step = request.POST['steps']
-        recipe.tip = request.POST['tips']
-        recipe.point = request.POST['point']
-        recipe.portion = request.POST['portion']
-        recipe.typical_recipe_city = request.POST['typical']
-        recipe.categorie = CategorieRecipe.objects.get(
-            pk=int(request.POST['categ'])
-        )
-        recipe.price_scale = PriceScale.objects.get(
-            pk=int(request.POST['price'])
-        )
-        recipe.level = Level.objects.get(
-            pk=int(request.POST['level'])
-        )
-        recipe.origin = OriginRecipe.objects.get(
-            pk=int(request.POST['origin'])
-        )
-        recipe.save()
 
-        foods, utensils = parse_foods_and_utensils(
-            request.POST['foods'],
-            request.POST['utensils'],
-        )
-        diets, seasons = parse_diets_and_seasons(
-            request.POST['dietary_plan'],
-            request.POST['season']
-        )
-        updated_recipe_foods_and_utensils(recipe, foods, utensils)
-        updated_season_and_diet(recipe, diets, seasons)
+        if request.POST.get('postType') != None:
+            if request.POST['postType'] == 'update image':
+                print(request.POST, request.FILES)
+                recipe.image = request.FILES['image']
+                recipe.save()
+                return JsonResponse({'status': 'done'})
 
-        return JsonResponse({'test': 'ok'})
+            else:
+                recipe.name = request.POST['name']
+                recipe.preparation_time = request.POST['prepTime']
+                recipe.cooking_time = request.POST['cookTime']
+                recipe.step = request.POST['steps']
+                recipe.tip = request.POST['tips']
+                recipe.point = request.POST['point']
+                recipe.portion = request.POST['portion']
+                recipe.typical_recipe_city = request.POST['typical']
+                recipe.categorie = CategorieRecipe.objects.get(
+                    pk=int(request.POST['categ'])
+                )
+                recipe.price_scale = PriceScale.objects.get(
+                    pk=int(request.POST['price'])
+                )
+                recipe.level = Level.objects.get(
+                    pk=int(request.POST['level'])
+                )
+                recipe.origin = OriginRecipe.objects.get(
+                    pk=int(request.POST['origin'])
+                )
+                recipe.save()
+
+                foods, utensils = parse_foods_and_utensils(
+                    request.POST['foods'],
+                    request.POST['utensils'],
+                )
+                diets, seasons = parse_diets_and_seasons(
+                    request.POST['dietary_plan'],
+                    request.POST['season']
+                )
+                updated_recipe_foods_and_utensils(recipe, foods, utensils)
+                updated_season_and_diet(recipe, diets, seasons)
+
+                return JsonResponse({'test': 'ok'})
+        else:
+            return JsonResponse({'status': 'error'})
 
 
 class CategorieDetailView(DetailView):
