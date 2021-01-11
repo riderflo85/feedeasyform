@@ -39,11 +39,23 @@ function submitForm(foods, utensils, successCb, errorCb) {
 
         // formatedDataForRequest is defined in the parsedRequestData.js file.
         const dataFormated = formatedDataForRequest(dataForRequest);
+        let formData = new FormData();
+
+        for (const [key, value] of Object.entries(dataFormated)) {
+            if (key === "image") {
+                formData.append(key, $('#id_image')[0].files[0]);
+            } else {
+                formData.append(key, value);
+            }
+        }
+
         $.ajax({
             url: "/planning/new_recipe/",
             type: "POST",
             dataType: "json",
-            data: dataFormated,
+            data: formData,
+            processData: false,
+			contentType: false,
             success: (data) => {
                 if (data.success) {
                     successCb();

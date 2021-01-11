@@ -6,7 +6,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.47', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.47', '192.168.1.27', '127.0.0.1']
 
 INSTALLED_APPS.append('django_extensions')
 

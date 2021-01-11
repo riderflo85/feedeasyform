@@ -103,7 +103,7 @@
                                 {% if form_recipe.errors %}
                                 <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
                                 {% endif %}
-                                <form method="POST" id="formNewRecipe">
+                                <form enctype="multipart/form-data" method="POST" id="formNewRecipe">
                                     {% csrf_token %}
                                     <div class="form-group row">
                                         <label class="col-sm-4 col-form-label">{{ form_recipe.name.label }}</label>

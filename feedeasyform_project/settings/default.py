@@ -104,3 +104,5 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/task'
 LOGOUT_REDIRECT_URL = '/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

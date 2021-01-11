@@ -124,8 +124,6 @@ class Recipe(models.Model):
     )
     image = models.ImageField(
         upload_to="recipe/picture/%Y/%m/%d",
-        blank=True,
-        null=True,
         verbose_name="image de la recette"
     )
     food = models.ManyToManyField(
