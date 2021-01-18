@@ -11,7 +11,7 @@ from .models import Level, PriceScale, Recipe, CategorieRecipe, Utensil, OriginR
 from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
     parse_foods_and_utensils, added_season_and_diet, parse_diets_and_seasons, \
         updated_recipe_foods_and_utensils, updated_season_and_diet
-from .utils.backup_db import generate_json_file
+from .utils.backup_db import generate_zip_file
 from .list_all_db import list_all_diet, list_all_season
 from food.models import Food, FoodGroup
 from food.forms import DeleteFoodForm, DeleteFoodGroupForm
@@ -174,11 +174,11 @@ def show_and_update_db(request):
 
 @login_required
 def download_json_backup(request):
-    file_name = generate_json_file()
+    file_name = generate_zip_file()
     return FileResponse(
         open(file_name, 'rb'),
         as_attachment=True,
-        content_type="application/json"
+        content_type="application/zip"
     )
 
 class RecipeDetailView(DetailView):

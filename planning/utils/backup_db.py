@@ -1,4 +1,5 @@
 import json, os
+from django.conf import settings
 
 from planning.models import Utensil, CategorieRecipe, Level, PriceScale, \
     OriginRecipe, Recipe, DietaryPlan
@@ -115,6 +116,8 @@ def get_recipes():
         'portion': '...',
         'point': '...',
         'typical_recipe_city': '...',
+        'source': '...',
+        'image': '...',
         'food': [
             {
                 'name': '...',
@@ -168,6 +171,8 @@ def get_recipes():
             'portion': recipe.portion,
             'point': recipe.point,
             'typical_recipe_city': recipe.typical_recipe_city,
+            'source': recipe.source,
+            'image': recipe.image.url,
             'food': foods,
             'categorie': categ,
             'origin': origin,
@@ -196,8 +201,20 @@ def generate_json_file():
     }
     file_name = 'database.json'
 
-    if file_name not in os.listdir('.'):
-        with open('database.json', 'w') as database_file:
-            json.dump(all_data, database_file, indent=4, ensure_ascii=False)
+    with open('database.json', 'w') as database_file:
+        json.dump(all_data, database_file, indent=4, ensure_ascii=False)
     
     return file_name
+
+
+def generate_zip_file():
+    if "backup_db.zip" in os.listdir(f"{settings.MEDIA_ROOT}"):
+        rm_cmd = f"rm \"{settings.MEDIA_ROOT}backup_db.zip\""
+        os.system(rm_cmd)
+
+    command = f"cd \"{settings.MEDIA_ROOT}\" && zip -r backup_db.zip recipe"
+    os.system(command)
+    json_file_name = generate_json_file()
+    os.system(f"zip \"{settings.MEDIA_ROOT}backup_db.zip\" {json_file_name}")
+
+    return f"{settings.MEDIA_ROOT}backup_db.zip"
