@@ -1,6 +1,7 @@
 .env
 .vscode
 .DS_Store
+database.json
 feedeasyform_project/media
 food/migrations/00*
 planning/migrations/00*
