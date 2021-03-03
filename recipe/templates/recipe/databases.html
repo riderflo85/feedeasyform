@@ -83,6 +83,47 @@
                 </ul>
             </div>
         </div>
+        <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
+            <div class="border-box content-sign_in">
+                <h3>Plannings <button type="button" data-toggle="modal" data-target="#modalDeletePlanning" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <small>Total: {{ plannings|length }}</small>
+                <ul class="listing">
+                    {% for planning in plannings %}
+                    <li><a href="/planning/detail/planning/{{ planning.pk }}" class="link">{{ planning }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal delete diet -->
+<div class="modal fade" id="modalDeletePlanning" tabindex="-1" role="dialog" aria-labelledby="modalDeletePlanning" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeletePlanningTitle">Supprimer un planning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="origin" class="col-sm-3 col-form-label text-center">Planning</label>
+                        <div class="col-sm-9">
+                            {{ del_planning.planning }}
+                        </div>
+                            {{ del_planning.identifiant }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Valider</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

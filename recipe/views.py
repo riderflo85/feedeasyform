@@ -3,9 +3,18 @@ from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
 
-from .forms import RecipeForm, CategorieRecipeForm, UtensilForm, \
-    DeleteRecipeForm, DeleteCategForm, DeleteUtensilForm, OriginRecipeForm, \
-    DeleteOriginRecipe, DietaryPlanForm, DeleteDietForm
+from .forms import (
+    RecipeForm,
+    CategorieRecipeForm,
+    UtensilForm,
+    DeleteRecipeForm,
+    DeleteCategForm,
+    DeleteUtensilForm,
+    OriginRecipeForm,
+    DeleteOriginRecipe,
+    DietaryPlanForm,
+    DeleteDietForm,
+)
 from .models import Level, PriceScale, Recipe, CategorieRecipe, Utensil, OriginRecipe, \
     DietaryPlan, Season
 from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
@@ -15,6 +24,8 @@ from .utils.backup_db import generate_zip_file
 from .list_all_db import list_all_diet, list_all_season
 from food.models import Food, FoodGroup
 from food.forms import DeleteFoodForm, DeleteFoodGroupForm
+from planning.models import Planning
+from planning.forms import DeletePlanningForm
 
 
 @login_required
@@ -145,6 +156,7 @@ def show_and_update_db(request):
         utensils = Utensil.objects.order_by('name')
         origin_recipes = OriginRecipe.objects.order_by('name')
         dietarys_plan = DietaryPlan.objects.order_by('name')
+        plannings = Planning.objects.order_by('id')
         form_del_food = DeleteFoodForm()
         form_del_group = DeleteFoodGroupForm()
         form_del_recipe = DeleteRecipeForm()
@@ -152,6 +164,7 @@ def show_and_update_db(request):
         form_del_utensil = DeleteUtensilForm()
         form_del_origin = DeleteOriginRecipe()
         form_del_diet = DeleteDietForm()
+        form_del_planning = DeletePlanningForm()
 
         context = {
             'foods': foods,
@@ -161,13 +174,15 @@ def show_and_update_db(request):
             'utensils': utensils,
             'origin_recipes': origin_recipes,
             'diets': dietarys_plan,
+            'plannings': plannings,
             'del_food': form_del_food,
             'del_group': form_del_group,
             'del_recipe': form_del_recipe,
             'del_categ': form_del_categ,
             'del_utensil': form_del_utensil,
             'del_origin': form_del_origin,
-            'del_diet': form_del_diet
+            'del_diet': form_del_diet,
+            'del_planning': form_del_planning
         }
 
         return render(request, 'recipe/databases.html', context)
