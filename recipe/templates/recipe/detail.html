@@ -1,11 +1,11 @@
-{% extends 'planning/base.html' %}
+{% extends 'recipe/base.html' %}
 {% load static %}
 {% block content %}
 
 <div class="container-fluid h-100vh scrollable">
     <div class="row mt-3">
         <div class="col-2 mb-5">
-            <a href="{% url 'planning:databases' %}" class="btn btn-info">Retour</a>
+            <a href="{% url 'recipe:databases' %}" class="btn btn-info">Retour</a>
         </div>
     </div>
     <div class="container mb-5">
@@ -397,7 +397,7 @@
                     <div class="col-sm-8">
                         <ul>
                             {% for food in foodgroup.food_set.all %}
-                            <li><a href="/planning/detail/food/{{ food.pk }}" class="lead">{{ food.name }}</a></li>
+                            <li><a href="/recipe/detail/food/{{ food.pk }}" class="lead">{{ food.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -414,7 +414,7 @@
                     <div class="col-sm-8">
                         <ul>
                             {% for recipe in categorierecipe.recipe_set.all %}
-                            <li><a href="/planning/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
+                            <li><a href="/recipe/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -438,7 +438,7 @@
                     <div class="col-sm-8">
                         <ul>
                             {% for recipe in dietaryplan.recipe_set.all %}
-                            <li><a href="/planning/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
+                            <li><a href="/recipe/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -455,7 +455,7 @@
                     <div class="col-sm-8">
                         <ul>
                             {% for recipe in originrecipe.recipe_set.all %}
-                            <li><a href="/planning/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
+                            <li><a href="/recipe/detail/recipe/{{ recipe.pk }}" class="lead">{{ recipe.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -472,7 +472,7 @@
                     <label for="descriptionFood" class="col-sm-4 col-form-label border-label">{{ field }}</label>
                     {% if field == "groupe de l'ingredient" %}
                     <div class="col-sm-8">
-                        <a href="/planning/detail/group/{{ food.pk }}" class="form-control-plaintext text-primary" id="descriptionFood">{{ food.id_group.name }}</a>
+                        <a href="/recipe/detail/group/{{ food.pk }}" class="form-control-plaintext text-primary" id="descriptionFood">{{ food.id_group.name }}</a>
                     </div>
                     {% else %}
                     <div class="col-sm-8">

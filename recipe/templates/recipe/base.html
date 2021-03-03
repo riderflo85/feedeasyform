@@ -19,11 +19,11 @@
 <body>
     <nav class="nav bg-dark">
         {% if user.is_authenticated %}
-        <a class="nav-link text-light" href="{% url 'planning:new_recipe' %}">Nouvelle recette</a>
+        <a class="nav-link text-light" href="{% url 'recipe:new_recipe' %}">Nouvelle recette</a>
         <!-- <a class="nav-link text-light" href="{% url 'food:new_food' %}">Nouveau aliment</a> -->
-        <a class="nav-link text-light" href="{% url 'planning:databases' %}">Base de données</a>
+        <a class="nav-link text-light" href="{% url 'recipe:databases' %}">Base de données</a>
         {% if user.username == 'managerJR' %}
-        <a class="nav-link text-light" href="{% url 'planning:backup_db' %}">Télécharger une partie de la base de données</a>
+        <a class="nav-link text-light" href="{% url 'recipe:backup_db' %}">Télécharger une partie de la base de données</a>
         {% endif %}
         <a class="nav-link text-light" href="{% url 'user:logout' %}">Déconnexion</a>
         {% else %}

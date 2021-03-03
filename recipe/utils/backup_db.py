@@ -1,7 +1,7 @@
 import json, os
 from django.conf import settings
 
-from planning.models import Utensil, CategorieRecipe, Level, PriceScale, \
+from recipe.models import Utensil, CategorieRecipe, Level, PriceScale, \
     OriginRecipe, Recipe, DietaryPlan
 from food.models import FoodGroup
 

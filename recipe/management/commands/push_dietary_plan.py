@@ -1,7 +1,7 @@
 import os, json
 from django.core.management.base import BaseCommand
 
-from planning.models import DietaryPlan
+from recipe.models import DietaryPlan
 
 
 class Command(BaseCommand):

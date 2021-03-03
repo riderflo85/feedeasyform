@@ -50,7 +50,7 @@ function submitForm(foods, utensils, successCb, errorCb) {
         }
 
         $.ajax({
-            url: "/planning/new_recipe/",
+            url: "/recipe/new_recipe/",
             type: "POST",
             dataType: "json",
             data: formData,

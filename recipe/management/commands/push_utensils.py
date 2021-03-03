@@ -1,7 +1,7 @@
 import os, csv
 from django.core.management.base import BaseCommand
 
-from planning.models import Utensil
+from recipe.models import Utensil
 
 
 class Command(BaseCommand):

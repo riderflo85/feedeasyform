@@ -1,4 +1,4 @@
-from planning.models import Food, FoodAndQuantity, Utensil, Season, DietaryPlan
+from recipe.models import Food, FoodAndQuantity, Utensil, Season, DietaryPlan
 
 
 def parse_foods_and_utensils(foods, utensils):

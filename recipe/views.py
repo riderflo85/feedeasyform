@@ -60,7 +60,7 @@ def create_recipe(request):
             form = DietaryPlanForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect(reverse('planning:new_recipe'))
+                return redirect(reverse('recipe:new_recipe'))
 
     else:
         form_recipe = RecipeForm()
@@ -87,7 +87,7 @@ def create_recipe(request):
             'diet_field': form_recipe_diet_field,
             'season_field': form_recipe_season_field
         }
-        return render(request, 'planning/new_recipe.html', context)
+        return render(request, 'recipe/new_recipe.html', context)
 
 
 @login_required
@@ -135,7 +135,7 @@ def show_and_update_db(request):
                 diet = form.cleaned_data['diet']
                 DietaryPlan.objects.get(pk=int(diet)).delete()
 
-        return redirect(reverse('planning:databases'))
+        return redirect(reverse('recipe:databases'))
 
     else:
         foods = Food.objects.order_by('name')
@@ -170,7 +170,7 @@ def show_and_update_db(request):
             'del_diet': form_del_diet
         }
 
-        return render(request, 'planning/databases.html', context)
+        return render(request, 'recipe/databases.html', context)
 
 @login_required
 def download_json_backup(request):
@@ -183,7 +183,7 @@ def download_json_backup(request):
 
 class RecipeDetailView(DetailView):
     model = Recipe
-    template_name = "planning/detail.html"
+    template_name = "recipe/detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -252,26 +252,26 @@ class RecipeDetailView(DetailView):
 
 class CategorieDetailView(DetailView):
     model = CategorieRecipe
-    template_name = "planning/detail.html"
+    template_name = "recipe/detail.html"
 
 
 class UtensilDetailView(DetailView):
     model = Utensil
-    template_name = "planning/detail.html"
+    template_name = "recipe/detail.html"
 
 class FoodDetailView(DetailView):
     model = Food
-    template_name = "planning/detail.html"
+    template_name = "recipe/detail.html"
 
 class GroupDetailView(DetailView):
     model = FoodGroup
-    template_name = "planning/detail.html"
+    template_name = "recipe/detail.html"
 
 class OriginRecipeDetailView(DetailView):
     model = OriginRecipe
-    template_name = "planning/detail.html"
+    template_name = "recipe/detail.html"
 
 
 class DietDetailView(DetailView):
     model = DietaryPlan
-    template_name = "planning/detail.html"
+    template_name = "recipe/detail.html"

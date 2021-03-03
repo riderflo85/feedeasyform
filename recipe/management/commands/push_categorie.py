@@ -1,7 +1,7 @@
 import os, json
 from django.core.management.base import BaseCommand
 
-from planning.models import CategorieRecipe
+from recipe.models import CategorieRecipe
 
 
 class Command(BaseCommand):
