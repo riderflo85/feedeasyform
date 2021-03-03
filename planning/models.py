@@ -46,9 +46,6 @@ class DayMealsPerDay(models.Model):
 
 
 class Planning(models.Model):
-    num_week = models.IntegerField(
-        verbose_name='numéro de semaine'
-    )
     monday = models.ForeignKey(
         Day,
         on_delete=models.CASCADE,
