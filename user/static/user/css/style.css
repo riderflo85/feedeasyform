@@ -84,3 +84,28 @@ hr {
     width: 10rem;
     margin: auto;
 }
+
+.new-planning {
+    width: 70vw;
+}
+
+.in-front {
+    position: relative;
+    z-index: 2;
+}
+
+.in-back {
+    position: relative;
+    z-index: 1;
+}
+
+.shadow-planning {
+    box-shadow: 0px 10px 12px rgb(170, 170, 170);
+}
+
+.select-recipe-box {
+    height: 40vh;
+    width: 70vw;
+    border: 0px solid;
+    border-radius: 0px 0px 30px 30px;
+}

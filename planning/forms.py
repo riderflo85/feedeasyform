@@ -6,6 +6,13 @@ from .models import Planning
 from .list_all_models import list_all_planning
 
 
+class PlanningForm(ModelForm):
+
+    class Meta:
+        model = Planning
+        fields = '__all__'
+
+
 class DeletePlanningForm(forms.Form):
     planning = forms.ChoiceField(
         label='Supprimer un planning',

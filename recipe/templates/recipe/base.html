@@ -20,6 +20,7 @@
     <nav class="nav bg-dark">
         {% if user.is_authenticated %}
         <a class="nav-link text-light" href="{% url 'recipe:new_recipe' %}">Nouvelle recette</a>
+        <a class="nav-link text-light" href="{% url 'planning:new_planning' %}">Nouveau planning</a>
         <!-- <a class="nav-link text-light" href="{% url 'food:new_food' %}">Nouveau aliment</a> -->
         <a class="nav-link text-light" href="{% url 'recipe:databases' %}">Base de données</a>
         {% if user.username == 'managerJR' %}

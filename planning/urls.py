@@ -9,4 +9,5 @@ urlpatterns = [
         views.PlanningDetailView.as_view(),
         name="detail_planning"
     ),
+    path('new_planning/', views.create_planning, name="new_planning"),
 ]

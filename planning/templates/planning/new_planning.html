@@ -1,0 +1,69 @@
+{% extends 'recipe/base.html' %}
+{% load static %}
+{% block form %}
+
+<section class="">
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-12 col-lg-12 h-100">
+                <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+                    <div class="border-box in-front shadow-planning content-sign_in d-flex align-items-center mt-5">
+                        <div class="new-planning margin-device">
+                            <h1>Enregistrer un nouveau planning de recette</h1>
+                            {% if form_planning.errors %}
+                            <h3 class="text-danger"><strong>Une erreur est présente dans le formulaire</strong></h3>
+                            {% endif %}
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        {% for day in week %}
+                                        <th scope="col">{{ day.name }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for mlp in meals_per_day %}
+                                    <tr>
+                                        <th scope="row">{{ mlp.name }}</th>
+                                        {% for day in week %}
+                                        <td>
+                                            <div class="d-flex justify-content-end mb-2">
+                                                <a href="#" class="fas fa-plus text-success"></a>
+                                                <!-- <a href="#" class="fas fa-trash-alt text-danger"></a> -->
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <p>Titre de recette</p>
+                                                <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <p>Titre de recette</p>
+                                                <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <p>Titre de recette</p>
+                                                <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
+                                            </div>
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-flex select-recipe-box content-sign_in in-back mb-5">
+                        <h4>Chercher une recette</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock form %}
+{% block script %}
+<style>body {height: 100vh;}</style>
+<script src="{% static 'user/js/secureajax.js' %}"></script>
+<script src="{% static 'user/js/script.js' %}"></script>
+{% endblock script %}
