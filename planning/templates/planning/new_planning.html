@@ -2,7 +2,7 @@
 {% load static %}
 {% block form %}
 
-<section class="">
+<section class="pb-5">
     <div class="container-fluid h-100">
         <div class="row h-100">
             <div class="col-12 col-lg-12 h-100">
@@ -29,19 +29,19 @@
                                         {% for day in week %}
                                         <td>
                                             <div class="d-flex justify-content-end mb-2">
-                                                <a href="#" class="fas fa-plus text-success"></a>
+                                                <i class="fas fa-plus text-success add-recipe-btn i-btn" data-day="{{ day.name }}" data-mlp="{{ mlp.name }}"></i>
                                                 <!-- <a href="#" class="fas fa-trash-alt text-danger"></a> -->
                                             </div>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <p>Titre de recette</p>
+                                            <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                                <p class="title-recipe">Titre de recette</p>
                                                 <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
                                             </div>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <p>Titre de recette</p>
+                                            <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                                <p class="title-recipe">Titre de recette</p>
                                                 <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
                                             </div>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <p>Titre de recette</p>
+                                            <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                                <p class="title-recipe">Titre de recette</p>
                                                 <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
                                             </div>
                                         </td>
@@ -52,7 +52,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="d-flex select-recipe-box content-sign_in in-back mb-5">
+                    <div class="d-flex select-recipe-box content-sign_in in-back mb-5" style="display: none !important;" id="searchRecipeBloc" data-is-display='false'>
                         <h4>Chercher une recette</h4>
                     </div>
                 </div>
@@ -63,7 +63,11 @@
 
 {% endblock form %}
 {% block script %}
-<style>body {height: 100vh;}</style>
+<style>body {
+    height: 100vh;
+    scroll-behavior: smooth;
+}</style>
 <script src="{% static 'user/js/secureajax.js' %}"></script>
 <script src="{% static 'user/js/script.js' %}"></script>
+<script src="{% static 'planning/js/newPlanning.js' %}"></script>
 {% endblock script %}

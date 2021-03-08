@@ -109,3 +109,15 @@ hr {
     border: 0px solid;
     border-radius: 0px 0px 30px 30px;
 }
+
+.title-recipe {
+    margin: auto;
+}
+
+.recipe-bloc {
+    border-bottom: 1px solid #aaa;
+}
+
+.i-btn:hover {
+    cursor: pointer;
+}
