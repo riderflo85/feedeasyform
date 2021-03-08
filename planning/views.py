@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Planning, MealsPerDay
 from .forms import PlanningForm
-from recipe.models import Recipe
+from recipe.models import CategorieRecipe, DietaryPlan, OriginRecipe, Recipe
 
 
 @login_required
@@ -29,7 +29,10 @@ def create_planning(request):
             'form_planning': PlanningForm(),
             'week': days,
             'meals_per_day': MealsPerDay.objects.all(),
-            'recipes': Recipe.objects.all()
+            'recipes': Recipe.objects.all(),
+            'categs': CategorieRecipe.objects.order_by('name'),
+            'origins': OriginRecipe.objects.order_by('name'),
+            'diets': DietaryPlan.objects.order_by('name')
         }
         return render(request, 'planning/new_planning.html', context)
 

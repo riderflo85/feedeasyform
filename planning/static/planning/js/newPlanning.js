@@ -8,16 +8,20 @@ function getHeightBody() {
 }
 
 
-function displaySearchRecipeBloc() {
+function displaySearchRecipeBloc(day, meal) {
     bloc = $('#searchRecipeBloc');
+    dayTitle = $('#daySearchTitle');
+    mealTitle = $('#mealSearchTitle');
 
     if (!bloc.data('is-display')) {
-        console.log('test');
         bloc.slideDown(400, function() {
             this.scrollIntoView();
+            getHeightBody();
         });
         bloc.data('is-display', true);
     }
+    dayTitle.text(day);
+    mealTitle.text(meal);
 
 }
 
@@ -30,7 +34,10 @@ $(document).ready(() => {
     for (const btn of allAddRecipeBtn) {
         // console.log($(btn).data('day'), $(btn).data('mlp'));
         $(btn).on('click', () => {
-            displaySearchRecipeBloc();
+            displaySearchRecipeBloc(
+                $(btn).data('day'),
+                $(btn).data('mlp')
+            );
         });
 
     }

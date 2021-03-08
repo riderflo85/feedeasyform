@@ -104,7 +104,7 @@ hr {
 }
 
 .select-recipe-box {
-    height: 40vh;
+    height: 70vh;
     width: 70vw;
     border: 0px solid;
     border-radius: 0px 0px 30px 30px;
@@ -118,6 +118,63 @@ hr {
     border-bottom: 1px solid #aaa;
 }
 
-.i-btn:hover {
+.i-btn-add:hover {
     cursor: pointer;
+    color: #1e7b34 !important;
+}
+
+.i-btn-trash:hover {
+    cursor: pointer;
+    color: #981b27 !important;
+}
+
+.recipe-choiced-bloc {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.content-card-recipe {
+    height: 100%;
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.image-bloc {
+    height: 80px;
+    width: 80px;
+    background-color: #ff4000;
+    border: 0px solid;
+    border-radius: 5px;
+}
+
+.data-recipe {
+    padding-left: 0.5rem;
+}
+
+.data-recipe, p {
+    margin: 0 !important;
+}
+
+.checkbox-small {
+    margin-right: 5px;
+    width: 15px;
+}
+
+.scrollable-section {
+    overflow-y: auto;
+    max-height: 45vh;
+}
+
+.footer {
+    width: 100%;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hiden-bloc-search:hover {
+    cursor: pointer;
+    color: #17a2b8;
 }

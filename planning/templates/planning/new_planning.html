@@ -29,20 +29,20 @@
                                         {% for day in week %}
                                         <td>
                                             <div class="d-flex justify-content-end mb-2">
-                                                <i class="fas fa-plus text-success add-recipe-btn i-btn" data-day="{{ day.name }}" data-mlp="{{ mlp.name }}"></i>
+                                                <i class="fas fa-plus text-success add-recipe-btn i-btn-add" data-day="{{ day.name }}" data-mlp="{{ mlp.name }}"></i>
                                                 <!-- <a href="#" class="fas fa-trash-alt text-danger"></a> -->
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                                 <p class="title-recipe">Titre de recette</p>
-                                                <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
+                                                <i class="fas fa-trash-alt text-danger ml-2 i-btn-trash"></i>
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                                 <p class="title-recipe">Titre de recette</p>
-                                                <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
+                                                <i class="fas fa-trash-alt text-danger ml-2 i-btn-trash"></i>
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                                 <p class="title-recipe">Titre de recette</p>
-                                                <a href="#" class="fas fa-trash-alt text-danger ml-2"></a>
+                                                <i class="fas fa-trash-alt text-danger ml-2 i-btn-trash"></i>
                                             </div>
                                         </td>
                                         {% endfor %}
@@ -52,8 +52,423 @@
                             </table>
                         </div>
                     </div>
-                    <div class="d-flex select-recipe-box content-sign_in in-back mb-5" style="display: none !important;" id="searchRecipeBloc" data-is-display='false'>
-                        <h4>Chercher une recette</h4>
+                    <div class="select-recipe-box content-sign_in in-back mb-5" style="display: none !important;" id="searchRecipeBloc" data-is-display='false'>
+                        <h4>Choisir une recette pour le <i class="text-info" id="daySearchTitle"></i> - <i class="text-info" id="mealSearchTitle"></i></h4>
+                        <div class="">
+                            <p class="">Votre sélection:</p>
+                            <div class="d-flex justify-content-between align-items-center recipe-choiced-bloc">
+                                <span class="badge badge-pill badge-success">riz au lait</span>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-4 justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="Categories">Categories</label>
+                                    </div>
+                                    <select class="custom-select" id="Categories">
+                                        <option selected>Choisissez...</option>
+                                        {% for categ in categs %}
+                                        <option value="{{ categ.pk }}">{{ categ.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="input-group mx-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="Origine">Origine</label>
+                                    </div>
+                                    <select class="custom-select" id="Origine">
+                                        <option selected>Choisissez...</option>
+                                        {% for origin in origins %}
+                                        <option value="{{ origin.pk }}">{{ origin.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="Régimes">Régimes</label>
+                                    </div>
+                                    <select class="custom-select" id="Régimes">
+                                        <option selected>Choisissez...</option>
+                                        {% for diet in diets %}
+                                        <option value="{{ diet.pk }}">{{ diet.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="input-group mx-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="Saison">Saison</label>
+                                    </div>
+                                    <select class="custom-select" id="Saison">
+                                        <option selected>Choisissez...</option>
+                                        {% for season in seasons %}
+                                        <option value="{{ season.pk }}">{{ season.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mr-3">
+                                <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                            </div>
+                            <div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Chercher une recette" aria-label="recherche de recette" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button type="button" class="input-group-text btn-secondary" id="basic-addon2"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid mt-5 pt-3 scrollable-section">
+                            <div class="row">
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mt-2">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mt-2">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mt-2">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mt-2">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mt-2">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">Title recipe</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex ">
+                                            <div class="image-bloc">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>categorie</p>
+                                                <p>saison</p>
+                                                <p>regime alimentaire</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <i class="fas fa-chevron-up hiden-bloc-search"></i>
+                            <button class="btn btn-success">Valider la sélection</button>
+                        </div>
                     </div>
                 </div>
             </div>

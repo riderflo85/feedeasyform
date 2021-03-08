@@ -56,17 +56,17 @@ def create_recipe(request):
             form = CategorieRecipeForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect(reverse('planning:new_recipe'))
+                return redirect(reverse('recipe:new_recipe'))
         elif request.POST['identifiant'] == 'utensil':
             form = UtensilForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect(reverse('planning:new_recipe'))
+                return redirect(reverse('recipe:new_recipe'))
         elif request.POST['identifiant'] == 'origin_recipe':
             form = OriginRecipeForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect(reverse('planning:new_recipe'))
+                return redirect(reverse('recipe:new_recipe'))
         elif request.POST['identifiant'] == 'diet':
             form = DietaryPlanForm(request.POST)
             if form.is_valid():
