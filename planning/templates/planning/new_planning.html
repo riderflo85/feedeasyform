@@ -27,12 +27,12 @@
                                     <tr>
                                         <th scope="row">{{ mlp.name }}</th>
                                         {% for day in week %}
-                                        <td>
+                                        <td id="{{ day.id }}-{{ mlp.pk }}">
                                             <div class="d-flex justify-content-end mb-2">
-                                                <i class="fas fa-plus text-success add-recipe-btn i-btn-add" data-day="{{ day.name }}" data-mlp="{{ mlp.name }}"></i>
+                                                <i class="fas fa-plus text-success add-recipe-btn i-btn-add" data-day="{{ day.name }}&{{ day.id }}" data-mlp="{{ mlp.name }}&{{ mlp.pk }}"></i>
                                                 <!-- <a href="#" class="fas fa-trash-alt text-danger"></a> -->
                                             </div>
-                                            <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                            <!-- <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                                 <p class="title-recipe">Titre de recette</p>
                                                 <i class="fas fa-trash-alt text-danger ml-2 i-btn-trash"></i>
                                             </div>
@@ -43,7 +43,7 @@
                                             <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                                 <p class="title-recipe">Titre de recette</p>
                                                 <i class="fas fa-trash-alt text-danger ml-2 i-btn-trash"></i>
-                                            </div>
+                                            </div> -->
                                         </td>
                                         {% endfor %}
                                     </tr>
@@ -56,8 +56,7 @@
                         <h4>Choisir une recette pour le <i class="text-info" id="daySearchTitle"></i> - <i class="text-info" id="mealSearchTitle"></i></h4>
                         <div class="">
                             <p class="">Votre sélection:</p>
-                            <div class="d-flex justify-content-between align-items-center recipe-choiced-bloc">
-                                <span class="badge badge-pill badge-success">riz au lait</span>
+                            <div class="d-flex justify-content-between align-items-center recipe-choiced-bloc" id="recipesChoiced">
                             </div>
                         </div>
                         <div class="d-flex mt-4 justify-content-between align-items-center">
@@ -120,8 +119,32 @@
                             </div>
                         </div>
                         <div class="container-fluid mt-5 pt-3 scrollable-section">
-                            <div class="row">
-                                <div class="col-12 col-lg-3 mb-3">
+                            <div class="row" id="displayRecipeBloc">
+                                {% for recipe in recipes %}
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-{{ recipe.pk }}">
+                                    <div class="content-card-recipe">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="lead">{{ recipe.name }}</p>
+                                            <div class="checkbox-small">
+                                                <input type="checkbox" name="seleceted" id="checkRecipe-{{ recipe.pk }}">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mt-2">
+                                            <div class="image-bloc">
+                                                <img src="{{ recipe.image.url }}" alt="image of the recipo" class="img-fluid">
+                                            </div>
+                                            <div class="data-recipe">
+                                                <p>{{ recipe.categorie.name }}</p>
+                                                <hr class="hr-data-recipe">
+                                                <p>{% for season in recipe.season.all %}{{ season.name }}, {% endfor %}</p>
+                                                <hr class="hr-data-recipe">
+                                                <p>{% for diet in recipe.dietary_plan.all %}{{ diet.name }}, {% endfor %}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-2">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="lead">Title recipe</p>
@@ -140,10 +163,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-3">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 2</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -159,10 +182,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-4">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 3</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -178,10 +201,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-5">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 4</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -197,29 +220,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-6">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
-                                            <div class="checkbox-small">
-                                                <input type="checkbox" name="seleceted" id="checkRecipe">
-                                            </div>
-                                        </div>
-                                        <div class="d-flex mt-2">
-                                            <div class="image-bloc">
-                                            </div>
-                                            <div class="data-recipe">
-                                                <p>categorie</p>
-                                                <p>saison</p>
-                                                <p>regime alimentaire</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-3 mb-3">
-                                    <div class="content-card-recipe">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 5</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -235,10 +239,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-7">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 6</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -254,10 +258,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-8">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 7</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -273,10 +277,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-9">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 8</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -292,10 +296,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-10">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 9</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -311,10 +315,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-11">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 10</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -330,10 +334,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-12">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 11</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -349,10 +353,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-13">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 12</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -368,10 +372,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-14">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 13</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -387,10 +391,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-15">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 14</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -406,10 +410,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-16">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 15</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -425,10 +429,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-17">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 16</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -444,10 +448,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3 mb-3">
+                                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-18">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">Title recipe</p>
+                                            <p class="lead">Title recipe 17</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe">
                                             </div>
@@ -466,8 +470,8 @@
                             </div>
                         </div>
                         <div class="footer">
-                            <i class="fas fa-chevron-up hiden-bloc-search"></i>
-                            <button class="btn btn-success">Valider la sélection</button>
+                            <i class="fas fa-chevron-up hiden-bloc-search" id="chevronTop"></i>
+                            <button class="btn btn-success" id="valideChoice">Valider la sélection</button>
                         </div>
                     </div>
                 </div>
