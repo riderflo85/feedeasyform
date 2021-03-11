@@ -75,6 +75,22 @@ function clearSearchBloc(blocRecipeChoiced, allRecipes) {
 }
 
 
+function searchRecipe(text) {
+    $.ajax({
+        url: "/planning/search",
+        type: "GET",
+        dataType: "json",
+        data: {'text': text},
+        success: (data) => {
+            console.log(data);
+        },
+        error: (error) => {
+            console.warn(error);
+        }
+    });
+}
+
+
 $(document).ready(() => {
     getHeightBody();
     eventCheckboxClick();
@@ -85,6 +101,17 @@ $(document).ready(() => {
     const allRecipes = $('#displayRecipeBloc');
     const listingRecipesChoiced = $('#recipesChoiced');
     const btnValideRecipe = $('#valideChoice');
+    const searchInput = $('#inputSearchRecipe');
+
+    let csrftoken = getCookie('csrftoken');
+
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
 
     for (const btn of allAddRecipeBtn) {
         $(btn).on('click', () => {
@@ -120,4 +147,6 @@ $(document).ready(() => {
         hideSearchRecipeBloc(searchBloc);
         clearSearchBloc(listingRecipesChoiced, allRecipes);
     });
+
+    searchInput.on('key')
 });

@@ -10,4 +10,5 @@ urlpatterns = [
         name="detail_planning"
     ),
     path('new_planning/', views.create_planning, name="new_planning"),
+    path('search/', views.search_recipe_by_text, name="search_recipe"),
 ]

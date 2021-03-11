@@ -128,7 +128,7 @@ hr {
 }
 
 .select-recipe-box {
-    height: 70vh;
+    /* height: 70vh; */
     width: 70vw;
     border: 0px solid;
     border-radius: 0px 0px 30px 30px;

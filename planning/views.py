@@ -1,4 +1,4 @@
-from django.http import JsonResponse, FileResponse
+from django.http import JsonResponse
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
@@ -36,6 +36,14 @@ def create_planning(request):
             'seasons': Season.objects.order_by('name')
         }
         return render(request, 'planning/new_planning.html', context)
+
+
+@login_required
+def search_recipe_by_text(request):
+    text_user = request.GET
+    print(text_user)
+
+    return JsonResponse({'recipes': 'ok'})
 
 
 class PlanningDetailView(DetailView):
