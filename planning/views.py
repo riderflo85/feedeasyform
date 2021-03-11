@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Planning, MealsPerDay
 from .forms import PlanningForm
+from .serializers import recipe_serializer
 from recipe.models import CategorieRecipe, DietaryPlan, OriginRecipe, Recipe, Season
 
 
@@ -41,20 +42,48 @@ def create_planning(request):
 @login_required
 def search_recipe_by_text(request):
     text_user = request.GET['text']
-    data = []
-
-    for recipe in Recipe.objects.filter(name__icontains=text_user):
-        data.append({
-            'id': recipe.pk,
-            'name': recipe.name,
-            'categ': recipe.categorie.name,
-            'seasons': [x.name for x in recipe.season.all()],
-            'diets': [x.name for x in recipe.dietary_plan.all()],
-            'image': recipe.image.url
-        })
 
     return JsonResponse({
-        'recipes': data
+        'recipes': recipe_serializer(
+            Recipe.objects.filter(name__icontains=text_user)
+        )
+    })
+
+
+@login_required
+def search_recipe_by_filter(request):
+    season = request.GET['season']
+    origin = request.GET['origin']
+    diet = request.GET['diet']
+    categ = request.GET['categ']
+
+    if request.GET['text'] != '':
+        recipes_done = Recipe.objects.filter(
+            name__icontains=request.GET['text']
+        )
+
+    else:
+        recipes_done = Recipe.objects.all()
+
+    if season != '':
+        recipes_done = recipes_done.filter(
+            season=Season.objects.get(pk=int(season))
+        )
+    if origin != '':
+        recipes_done = recipes_done.filter(
+            origin=int(origin)
+        )
+    if diet != '':
+        recipes_done = recipes_done.filter(
+            dietary_plan=DietaryPlan.objects.get(pk=int(diet))
+        )
+    if categ != '':
+        recipes_done = recipes_done.filter(
+            categorie=int(categ)
+        )
+
+    return JsonResponse({
+        'recipes': recipe_serializer(recipes_done)
     })
 
 

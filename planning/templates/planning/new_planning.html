@@ -65,8 +65,8 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="Categories">Categories</label>
                                     </div>
-                                    <select class="custom-select" id="Categories">
-                                        <option selected>Choisissez...</option>
+                                    <select class="custom-select" id="categorieFilter">
+                                        <option value="" selected>Choisissez...</option>
                                         {% for categ in categs %}
                                         <option value="{{ categ.pk }}">{{ categ.name }}</option>
                                         {% endfor %}
@@ -74,10 +74,10 @@
                                 </div>
                                 <div class="input-group mx-3">
                                     <div class="input-group-prepend">
-                                        <label class="input-group-text" for="Origine">Origine</label>
+                                        <label class="input-group-text" for="originFilter">Origine</label>
                                     </div>
-                                    <select class="custom-select" id="Origine">
-                                        <option selected>Choisissez...</option>
+                                    <select class="custom-select" id="originFilter">
+                                        <option value="" selected>Choisissez...</option>
                                         {% for origin in origins %}
                                         <option value="{{ origin.pk }}">{{ origin.name }}</option>
                                         {% endfor %}
@@ -85,10 +85,10 @@
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <label class="input-group-text" for="Régimes">Régimes</label>
+                                        <label class="input-group-text" for="dietFilter">Régimes</label>
                                     </div>
-                                    <select class="custom-select" id="Régimes">
-                                        <option selected>Choisissez...</option>
+                                    <select class="custom-select" id="dietFilter">
+                                        <option value="" selected>Choisissez...</option>
                                         {% for diet in diets %}
                                         <option value="{{ diet.pk }}">{{ diet.name }}</option>
                                         {% endfor %}
@@ -98,8 +98,8 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="Saison">Saison</label>
                                     </div>
-                                    <select class="custom-select" id="Saison">
-                                        <option selected>Choisissez...</option>
+                                    <select class="custom-select" id="seasonFilter">
+                                        <option value="" selected>Choisissez...</option>
                                         {% for season in seasons %}
                                         <option value="{{ season.pk }}">{{ season.name }}</option>
                                         {% endfor %}
@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                             <div class="mr-3">
-                                <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-success" id="valideFilter"><i class="fas fa-check"></i></button>
                             </div>
                             <div>
                                 <div class="input-group">

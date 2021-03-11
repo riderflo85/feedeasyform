@@ -136,6 +136,22 @@ function searchRecipe(text) {
 }
 
 
+function filteredRecipe(dataFilterAndText) {
+    $.ajax({
+        url: "/planning/filter",
+        type: "GET",
+        dataType: "json",
+        data: dataFilterAndText,
+        success: (data) => {
+            displaySearchResult(data.recipes);
+        },
+        error: (error) => {
+            console.warn(error);
+        }
+    });
+}
+
+
 $(document).ready(() => {
     getHeightBody();
     eventCheckboxClick();
@@ -147,6 +163,7 @@ $(document).ready(() => {
     const listingRecipesChoiced = $('#recipesChoiced');
     const btnValideRecipe = $('#valideChoice');
     const searchInput = $('#inputSearchRecipe');
+    const btnValideFilter = $('#valideFilter');
 
     let csrftoken = getCookie('csrftoken');
 
@@ -199,5 +216,22 @@ $(document).ready(() => {
             console.log(textUser);
             searchRecipe(textUser);
         }
+    });
+
+    btnValideFilter.on('click', () => {
+        const categFilter = $('#categorieFilter').val();
+        const originFilter = $('#originFilter').val();
+        const dietFilter = $('#dietFilter').val();
+        const seasonFilter = $('#seasonFilter').val();
+
+        const data = {
+            categ: categFilter,
+            origin: originFilter,
+            diet: dietFilter,
+            season: seasonFilter,
+            text: searchInput.val()
+        }
+
+        filteredRecipe(data);
     });
 });
