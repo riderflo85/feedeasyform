@@ -75,6 +75,51 @@ function clearSearchBloc(blocRecipeChoiced, allRecipes) {
 }
 
 
+function displaySearchResult(data) {
+    const allRecipes = $('#displayRecipeBloc');
+    allRecipes.empty();
+
+    if (data.length > 0) {
+        for (const recipe of data) {
+            const recipeResultBalise = `
+                <div class="col-12 col-lg-3 mb-3" id="recipeNumber-${recipe.id}">
+                    <div class="content-card-recipe">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="lead">${recipe.name}</p>
+                            <div class="checkbox-small">
+                                <input type="checkbox" name="seleceted" id="checkRecipe-${recipe.id}">
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2">
+                            <div class="image-bloc">
+                                <img src="${recipe.image}" alt="image of the recipe" class="img-fluid">
+                            </div>
+                            <div class="data-recipe">
+                                <p>${recipe.categ}</p>
+                                <hr class="hr-data-recipe">
+                                <p>${recipe.seasons.toString()}</p>
+                                <hr class="hr-data-recipe">
+                                <p>${recipe.diets.toString()}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $(recipeResultBalise).appendTo(allRecipes);
+        }
+    } else {
+        const errorMessage = `
+            <div class="col-12">
+                <h4 class="text-danger">Aucune recette n'a été trouvée dans la base de données.</h4>
+            </div>
+        `;
+        $(errorMessage).appendTo(allRecipes)
+    }
+    getHeightBody();
+
+}
+
+
 function searchRecipe(text) {
     $.ajax({
         url: "/planning/search",
@@ -82,7 +127,7 @@ function searchRecipe(text) {
         dataType: "json",
         data: {'text': text},
         success: (data) => {
-            console.log(data);
+            displaySearchResult(data.recipes);
         },
         error: (error) => {
             console.warn(error);
@@ -148,5 +193,11 @@ $(document).ready(() => {
         clearSearchBloc(listingRecipesChoiced, allRecipes);
     });
 
-    searchInput.on('key')
+    searchInput.keyup(function() {
+        let textUser = $(this).val();
+        if (textUser.length >= 3) {
+            console.log(textUser);
+            searchRecipe(textUser);
+        }
+    });
 });

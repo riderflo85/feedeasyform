@@ -40,10 +40,22 @@ def create_planning(request):
 
 @login_required
 def search_recipe_by_text(request):
-    text_user = request.GET
-    print(text_user)
+    text_user = request.GET['text']
+    data = []
 
-    return JsonResponse({'recipes': 'ok'})
+    for recipe in Recipe.objects.filter(name__icontains=text_user):
+        data.append({
+            'id': recipe.pk,
+            'name': recipe.name,
+            'categ': recipe.categorie.name,
+            'seasons': [x.name for x in recipe.season.all()],
+            'diets': [x.name for x in recipe.dietary_plan.all()],
+            'image': recipe.image.url
+        })
+
+    return JsonResponse({
+        'recipes': data
+    })
 
 
 class PlanningDetailView(DetailView):
