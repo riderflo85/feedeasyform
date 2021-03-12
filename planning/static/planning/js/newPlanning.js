@@ -21,13 +21,13 @@ function displaySearchRecipeBloc(bloc, day, meal) {
         });
         bloc.data('is-display', true);
     }
-    const dayData = day.split('&');
+    const dayData = day;
     const mealData = meal.split('&');
-    dayTitle.text(dayData[0]);
-    dayTitle.data('id', dayData[1]);
+    dayTitle.text(dayData);
+    dayTitle.data('id', dayData);
     mealTitle.text(mealData[0]);
     mealTitle.data('id', mealData[1]);
-
+    getHeightBody();
 }
 
 
@@ -152,6 +152,40 @@ function filteredRecipe(dataFilterAndText) {
 }
 
 
+function sendDataForNewPlanning(data) {
+    $.ajax({
+        url: "/planning/new_planning/",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        success: (data) => {
+            console.log(data);
+        },
+        error: (error) => {
+            console.warn(error);
+        }
+    });
+}
+
+
+function getAllRecipeInPlanning() {
+    const tableTR = $('tbody tr');
+
+    const data = {};
+
+    for (const tr of tableTR) {
+        data[tr.id] = {};
+        for (const td of $(tr).children()) {
+            if (td.tagName != 'TH') {
+                let recipe = $($(td).children()[1]).children()[0];
+                data[tr.id][td.id] = $(recipe).data('id-recipe');
+            }
+        }
+    }
+    return data;
+}
+
+
 $(document).ready(() => {
     getHeightBody();
     eventCheckboxClick();
@@ -164,6 +198,8 @@ $(document).ready(() => {
     const btnValideRecipe = $('#valideChoice');
     const searchInput = $('#inputSearchRecipe');
     const btnValideFilter = $('#valideFilter');
+    const errorMsgPlanning = $('#errorMsgPlanningNotComplet');
+    const btnValideNewPlanning = $('#valideNewPlanning');
 
     let csrftoken = getCookie('csrftoken');
 
@@ -198,7 +234,7 @@ $(document).ready(() => {
                 {id: recipeData.id, name: recipeData.innerText}
             );
             const baliseRecipeTable = `<div class="d-flex justify-content-center align-items-center recipe-bloc">
-            <p class="title-recipe">${recipeData.innerText}</p>
+            <p class="title-recipe" data-id-recipe="${recipeData.id}">${recipeData.innerText}</p>
             <i class="fas fa-trash-alt text-danger ml-2 i-btn-trash" id="removeRecipe${recipeData.id}"></i>
             </div>`;
             $(baliseRecipeTable).appendTo(tdTable);
@@ -208,6 +244,7 @@ $(document).ready(() => {
         }
         hideSearchRecipeBloc(searchBloc);
         clearSearchBloc(listingRecipesChoiced, allRecipes);
+        errorMsgPlanning.addClass('d-none');
     });
 
     searchInput.keyup(function() {
@@ -233,5 +270,28 @@ $(document).ready(() => {
         }
 
         filteredRecipe(data);
+    });
+
+    btnValideNewPlanning.on('click', function() {
+        const data = getAllRecipeInPlanning();
+        let isGood = false;
+
+        blocCheckData: {
+            for (const mlp of Object.keys(data)) {
+                for (const day of Object.values(data[mlp])) {
+                    if (day === undefined) {
+                        errorMsgPlanning.removeClass('d-none');
+                        isGood = false;
+                        break blocCheckData;
+                    } else {
+                        isGood = true;
+                    }
+                }
+            }
+        }
+
+        if (isGood) {
+            sendDataForNewPlanning(data);
+        }
     });
 });

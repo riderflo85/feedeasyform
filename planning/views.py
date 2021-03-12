@@ -12,10 +12,11 @@ from recipe.models import CategorieRecipe, DietaryPlan, OriginRecipe, Recipe, Se
 @login_required
 def create_planning(request):
     if request.method == 'POST':
-        form = PlanningForm(request.POST)
-        if form.is_valid():
-            new_planning = form.save()
-            return JsonResponse({'success': True})
+        print(request.POST['déjeuner'])
+        # form = PlanningForm(request.POST)
+        # if form.is_valid():
+        #     new_planning = form.save()
+        return JsonResponse({'success': True})
     else:
         days = [
             {'id': 1, 'name': 'lundi'},
