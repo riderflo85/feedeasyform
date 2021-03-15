@@ -1,4 +1,4 @@
-from .models import MealsPerDay, Recipe
+from .models import MealsPerDay, Recipe, DayMealsPerDay
 
 
 def parse_data_new_planning(request_data):
@@ -22,7 +22,7 @@ def parse_data_new_planning(request_data):
                     pk=int(x.split('-')[1])
                 ) for x in data_splited[1].split('_')[1:]
             ]
-            recipes_by_days[index][key][mlp.name] = recipes
+            recipes_by_days[index][key][mlp] = recipes
         index += 1
 
     return recipes_by_days
@@ -37,3 +37,16 @@ def parse_data_new_planning(request_data):
 #     "samedi": "?&samedi-1=_recipeNumber-2_recipeNumber-3&samedi-2=_recipeNumber-1_recipeNumber-3&samedi-3=_recipeNumber-2&samedi-4=_recipeNumber-1_recipeNumber-2_recipeNumber-3&samedi-5=_recipeNumber-1_recipeNumber-3",
 #     "dimanche": "?&dimanche-1=_recipeNumber-1_recipeNumber-2&dimanche-2=_recipeNumber-1_recipeNumber-2&dimanche-3=_recipeNumber-1_recipeNumber-2&dimanche-4=_recipeNumber-3&dimanche-5=_recipeNumber-2"
 # }
+
+
+def create_new_planning(parsed_data):
+    """
+    Create the new planning with the parsed data.
+    """
+    day_instances = []
+
+    for day in parsed_data:
+        new_day_mlp_objects = DayMealsPerDay()
+        mlps = set()
+        for k, v in day.items():
+            mlps.add(k)

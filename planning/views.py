@@ -13,7 +13,7 @@ from recipe.models import CategorieRecipe, DietaryPlan, OriginRecipe, Recipe, Se
 @login_required
 def create_planning(request):
     if request.method == 'POST':
-        parse_data_new_planning(request.POST)
+        print(parse_data_new_planning(request.POST))
         # form = PlanningForm(request.POST)
         # if form.is_valid():
         #     new_planning = form.save()
