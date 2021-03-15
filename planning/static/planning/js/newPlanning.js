@@ -174,11 +174,11 @@ function getAllRecipeInPlanning() {
     const data = {};
 
     for (const tr of tableTR) {
-        data[tr.id] = {};
+        data[tr.id] = "?";
         for (const td of $(tr).children()) {
             if (td.tagName != 'TH') {
                 let recipe = $($(td).children()[1]).children()[0];
-                data[tr.id][td.id] = $(recipe).data('id-recipe');
+                data[tr.id] = data[tr.id] + `&${td.id}=${$(recipe).data('id-recipe')}`;
             }
         }
     }
