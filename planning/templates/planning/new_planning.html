@@ -6,6 +6,7 @@
     <div class="container-fluid h-100">
         <div class="row h-100">
             <div class="col-12 col-lg-12 h-100">
+            
                 <div class="h-100 d-flex flex-column justify-content-center align-items-center">
                     <div class="border-box in-front shadow-planning content-sign_in d-flex align-items-center mt-5">
                         <div class="new-planning margin-device">
@@ -17,16 +18,19 @@
                                 <thead>
                                     <tr>
                                         <th scope="col"></th>
-                                        {% for day in week %}
-                                        <th scope="col">{{ day.name }}</th>
+                                        {% comment %} {% for day in week %} {% endcomment %}
+                                        {% for mlp in meals_per_day %}
+                                        <th scope="col">{{ mlp.name }}</th>
                                         {% endfor %}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for mlp in meals_per_day %}
-                                    <tr id="{{ mlp.name }}">
-                                        <th scope="row">{{ mlp.name }}</th>
-                                        {% for day in week %}
+                                    {% comment %} {% for mlp in meals_per_day %} {% endcomment %}
+                                    {% for day in week %}
+                                    <tr id="{{ day.name }}">
+                                        <th scope="row">{{ day.name }}</th>
+                                        {% comment %} {% for day in week %} {% endcomment %}
+                                        {% for mlp in meals_per_day %}
                                         <td id="{{ day.name }}-{{ mlp.pk }}">
                                             <div class="d-flex justify-content-end mb-2">
                                                 <i class="fas fa-plus text-success add-recipe-btn i-btn-add" data-day="{{ day.name }}" data-mlp="{{ mlp.name }}&{{ mlp.pk }}"></i>

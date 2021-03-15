@@ -172,17 +172,32 @@ function getAllRecipeInPlanning() {
     const tableTR = $('tbody tr');
 
     const data = {};
+    let planningIsCompleted = false;
 
-    for (const tr of tableTR) {
-        data[tr.id] = "?";
-        for (const td of $(tr).children()) {
-            if (td.tagName != 'TH') {
-                let recipe = $($(td).children()[1]).children()[0];
-                data[tr.id] = data[tr.id] + `&${td.id}=${$(recipe).data('id-recipe')}`;
+    blocCheckData: {
+        for (const tr of tableTR) {
+            data[tr.id] = "?";
+            for (const td of $(tr).children()) {
+                if (td.tagName != 'TH') {
+                    let encodeRecipe = "";
+                    for (const div of $($(td).children())) {
+                        if ($(div).hasClass('recipe-bloc')) {
+                            const recipe = $(div).children()[0];
+                            encodeRecipe = encodeRecipe + `_${$(recipe).data('id-recipe')}`;
+                        }
+                    }
+                    if (encodeRecipe != "") {
+                        data[tr.id] = data[tr.id] + `&${td.id}=${encodeRecipe}`;
+                        planningIsCompleted = true;
+                    } else {
+                        planningIsCompleted = false;
+                        break blocCheckData;
+                    }
+                }
             }
         }
     }
-    return data;
+    return [data, planningIsCompleted];
 }
 
 
@@ -273,25 +288,12 @@ $(document).ready(() => {
     });
 
     btnValideNewPlanning.on('click', function() {
-        const data = getAllRecipeInPlanning();
-        let isGood = false;
+        const [data, isCompleted] = getAllRecipeInPlanning();
 
-        blocCheckData: {
-            for (const mlp of Object.keys(data)) {
-                for (const day of Object.values(data[mlp])) {
-                    if (day === undefined) {
-                        errorMsgPlanning.removeClass('d-none');
-                        isGood = false;
-                        break blocCheckData;
-                    } else {
-                        isGood = true;
-                    }
-                }
-            }
-        }
-
-        if (isGood) {
+        if (isCompleted) {
             sendDataForNewPlanning(data);
+        } else {
+            errorMsgPlanning.removeClass('d-none');
         }
     });
 });

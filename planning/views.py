@@ -6,13 +6,14 @@ from django.contrib.auth.decorators import login_required
 from .models import Planning, MealsPerDay
 from .forms import PlanningForm
 from .serializers import recipe_serializer
+from .utils import parse_data_new_planning
 from recipe.models import CategorieRecipe, DietaryPlan, OriginRecipe, Recipe, Season
 
 
 @login_required
 def create_planning(request):
     if request.method == 'POST':
-        print(request.POST)
+        parse_data_new_planning(request.POST)
         # form = PlanningForm(request.POST)
         # if form.is_valid():
         #     new_planning = form.save()

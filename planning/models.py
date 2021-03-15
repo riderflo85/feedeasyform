@@ -15,9 +15,9 @@ class Day(models.Model):
         max_length=20,
         verbose_name='nom du jour de la semaine'
     )
-    date = models.DateField(
-        verbose_name='date de ce jour'
-    )
+    # date = models.DateField(
+    #     verbose_name='date de ce jour'
+    # )
     meals_per_day = models.ManyToManyField(
         MealsPerDay,
         through="DayMealsPerDay",
