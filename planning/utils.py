@@ -1,4 +1,4 @@
-from .models import MealsPerDay, Recipe, DayMealsPerDay
+from .models import MealsPerDay, Recipe, DayMealsPerDay, Day, Planning
 
 
 def parse_data_new_planning(request_data):
@@ -44,9 +44,33 @@ def create_new_planning(parsed_data):
     Create the new planning with the parsed data.
     """
     day_instances = []
+    is_good = False
 
     for day in parsed_data:
-        new_day_mlp_objects = DayMealsPerDay()
-        mlps = set()
         for k, v in day.items():
-            mlps.add(k)
+            new_day = Day()
+            new_day.name = k
+            new_day.save()
+            for mlp, recipes in v.items():
+                new_day_mlp_objects = DayMealsPerDay()
+                new_day_mlp_objects.meal_per_day = mlp
+                new_day_mlp_objects.day = new_day
+                new_day_mlp_objects.save()
+                new_day_mlp_objects.recipes.set(recipes)
+            day_instances.append(new_day)
+
+    new_planning = Planning()
+    try:
+        new_planning.monday = day_instances[0]
+        new_planning.tuesday = day_instances[1]
+        new_planning.wednesday = day_instances[2]
+        new_planning.thursday = day_instances[3]
+        new_planning.friday = day_instances[4]
+        new_planning.saturday = day_instances[5]
+        new_planning.sunday = day_instances[6]
+        new_planning.save()
+        is_good = True
+    except:
+        is_good = False
+
+    return is_good
