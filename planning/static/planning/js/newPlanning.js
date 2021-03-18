@@ -152,23 +152,31 @@ function filteredRecipe(dataFilterAndText) {
 }
 
 
-function sendDataForNewPlanning(data) {
+function sendDataForNewPlanning(data, btnObject) {
+    const loading = $('#spinnerLoading');
+
+    loading.removeClass('d-none');
+
     $.ajax({
         url: "/planning/new_planning/",
         type: "POST",
         dataType: "json",
         data: data,
         success: (data) => {
-            console.log(data);
+            loading.addClass('d-none');
+            btnObject.removeAttr('disabled');
+            
         },
         error: (error) => {
+            loading.addClass('d-none');
+            btnObject.removeAttr('disabled');
             console.warn(error);
         }
     });
 }
 
 
-function getAllRecipeInPlanning() {
+function getAllRecipeInPlanning(planningName) {
     const tableTR = $('tbody tr');
 
     const data = {};
@@ -197,6 +205,14 @@ function getAllRecipeInPlanning() {
             }
         }
     }
+
+    if (planningName != "") {
+        planningIsCompleted = true;
+        data['name'] = planningName;
+    } else {
+        planningIsCompleted = false;
+    }
+
     return [data, planningIsCompleted];
 }
 
@@ -215,6 +231,7 @@ $(document).ready(() => {
     const btnValideFilter = $('#valideFilter');
     const errorMsgPlanning = $('#errorMsgPlanningNotComplet');
     const btnValideNewPlanning = $('#valideNewPlanning');
+    const inputNamePlanning = $('#namePlanning');
 
     let csrftoken = getCookie('csrftoken');
 
@@ -288,10 +305,11 @@ $(document).ready(() => {
     });
 
     btnValideNewPlanning.on('click', function() {
-        const [data, isCompleted] = getAllRecipeInPlanning();
-
+        const [data, isCompleted] = getAllRecipeInPlanning(inputNamePlanning.val());
+        
         if (isCompleted) {
-            sendDataForNewPlanning(data);
+            $(this).attr('disabled', true);
+            sendDataForNewPlanning(data, $(this));
         } else {
             errorMsgPlanning.removeClass('d-none');
         }

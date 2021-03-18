@@ -46,6 +46,10 @@ class DayMealsPerDay(models.Model):
 
 
 class Planning(models.Model):
+    name = models.CharField(
+        max_length=150,
+        verbose_name="nom du planning"
+    )
     monday = models.ForeignKey(
         Day,
         on_delete=models.CASCADE,
