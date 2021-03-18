@@ -6,7 +6,6 @@
     <div class="container-fluid h-100">
         <div class="row h-100">
             <div class="col-12 col-lg-12 h-100">
-            
                 <div class="h-100 d-flex flex-column justify-content-center align-items-center">
                     <div class="border-box in-front shadow-planning content-sign_in d-flex align-items-center mt-5">
                         <div class="new-planning margin-device">
@@ -123,12 +122,12 @@
                                 <div class="col-12 col-lg-3 mb-3" id="recipeNumber-{{ recipe.pk }}">
                                     <div class="content-card-recipe">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="lead">{{ recipe.name }}</p>
+                                            <p class="lead" data-recipe-id="{{ recipe.pk }}" onclick="showModalDetailRecipe(this)">{{ recipe.name }}</p>
                                             <div class="checkbox-small">
                                                 <input type="checkbox" name="seleceted" id="checkRecipe-{{ recipe.pk }}">
                                             </div>
                                         </div>
-                                        <div class="d-flex mt-2">
+                                        <div class="d-flex mt-2" data-recipe-id="{{ recipe.pk }}" onclick="showModalDetailRecipe(this)">
                                             <div class="image-bloc">
                                                 <img src="{{ recipe.image.url }}" alt="image of the recipe" class="img-fluid">
                                             </div>
@@ -154,6 +153,159 @@
             </div>
         </div>
     </div>
+    {% for recipe in recipes %}
+    <!-- Modal -->
+    <div class="modal fade" id="modalRecipe{{ recipe.pk }}" tabindex="-1" role="dialog" aria-labelledby="modalRecipeDetaiTitlel{{ recipe.pk }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRecipeDetailTitle{{ recipe.pk }}">{{ recipe.name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex mt-2">
+                        <div class="image-bloc image-bloc-modal">
+                            <img src="{{ recipe.image.url }}" alt="image of the recipe" class="img-fluid">
+                        </div>
+                        <div class="row ml-4">
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <label for="prepTime" class="col-sm-4 col-form-label border-label">Temps de préparation</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext">{{ recipe.preparation_time }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeCookingTime" class="col-sm-4 col-form-label border-label">Temps de cuisson</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipeCookingTime">{{ recipe.cooking_time }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4 col-form-label border-label">
+                                        <label for="RecipeFoodQuant">Aliments et quantités</label>
+                                    </div>
+                                    <div class="col-sm-8" id="divFoods">
+                                        <ul id="listingFoods">
+                                            {% for r_food in recipe.get_all_foods %}
+                                            <li data-food_id="{{ r_food.food.pk }}">{{ r_food.food.name }} <strong>{{ r_food.quantity }}</strong></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeStep" class="col-sm-4 col-form-label border-label">Étapes de la recette</label>
+                                    <div class="col-sm-8">
+                                        <ol id="listingSteps">
+                                            {% for step in recipe.get_step %}
+                                            <li>{{ step }}</li>
+                                            {% endfor %}
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeTip" class="col-sm-4 col-form-label border-label">Astuces pour la recette</label>
+                                    <div class="col-sm-8">
+                                        <ol id="listingTips">
+                                            {% for tip in recipe.get_tip %}
+                                            <li>{{ tip }}</li>
+                                            {% endfor %}
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeCateg" class="col-sm-4 col-form-label border-label">Catégorie de la recette</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipeCateg" data-id_categ="{{ recipe.categorie.pk }}">{{ recipe.categorie.name }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Nombre de portions</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipePortion">{{ recipe.portion }}</P>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Nombre de points</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipePoint">{{ recipe.point }}</P>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipePriceScale" class="col-sm-4 col-form-label border-label">Fourchette de prix</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipePriceScale">{{ recipe.price_scale.name }}</P>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeSource" class="col-sm-4 col-form-label border-label">Source de la recette</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipeSource">{{ recipe.source }}</P>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeLevel" class="col-sm-4 col-form-label border-label">Niveau de difficultée</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipeLevel">{{ recipe.level.name }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeOrigin" class="col-sm-4 col-form-label border-label">Origine de la recette</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipeOrigin">{{ recipe.origin.name }}</P>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeAtypical" class="col-sm-4 col-form-label border-label">Recette typique de la ville de</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-plaintext" id="RecipeTypical">{{ recipe.typical_recipe_city }}</P>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeSeason" class="col-sm-4 col-form-label border-label">Saison(s) de la recette</label>
+                                    <div class="col-sm-8">
+                                        <ul id="RecipeSeason">
+                                            {% for season in recipe.season.all %}
+                                            <li>{{ season.name }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="RecipeDiet" class="col-sm-4 col-form-label border-label">Régime(s) alimentaire de la recette</label>
+                                    <div class="col-sm-8">
+                                        <ul id="RecipeDiet">
+                                            {% for diet in recipe.dietary_plan.all %}
+                                            <li>{{ diet.name }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4 col-form-label border-label">
+                                        <label for="RecipeFoodQuant">Ustensiles de cuisine</label>
+                                    </div>
+                                    <div class="col-sm-8" id="divUtensils">
+                                        <ul id="RecipeUtensils">
+                                            {% for r_utensil in recipe.utensils.all %}
+                                            <li data-utensil_id="{{ r_utensil.pk }}">{{ r_utensil.name }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </section>
 
 {% endblock form %}

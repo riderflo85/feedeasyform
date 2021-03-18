@@ -1,3 +1,9 @@
+function showModalDetailRecipe(el) {
+    const modalRecipe = $(`#modalRecipe${$(el).data('recipe-id')}`);
+    modalRecipe.modal();
+}
+
+
 function getHeightBody() {
     const windowHeight = window.innerHeight;
     const section = document.getElementsByTagName('section')[0];
