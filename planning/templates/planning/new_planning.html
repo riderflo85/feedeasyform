@@ -23,18 +23,15 @@
                                 <thead>
                                     <tr>
                                         <th scope="col"></th>
-                                        {% comment %} {% for day in week %} {% endcomment %}
                                         {% for mlp in meals_per_day %}
                                         <th scope="col">{{ mlp.name }}</th>
                                         {% endfor %}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% comment %} {% for mlp in meals_per_day %} {% endcomment %}
                                     {% for day in week %}
                                     <tr id="{{ day.name }}">
                                         <th scope="row">{{ day.name }}</th>
-                                        {% comment %} {% for day in week %} {% endcomment %}
                                         {% for mlp in meals_per_day %}
                                         <td id="{{ day.name }}-{{ mlp.pk }}">
                                             <div class="d-flex justify-content-end mb-2">

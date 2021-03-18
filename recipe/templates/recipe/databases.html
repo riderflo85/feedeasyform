@@ -89,7 +89,7 @@
                 <small>Total: {{ plannings|length }}</small>
                 <ul class="listing">
                     {% for planning in plannings %}
-                    <li><a href="/planning/detail/planning/{{ planning.pk }}" class="link">{{ planning }}</a></li>
+                    <li><a href="/planning/detail/planning/{{ planning.pk }}" class="link">{{ planning.name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

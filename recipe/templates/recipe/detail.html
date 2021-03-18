@@ -481,6 +481,109 @@
                     {% endif %}
                 </div>
                 {% endfor %}
+                {% elif planning %}
+                <div class="form-group row">
+                    <label for="namePlanning" class="col-sm-4 col-form-label">Nom du planning de recette</label>
+                    <div class="col-sm-8">
+                        <h3 class="form-control-plaintext" id="namePlanning">{{ planning.name }}</h3>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            {% for mlp in planning.monday.meals_per_day.all %}
+                            <th scope="col">{{ mlp.name }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="{{ planning.monday.name }}">
+                            <th scope="row">{{ planning.monday.name }}</th>
+                            {% for day_mlp in planning.monday.daymealsperday_set.all %}
+                            <td>
+                                {% for recipe in day_mlp.recipes.all %}
+                                <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                    <p class="title-recipe" data-id-recipe="recipeNumber-2">{{ recipe.name }}</p>
+                                </div>
+                            {% endfor %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr id="{{ planning.tuesday.name }}">
+                            <th scope="row">{{ planning.tuesday.name }}</th>
+                            {% for day_mlp in planning.tuesday.daymealsperday_set.all %}
+                            <td>
+                                {% for recipe in day_mlp.recipes.all %}
+                                <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                    <p class="title-recipe" data-id-recipe="recipeNumber-2">{{ recipe.name }}</p>
+                                </div>
+                            {% endfor %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr id="{{ planning.wednesday.name }}">
+                            <th scope="row">{{ planning.wednesday.name }}</th>
+                            {% for day_mlp in planning.wednesday.daymealsperday_set.all %}
+                            <td>
+                                {% for recipe in day_mlp.recipes.all %}
+                                <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                    <p class="title-recipe" data-id-recipe="recipeNumber-2">{{ recipe.name }}</p>
+                                </div>
+                            {% endfor %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr id="{{ planning.thursday.name }}">
+                            <th scope="row">{{ planning.thursday.name }}</th>
+                            {% for day_mlp in planning.thursday.daymealsperday_set.all %}
+                            <td>
+                                {% for recipe in day_mlp.recipes.all %}
+                                <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                    <p class="title-recipe" data-id-recipe="recipeNumber-2">{{ recipe.name }}</p>
+                                </div>
+                            {% endfor %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr id="{{ planning.friday.name }}">
+                            <th scope="row">{{ planning.friday.name }}</th>
+                            {% for day_mlp in planning.friday.daymealsperday_set.all %}
+                            <td>
+                                {% for recipe in day_mlp.recipes.all %}
+                                <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                    <p class="title-recipe" data-id-recipe="recipeNumber-2">{{ recipe.name }}</p>
+                                </div>
+                            {% endfor %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr id="{{ planning.saturday.name }}">
+                            <th scope="row">{{ planning.saturday.name }}</th>
+                            {% for day_mlp in planning.saturday.daymealsperday_set.all %}
+                            <td>
+                                {% for recipe in day_mlp.recipes.all %}
+                                <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                    <p class="title-recipe" data-id-recipe="recipeNumber-2">{{ recipe.name }}</p>
+                                </div>
+                            {% endfor %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr id="{{ planning.sunday.name }}">
+                            <th scope="row">{{ planning.sunday.name }}</th>
+                            {% for day_mlp in planning.sunday.daymealsperday_set.all %}
+                            <td>
+                                {% for recipe in day_mlp.recipes.all %}
+                                <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                                    <p class="title-recipe" data-id-recipe="recipeNumber-2">{{ recipe.name }}</p>
+                                </div>
+                            {% endfor %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
                 {% endif %}
             </div>
         </div>
@@ -492,10 +595,12 @@
 {% block script %}
 <script src="{% static 'user/js/secureajax.js' %}"></script>
 <script src="{% static 'user/js/parsedRequestData.js' %}"></script>
+{% if recipe %}
 <script src="{% static 'user/js/getFoodsTable.js' %}"></script>
 <script src="{% static 'user/js/getUtensilsTable.js' %}"></script>
 <script src="{% static 'user/js/updateRecipe.js' %}"></script>
 <script src="{% static 'user/js/updateRecipeImage.js' %}"></script>
 <script src="{% static 'user/js/addUtensils.js' %}"></script>
+{% endif %}
 <script src="{% static 'user/js/script.js' %}"></script>
 {% endblock script %}
