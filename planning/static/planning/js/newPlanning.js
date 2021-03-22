@@ -288,7 +288,6 @@ $(document).ready(() => {
     searchInput.keyup(function() {
         let textUser = $(this).val();
         if (textUser.length >= 3) {
-            console.log(textUser);
             searchRecipe(textUser);
         }
     });

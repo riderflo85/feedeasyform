@@ -222,3 +222,8 @@ hr {
     cursor: pointer;
     color: #17a2b8;
 }
+
+.update-recipe-bloc-listing {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 2vh;
+}

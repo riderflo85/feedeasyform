@@ -91,3 +91,13 @@ def search_recipe_by_filter(request):
 class PlanningDetailView(DetailView):
     model = Planning
     template_name = "recipe/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categs'] = CategorieRecipe.objects.order_by('name')
+        context['origins'] = OriginRecipe.objects.order_by('name')
+        context['diets'] = DietaryPlan.objects.order_by('name')
+        context['seasons'] = Season.objects.order_by('name')
+        context['recipes'] = Recipe.objects.all()
+
+        return context
