@@ -8,7 +8,8 @@ function displayModalEdit(day, mlp, recipes) {
     const modal = $('#modalEditPlanning');
     const modalTitle = $('#modalEditPlanningTitle');
     modal.modal();
-    modalTitle.text(`${day} - ${mlp}`);
+    modalTitle.text(`${day} - ${mlp.name}`);
+    modalTitle.attr("data-mlp-id", mlp.id);
 
     $('#listingRecipe').replaceWith("<ul id='listingRecipe'></ul>");
 
@@ -27,7 +28,7 @@ function displayModalEdit(day, mlp, recipes) {
 }
 
 
-function addEditBtnOnRecipe(disabledBtnCallBack) {
+function addEditBtnOnRecipe(addBtn, disabledBtnCallBack) {
     const tableTR = $('tbody tr');
     const tableTHEAD = $('thead tr th');
     let idForBtnChangeRecipe = 0;
@@ -35,7 +36,9 @@ function addEditBtnOnRecipe(disabledBtnCallBack) {
     let mlps = [];
 
     for (const th of tableTHEAD) {
-        mlps.push(String($(th).text()));
+        mlps.push(
+            {id: $(th).data('mlp-id'), name: String($(th).text())}
+        );
     }
 
     for (const tr of tableTR) {
@@ -43,13 +46,15 @@ function addEditBtnOnRecipe(disabledBtnCallBack) {
         for (const td of $(tr).children()) {
             if (td.tagName != 'TH') {
                 const mlp = mlps[indexMlp];
-                const balise = `
-                    <div class="d-flex justify-content-end mb-2">
-                        <i class="fas fa-sync-alt text-success add-recipe-btn i-btn-add" data-day="${day}" data-mlp="${mlp}" id="btnAddRecipe-${idForBtnChangeRecipe}"></i>
-                    </div>
-                `;
                 let recipes = [];
-                $(balise).prependTo(td);
+                if (addBtn) {
+                    const balise = `
+                        <div class="d-flex justify-content-end mb-2">
+                            <i class="fas fa-sync-alt text-success add-recipe-btn i-btn-add" data-day="${day}" data-mlp="${mlp.name}" id="btnAddRecipe-${idForBtnChangeRecipe}"></i>
+                        </div>
+                    `;
+                    $(balise).prependTo(td);
+                }
 
                 for (const divRecipe of $(td).children()) {
                     if ($(divRecipe).hasClass('recipe-bloc')) {
@@ -65,7 +70,9 @@ function addEditBtnOnRecipe(disabledBtnCallBack) {
         }
         indexMlp = 1;
     }
-    disabledBtnCallBack();
+    if (disabledBtnCallBack) {
+        disabledBtnCallBack();
+    }
 }
 
 
@@ -175,8 +182,39 @@ function eventCheckboxClick() {
 }
 
 
+function getRecipeChoiced() {
+    let listingRecipe = $('#listingRecipe');
+    let modalTitle = $('#modalEditPlanningTitle');
+    let momentDay = modalTitle.text();
+    let tdTable = $(`#${momentDay.split(' - ')[0]}-${modalTitle.attr('data-mlp-id')}`);
+    let recipes = [];
+
+    for (const li of listingRecipe.children()) {
+        recipes.push({id:li.id.split('-')[2], name: $(li).data('recipe-name')});
+    }
+
+    for (const div of tdTable.children()) {
+        if ($(div).hasClass('recipe-bloc')) {
+            $(div).remove();
+        }
+    }
+
+    for (const recipe of recipes) {
+        let newBalise = `
+            <div class="d-flex justify-content-center align-items-center recipe-bloc">
+                <p class="title-recipe" data-id-recipe="${recipe.id}">${recipe.name}</p>
+            </div>
+        `;
+        $(newBalise).appendTo(tdTable);
+    }
+    addEditBtnOnRecipe();
+}
+
+
 $(document).ready(() => {
     const btnEdit = $('#editPlanning');
+    const btnValid = $('#confirmPlanning');
+    const btnModalSaveRecipe = $('#saveChangeBtn');
     const searchInput = $('#inputSearchRecipe');
     const btnValideFilter = $('#valideFilter');
     let csrftoken = getCookie('csrftoken');
@@ -214,9 +252,18 @@ $(document).ready(() => {
     });
 
     btnEdit.on('click', function() {
-        addEditBtnOnRecipe(() => {
+        addEditBtnOnRecipe(true, () => {
             $(this).attr('disabled', 'true');
-        });   
+        });
+        btnValid.removeAttr('disabled');
+    });
+
+    btnValid.on('click', function() {
+
+    });
+
+    btnModalSaveRecipe.on('click', () => {
+        getRecipeChoiced();
     });
 
     eventCheckboxClick();

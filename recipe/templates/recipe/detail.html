@@ -486,6 +486,7 @@
                     <label for="namePlanning" class="col-sm-4 col-form-label">Nom du planning de recette</label>
                     <div class="col-sm-8 d-flex justify-content-center align-items-center">
                         <h3 class="form-control-plaintext" id="namePlanning">{{ planning.name }}</h3>
+                        <button class="btn btn-success mr-3" id="confirmPlanning" disabled><i class="fas fa-check"></i></button>
                         <button class="btn btn-primary" id="editPlanning"><i class="fas fa-pencil-alt"></i></button>
                     </div>
                 </div>
@@ -494,7 +495,7 @@
                         <tr>
                             <th scope="col"></th>
                             {% for mlp in planning.monday.meals_per_day.all %}
-                            <th scope="col">{{ mlp.name }}</th>
+                            <th scope="col" data-mlp-id="{{ mlp.pk }}">{{ mlp.name }}</th>
                             {% endfor %}
                         </tr>
                     </thead>
@@ -502,7 +503,7 @@
                         <tr id="{{ planning.monday.name }}">
                             <th scope="row">{{ planning.monday.name }}</th>
                             {% for day_mlp in planning.monday.daymealsperday_set.all %}
-                            <td>
+                            <td id="{{ planning.monday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                     <p class="title-recipe" data-id-recipe="{{ recipe.pk }}">{{ recipe.name }}</p>
@@ -514,7 +515,7 @@
                         <tr id="{{ planning.tuesday.name }}">
                             <th scope="row">{{ planning.tuesday.name }}</th>
                             {% for day_mlp in planning.tuesday.daymealsperday_set.all %}
-                            <td>
+                            <td id="{{ planning.tuesday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                     <p class="title-recipe" data-id-recipe="{{ recipe.pk }}">{{ recipe.name }}</p>
@@ -526,7 +527,7 @@
                         <tr id="{{ planning.wednesday.name }}">
                             <th scope="row">{{ planning.wednesday.name }}</th>
                             {% for day_mlp in planning.wednesday.daymealsperday_set.all %}
-                            <td>
+                            <td id="{{ planning.wednesday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                     <p class="title-recipe" data-id-recipe="{{ recipe.pk }}">{{ recipe.name }}</p>
@@ -538,7 +539,7 @@
                         <tr id="{{ planning.thursday.name }}">
                             <th scope="row">{{ planning.thursday.name }}</th>
                             {% for day_mlp in planning.thursday.daymealsperday_set.all %}
-                            <td>
+                            <td id="{{ planning.thursday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                     <p class="title-recipe" data-id-recipe="{{ recipe.pk }}">{{ recipe.name }}</p>
@@ -550,7 +551,7 @@
                         <tr id="{{ planning.friday.name }}">
                             <th scope="row">{{ planning.friday.name }}</th>
                             {% for day_mlp in planning.friday.daymealsperday_set.all %}
-                            <td>
+                            <td id="{{ planning.friday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                     <p class="title-recipe" data-id-recipe="{{ recipe.pk }}">{{ recipe.name }}</p>
@@ -562,7 +563,7 @@
                         <tr id="{{ planning.saturday.name }}">
                             <th scope="row">{{ planning.saturday.name }}</th>
                             {% for day_mlp in planning.saturday.daymealsperday_set.all %}
-                            <td>
+                            <td id="{{ planning.saturday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                     <p class="title-recipe" data-id-recipe="{{ recipe.pk }}">{{ recipe.name }}</p>
@@ -574,7 +575,7 @@
                         <tr id="{{ planning.sunday.name }}">
                             <th scope="row">{{ planning.sunday.name }}</th>
                             {% for day_mlp in planning.sunday.daymealsperday_set.all %}
-                            <td>
+                            <td id="{{ planning.sunday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
                                     <p class="title-recipe" data-id-recipe="{{ recipe.pk }}">{{ recipe.name }}</p>
@@ -590,7 +591,7 @@
                     <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalEditPlanningTitle"></h5>
+                                <h5 class="modal-title" data-mlp-id="" id="modalEditPlanningTitle"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -692,7 +693,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                <button type="button" class="btn btn-success" id="saveChangeBtn">Enregistrer les changements</button>
+                                <button type="button" class="btn btn-success" data-dismiss="modal" id="saveChangeBtn">Enregistrer les changements</button>
                             </div>
                         </div>
                     </div>
