@@ -1,7 +1,6 @@
 function showModalDetailRecipe(el) {
     const modalRecipe = $(`#modalRecipe${$(el).data('recipe-id')}`);
     modalRecipe.modal();
-    eventCheckboxClick();
 }
 
 
@@ -23,10 +22,8 @@ function displayModalEdit(day, mlp, recipes) {
         $(baliseRecipe).appendTo('#listingRecipe');
         $(`#li-recipe-${$(recipe).data('id-recipe')} i`).on('click', function() {
             $(this).parent().remove();
-            $(`#checkRecipe-${$(recipe).data('id-recipe')}`).removeAttr('checked');
         });
     }
-    eventCheckboxClick();
 }
 
 
@@ -76,6 +73,13 @@ function displaySearchResult(data) {
     const allRecipes = $('#displayRecipeBloc');
     allRecipes.empty();
 
+    const listingRecipesChoiced = $('#listingRecipe');
+    let recipesChoiced = [];
+
+    for (const recipeUsed of listingRecipesChoiced.children()) {
+        recipesChoiced.push($(recipeUsed).data('recipe-name'));
+    }
+
     if (data.length > 0) {
         for (const recipe of data) {
             const recipeResultBalise = `
@@ -83,8 +87,8 @@ function displaySearchResult(data) {
                     <div class="content-card-recipe">
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="lead">${recipe.name}</p>
-                            <div class="checkbox-small">
-                                <input type="checkbox" name="seleceted" id="checkRecipe-${recipe.id}">
+                            <div class="checkbox-small btn-group btn-group-sm" role="group">
+                                <button class="btn btn-sm btn-primary" id="checkRecipe-${recipe.id}"><i class="fas fa-check"></i></button>
                             </div>
                         </div>
                         <div class="d-flex mt-2">
@@ -150,41 +154,22 @@ function filteredRecipe(dataFilterAndText) {
 
 function eventCheckboxClick() {
     const allRecipes = $('#displayRecipeBloc');
-    const listingRecipesChoiced = $('#listingRecipe');
-    let recipesChoiced = [];
-
-    for (const recipeUsed of listingRecipesChoiced.children()) {
-        recipesChoiced.push($(recipeUsed).data('recipe-name'));
-    }
 
     for (const recipe of allRecipes.children()) {
-        const checkbox = $(`#${recipe.id} div div div input`);
+        const checkbox = $(`#${recipe.id} div div div button`);
         const titleRecipe = $(`#${recipe.id} div div p.lead`).text();
 
-        if (recipesChoiced.includes(titleRecipe)) {
-            checkbox.attr('checked', true);
-        } else {
-            checkbox.removeAttr('checked');
-        }
-    
         checkbox.on('click', () => {
-            if (!recipesChoiced.includes(titleRecipe)) {
-                recipesChoiced.push(titleRecipe);
-                const baliseRecipe = `
-                    <li id="li-recipe-${recipe.id.split('-')[1]}" data-recipe-name="${titleRecipe}">
-                        ${titleRecipe}
-                        <i class="fas fa-trash-alt ml-4 text-danger i-btn-trash"></i>
-                    </li>`
-                ;
-                $(baliseRecipe).appendTo('#listingRecipe');
-                $(`#li-recipe-${recipe.id.split('-')[1]} i`).on('click', function() {
-                    $(this).parent().remove();
-                    $(`#checkRecipe-${recipe.id.split('-')[1]}`).removeAttr('checked');
-                });
-            } else {
-                recipesChoiced = recipesChoiced.filter(el => el != titleRecipe);
-                $(`#li-recipe-${recipe.id.split('-')[1]}`).remove();
-            }
+            const baliseRecipe = `
+                <li id="li-recipe-${recipe.id.split('-')[1]}" data-recipe-name="${titleRecipe}">
+                    ${titleRecipe}
+                    <i class="fas fa-trash-alt ml-4 text-danger i-btn-trash"></i>
+                </li>`
+            ;
+            $(baliseRecipe).appendTo('#listingRecipe');
+            $(`#li-recipe-${recipe.id.split('-')[1]} i`).on('click', function() {
+                $(this).parent().remove();
+            });
         });
     }
 }
@@ -233,4 +218,6 @@ $(document).ready(() => {
             $(this).attr('disabled', 'true');
         });   
     });
+
+    eventCheckboxClick();
 });

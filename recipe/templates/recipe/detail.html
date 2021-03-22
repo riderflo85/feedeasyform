@@ -668,8 +668,8 @@
                                             <div class="content-card-recipe">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="lead" data-recipe-id="{{ recipe.pk }}" onclick="showModalDetailRecipe(this)">{{ recipe.name }}</p>
-                                                    <div class="checkbox-small">
-                                                        <input type="checkbox" name="seleceted" id="checkRecipe-{{ recipe.pk }}">
+                                                    <div class="checkbox-small btn-group btn-group-sm" role="group">
+                                                        <button class="btn btn-sm btn-success" id="checkRecipe-{{ recipe.pk }}" data-checked="false"><i class="fas fa-plus"></i></button>
                                                     </div>
                                                 </div>
                                                 <div class="d-flex mt-2" data-recipe-id="{{ recipe.pk }}" onclick="showModalDetailRecipe(this)">
@@ -692,7 +692,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                <button type="button" class="btn btn-success">Enregistrer les changements</button>
+                                <button type="button" class="btn btn-success" id="saveChangeBtn">Enregistrer les changements</button>
                             </div>
                         </div>
                     </div>
