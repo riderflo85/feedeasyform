@@ -212,7 +212,7 @@ function getAllRecipeInPlanning(planningName) {
         }
     }
 
-    if (planningName != "") {
+    if (planningName != "" && planningIsCompleted) {
         planningIsCompleted = true;
         data['name'] = planningName;
     } else {

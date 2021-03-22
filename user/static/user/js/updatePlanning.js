@@ -211,6 +211,48 @@ function getRecipeChoiced() {
 }
 
 
+function getAllRecipeInPlanning(planningName) {
+    const tableTR = $('tbody tr');
+
+    const data = {};
+    let planningIsCompleted = false;
+
+    blocCheckData: {
+        for (const tr of tableTR) {
+            data[tr.id] = "?";
+            for (const td of $(tr).children()) {
+                if (td.tagName != 'TH') {
+                    let encodeRecipe = "";
+                    for (const div of $($(td).children())) {
+                        if ($(div).hasClass('recipe-bloc')) {
+                            const recipe = $(div).children()[0];
+                            encodeRecipe = encodeRecipe + `_${$(recipe).data('id-recipe')}`;
+                        }
+                    }
+                    console.log('encode recipe ', data[tr.id], encodeRecipe);
+                    if (encodeRecipe != "") {
+                        data[tr.id] = data[tr.id] + `&${td.id}=${encodeRecipe}`;
+                        planningIsCompleted = true;
+                    } else {
+                        planningIsCompleted = false;
+                        break blocCheckData;
+                    }
+                }
+            }
+        }
+    }
+
+    if (planningName != "" && planningIsCompleted) {
+        planningIsCompleted = true;
+        data['name'] = planningName;
+    } else {
+        planningIsCompleted = false;
+    }
+
+    return [data, planningIsCompleted];
+}
+
+
 $(document).ready(() => {
     const btnEdit = $('#editPlanning');
     const btnValid = $('#confirmPlanning');
@@ -259,7 +301,8 @@ $(document).ready(() => {
     });
 
     btnValid.on('click', function() {
-
+        const [recipes, state] = getAllRecipeInPlanning($('#namePlanning').text());
+        console.log(recipes, state);
     });
 
     btnModalSaveRecipe.on('click', () => {
