@@ -6,7 +6,12 @@ from django.contrib.auth.decorators import login_required
 from .models import Planning, MealsPerDay
 from .forms import PlanningForm
 from .serializers import recipe_serializer
-from .utils import parse_data_new_planning, create_new_planning
+from .utils import (
+    parse_data_new_planning,
+    create_new_planning,
+    parse_data_update_planning,
+    update_planning_recipes
+)
 from recipe.models import CategorieRecipe, DietaryPlan, OriginRecipe, Recipe, Season
 
 
@@ -38,6 +43,16 @@ def create_planning(request):
             'seasons': Season.objects.order_by('name')
         }
         return render(request, 'planning/new_planning.html', context)
+
+
+@login_required
+def update_planning(request):
+    if request.method == 'POST':
+        planning = Planning.objects.get(pk=int(request.POST['id']))
+        parsed_data = parse_data_update_planning(request.POST)
+        state = update_planning_recipes(planning, parsed_data)
+
+        return JsonResponse({'status': state})
 
 
 @login_required
@@ -99,5 +114,6 @@ class PlanningDetailView(DetailView):
         context['diets'] = DietaryPlan.objects.order_by('name')
         context['seasons'] = Season.objects.order_by('name')
         context['recipes'] = Recipe.objects.all()
+        context['meals_per_day'] = MealsPerDay.objects.all()
 
         return context

@@ -485,8 +485,8 @@
                 <div class="form-group row">
                     <label for="namePlanning" class="col-sm-4 col-form-label">Nom du planning de recette</label>
                     <div class="col-sm-8 d-flex justify-content-center align-items-center">
-                        <h3 class="form-control-plaintext" id="namePlanning">{{ planning.name }}</h3>
-                        <button class="btn btn-success mr-3" id="confirmPlanning" disabled><i class="fas fa-check"></i></button>
+                        <h3 class="form-control-plaintext" id="namePlanning" data-id-planning="{{ planning.pk }}">{{ planning.name }}</h3>
+                        <button class="btn btn-success mr-3" id="confirmPlanning" disabled><span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id="loading"></span> <i class="fas fa-check"></i></button>
                         <button class="btn btn-primary" id="editPlanning"><i class="fas fa-pencil-alt"></i></button>
                     </div>
                 </div>
@@ -494,15 +494,15 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            {% for mlp in planning.monday.meals_per_day.all %}
+                            {% for mlp in meals_per_day %}
                             <th scope="col" data-mlp-id="{{ mlp.pk }}">{{ mlp.name }}</th>
                             {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr id="{{ planning.monday.name }}">
+                        <tr id="{{ planning.monday.name }}" data-id-day="{{ planning.monday.pk }}">
                             <th scope="row">{{ planning.monday.name }}</th>
-                            {% for day_mlp in planning.monday.daymealsperday_set.all %}
+                            {% for day_mlp in planning.monday.daymealsperday_set.all|dictsort:"pk" %}
                             <td id="{{ planning.monday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
@@ -512,9 +512,9 @@
                             </td>
                             {% endfor %}
                         </tr>
-                        <tr id="{{ planning.tuesday.name }}">
+                        <tr id="{{ planning.tuesday.name }}" data-id-day="{{ planning.tuesday.pk }}">
                             <th scope="row">{{ planning.tuesday.name }}</th>
-                            {% for day_mlp in planning.tuesday.daymealsperday_set.all %}
+                            {% for day_mlp in planning.tuesday.daymealsperday_set.all|dictsort:"pk" %}
                             <td id="{{ planning.tuesday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
@@ -524,9 +524,9 @@
                             </td>
                             {% endfor %}
                         </tr>
-                        <tr id="{{ planning.wednesday.name }}">
+                        <tr id="{{ planning.wednesday.name }}" data-id-day="{{ planning.wednesday.pk }}">
                             <th scope="row">{{ planning.wednesday.name }}</th>
-                            {% for day_mlp in planning.wednesday.daymealsperday_set.all %}
+                            {% for day_mlp in planning.wednesday.daymealsperday_set.all|dictsort:"pk" %}
                             <td id="{{ planning.wednesday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
@@ -536,9 +536,9 @@
                             </td>
                             {% endfor %}
                         </tr>
-                        <tr id="{{ planning.thursday.name }}">
+                        <tr id="{{ planning.thursday.name }}" data-id-day="{{ planning.thursday.pk }}">
                             <th scope="row">{{ planning.thursday.name }}</th>
-                            {% for day_mlp in planning.thursday.daymealsperday_set.all %}
+                            {% for day_mlp in planning.thursday.daymealsperday_set.all|dictsort:"pk" %}
                             <td id="{{ planning.thursday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
@@ -548,9 +548,9 @@
                             </td>
                             {% endfor %}
                         </tr>
-                        <tr id="{{ planning.friday.name }}">
+                        <tr id="{{ planning.friday.name }}" data-id-day="{{ planning.friday.pk }}">
                             <th scope="row">{{ planning.friday.name }}</th>
-                            {% for day_mlp in planning.friday.daymealsperday_set.all %}
+                            {% for day_mlp in planning.friday.daymealsperday_set.all|dictsort:"pk" %}
                             <td id="{{ planning.friday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
@@ -560,9 +560,9 @@
                             </td>
                             {% endfor %}
                         </tr>
-                        <tr id="{{ planning.saturday.name }}">
+                        <tr id="{{ planning.saturday.name }}" data-id-day="{{ planning.saturday.pk }}">
                             <th scope="row">{{ planning.saturday.name }}</th>
-                            {% for day_mlp in planning.saturday.daymealsperday_set.all %}
+                            {% for day_mlp in planning.saturday.daymealsperday_set.all|dictsort:"pk" %}
                             <td id="{{ planning.saturday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">
@@ -572,9 +572,9 @@
                             </td>
                             {% endfor %}
                         </tr>
-                        <tr id="{{ planning.sunday.name }}">
+                        <tr id="{{ planning.sunday.name }}" data-id-day="{{ planning.sunday.pk }}">
                             <th scope="row">{{ planning.sunday.name }}</th>
-                            {% for day_mlp in planning.sunday.daymealsperday_set.all %}
+                            {% for day_mlp in planning.sunday.daymealsperday_set.all|dictsort:"pk" %}
                             <td id="{{ planning.sunday.name }}-{{ day_mlp.meal_per_day.pk }}" data-mlp-id="{{ day_mlp.meal_per_day.pk }}">
                                 {% for recipe in day_mlp.recipes.all %}
                                 <div class="d-flex justify-content-center align-items-center recipe-bloc">

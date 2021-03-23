@@ -159,6 +159,25 @@ function filteredRecipe(dataFilterAndText) {
 }
 
 
+function sendUpdatedData(data, successCb) {
+    $.ajax({
+        url: "/planning/updated/",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        success: (data) => {
+            if (data.status === true) {
+                successCb();
+                window.location.reload();
+            }
+        },
+        error: (error) => {
+            console.warn(error);
+        }
+    });
+}
+
+
 function eventCheckboxClick() {
     const allRecipes = $('#displayRecipeBloc');
 
@@ -211,7 +230,7 @@ function getRecipeChoiced() {
 }
 
 
-function getAllRecipeInPlanning(planningName) {
+function getAllRecipeInPlanning(planningName, planningId) {
     const tableTR = $('tbody tr');
 
     const data = {};
@@ -219,7 +238,7 @@ function getAllRecipeInPlanning(planningName) {
 
     blocCheckData: {
         for (const tr of tableTR) {
-            data[tr.id] = "?";
+            data[`${tr.id}-${tr.getAttribute('data-id-day')}`] = "?";
             for (const td of $(tr).children()) {
                 if (td.tagName != 'TH') {
                     let encodeRecipe = "";
@@ -229,9 +248,8 @@ function getAllRecipeInPlanning(planningName) {
                             encodeRecipe = encodeRecipe + `_${$(recipe).data('id-recipe')}`;
                         }
                     }
-                    console.log('encode recipe ', data[tr.id], encodeRecipe);
                     if (encodeRecipe != "") {
-                        data[tr.id] = data[tr.id] + `&${td.id}=${encodeRecipe}`;
+                        data[`${tr.id}-${tr.getAttribute('data-id-day')}`] = data[`${tr.id}-${tr.getAttribute('data-id-day')}`] + `&${td.id}=${encodeRecipe}`;
                         planningIsCompleted = true;
                     } else {
                         planningIsCompleted = false;
@@ -241,10 +259,10 @@ function getAllRecipeInPlanning(planningName) {
             }
         }
     }
-
     if (planningName != "" && planningIsCompleted) {
         planningIsCompleted = true;
         data['name'] = planningName;
+        data['id'] = planningId;
     } else {
         planningIsCompleted = false;
     }
@@ -301,8 +319,14 @@ $(document).ready(() => {
     });
 
     btnValid.on('click', function() {
-        const [recipes, state] = getAllRecipeInPlanning($('#namePlanning').text());
-        console.log(recipes, state);
+        const loadingSpinner = $('#loading');
+        loadingSpinner.removeClass('d-none');
+        $(this).attr('disabled', true);
+        const [recipes, state] = getAllRecipeInPlanning($('#namePlanning').text(), $('#namePlanning').data('id-planning'));
+        
+        if (state) {
+            sendUpdatedData(recipes, function() {loadingSpinner.addClass('d-none');});
+        }
     });
 
     btnModalSaveRecipe.on('click', () => {

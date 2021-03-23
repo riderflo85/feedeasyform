@@ -68,3 +68,68 @@ def create_new_planning(parsed_data, planning_name):
         is_good = False
 
     return is_good
+
+
+def parse_data_update_planning(request_data):
+    """
+    Parsed the request string data to the python object for updated a planning.
+    """
+    recipes_by_days = []
+    index = 0
+
+    for key, value in request_data.items():
+        if key != "name" and key != "id":
+            mlp_and_recipes = value.split('?&')[1].split('&')
+            recipes_by_days.append({key: {}})
+            for mlp_recipe in mlp_and_recipes:
+                data_splited = mlp_recipe.split('=')
+                mlp = MealsPerDay.objects.get(
+                    pk=int(data_splited[0].split('-')[1])
+                )
+                # Get a recipe ID in the data string request send by the user
+                recipes = [
+                    Recipe.objects.get(
+                        pk=int(x)
+                    ) for x in data_splited[1].split('_')[1:]
+                ]
+                recipes_by_days[index][key][mlp] = recipes
+            index += 1
+
+    return recipes_by_days
+
+
+def update_planning_recipes(planning_instance, new_recipes):
+    """
+    Update the recipes in the day in a planning instance.
+    """
+    day_instances = []
+    is_good = False
+
+    for day in new_recipes:
+        for k, v  in day.items():
+            day_name, day_id = k.split('-')
+            day = Day.objects.get(pk=int(day_id))
+            if day.name == day_name:
+                for mlp, recipes in v.items():
+                    day_mlp_object = DayMealsPerDay.objects.filter(
+                        day=day
+                    ).filter(meal_per_day=mlp)[0]
+                    day_mlp_object.recipes.set(recipes)
+                    day_mlp_object.save()
+            day.save()
+            day_instances.append(day)
+
+    try:
+        planning_instance.monday = day_instances[0]
+        planning_instance.tuesday = day_instances[1]
+        planning_instance.wednesday = day_instances[2]
+        planning_instance.thursday = day_instances[3]
+        planning_instance.friday = day_instances[4]
+        planning_instance.saturday = day_instances[5]
+        planning_instance.sunday = day_instances[6]
+        planning_instance.save()
+        is_good = True
+    except:
+        is_good = False
+    
+    return is_good
