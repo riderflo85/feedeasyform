@@ -1,4 +1,5 @@
 .env
+.env.dev.backup
 .vscode
 .DS_Store
 database.json
