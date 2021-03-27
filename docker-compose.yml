@@ -34,7 +34,7 @@ services:
       - static_volume:/usr/src/app/feedeasyform_project/settings/staticfiles
       - media_volume:/usr/src/app/feedeasyform_project/media
     ports:
-      - 1337:80
+      - 80:80
     depends_on:
       - web
 
