@@ -16,6 +16,8 @@ MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

@@ -1,5 +1,6 @@
 .env
 .env.dev.backup
+.env.prod.proxy-companion
 .vscode
 .DS_Store
 database.json
