@@ -1,9 +1,0 @@
-location /staticfiles/ {
-    alias /usr/src/app/feedeasyform_project/settings/staticfiles/;
-    add_header Access-Control-Allow-Origin *;
-}
-
-location /media/ {
-    alias /usr/src/app/feedeasyform_project/media/;
-    add_header Access-Control-Allow-Origin *;
-}
