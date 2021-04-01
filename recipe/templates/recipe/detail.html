@@ -96,7 +96,7 @@
                     <div class="col-sm-8" id="divFoods">
                         <ul id="listingFoods">
                             {% for r_food in recipe.get_all_foods %}
-                            <li data-food_id="{{ r_food.food.pk }}">{{ r_food.food.name }} <strong>{{ r_food.quantity }}</strong></li>
+                            <li data-food_id="{{ r_food.food.pk }}"><a href="/recipe/detail/food/{{ r_food.food.pk }}">{{ r_food.food.name }}</a> <strong>{{ r_food.quantity }}</strong></li>
                             {% endfor %}
                         </ul>
                         <table class="table table-bordered table-sm d-none" id="allUsedFoods">
