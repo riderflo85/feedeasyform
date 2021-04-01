@@ -21,4 +21,5 @@ urlpatterns = [
      path('detail/diet/<int:pk>/',
           views.DietDetailView.as_view(), name="detaildiet"),
      path('backup_database/', views.download_json_backup, name="backup_db"),
+     path('update_food_name/', views.update_food_name, name="update_food"),
 ]

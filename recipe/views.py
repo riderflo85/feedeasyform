@@ -187,6 +187,7 @@ def show_and_update_db(request):
 
         return render(request, 'recipe/databases.html', context)
 
+
 @login_required
 def download_json_backup(request):
     file_name = generate_zip_file()
@@ -195,6 +196,26 @@ def download_json_backup(request):
         as_attachment=True,
         content_type="application/zip"
     )
+
+
+@login_required
+def update_food_name(request):
+    if request.method == 'POST':
+        food = Food.objects.get(
+            pk=int(request.POST['id'])
+        )
+        food.name = request.POST['new_name']
+        try:
+            food.save()
+            return JsonResponse({'status': 'ok'})
+        except Exception as e:
+            return JsonResponse({
+                'error': 'already exist',
+            })
+
+    else:
+        return JsonResponse({'error': 'bad request type'})
+
 
 class RecipeDetailView(DetailView):
     model = Recipe
