@@ -84,7 +84,10 @@ function replaceListingByTextarea(listingBalise) {
     let value = "";
 
     for (const childContent of listingBalise.children()) {
-        value = value.concat('\n', $(childContent).contents()[0].data);
+        const text = $(childContent).contents()[0];
+        if (text != undefined) {
+            value = value.concat('\n', text.data);
+        }
     }
 
     return value.replace('\n', '');
