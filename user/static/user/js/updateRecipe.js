@@ -2,8 +2,8 @@ function getFoodsAndQuantity(foodsBloc) {
     let data = [];
 
     for (const ulBalise of foodsBloc.children()) {
-        const food = $(ulBalise)[0].innerText.replace($(ulBalise).children()[0].innerText, "");
-        const quantAndUnit = $(ulBalise).children()[0].innerText;
+        const food = $(`#${$(ulBalise)[0].id} a`).text() // $(ulBalise)[0].innerText.replace($(ulBalise).children()[0].innerText, "");
+        const quantAndUnit = $(ulBalise).children()[1].innerText;
         data.push({
             id: $(ulBalise).data('food_id'),
             foodName: food,
@@ -538,7 +538,7 @@ $(document).ready(() => {
                 },
                 () => {
                     // success call back
-                    setTimeout(() => document.location.reload(), 1000);
+                    setTimeout(() => document.location.reload(), 500);
                 },
                 () => {
                     // error call back
