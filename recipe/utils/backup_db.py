@@ -1,9 +1,18 @@
 import json, os
 from django.conf import settings
 
-from recipe.models import Utensil, CategorieRecipe, Level, PriceScale, \
-    OriginRecipe, Recipe, DietaryPlan
-from food.models import FoodGroup
+from recipe.models import (
+    Season,
+    Utensil,
+    CategorieRecipe,
+    Level,
+    PriceScale,
+    OriginRecipe,
+    Recipe,
+    DietaryPlan
+)
+from food.models import FoodGroup, Food
+from planning.models import MealsPerDay
 
 
 def get_utensils():
@@ -188,16 +197,89 @@ def get_recipes():
     return recipes
 
 
+def get_foods():
+    """
+    Get all foods in the database.
+    return [{
+        'name': '...',
+        'group_name': <FoodGroup>.name,
+        'proteine': '...',
+        'glucide': '...',
+        'sucre': '...',
+        'fibre': '...',
+        'lipide': '...',
+        'acide_gras_sature': '...',
+        'cholesterol': '...',
+        'sel_chlorure_de_sodium': '...',
+        'potassium': '...',
+        'calcium': '...',
+        'magnesium': '...',
+        'fer': '...',
+        'zinc': '...',
+        'vitamine_c': '...',
+        'vitamine_d': '...',
+        'vitamine_e': '...',
+        'metric_unit': '...',
+        'imperial_unit': '...',
+    }, ...]
+    """
+
+    foods = []
+
+    for food in Food.objects.all():
+        f_data = {}
+        for field, value in food.list_fields_without_verbose_name():
+            if field != 'id':
+                if field == 'id_group':
+                    f_data['group_name'] = FoodGroup.objects.get(
+                        pk=int(value)
+                    ).name
+                else:
+                    f_data[field] = value
+        foods.append(f_data)
+
+    return foods
+
+
+def get_seasons():
+    """
+    Get all seasons in the database.
+    return [name_season, ...]
+    """
+    seasons = []
+
+    for season in Season.objects.all():
+        seasons.append(season.name)
+
+    return seasons
+
+
+def get_meals_per_day():
+    """
+    Get all meals per day in the database.
+    return [name_mlp, ...]
+    """
+    mlps = []
+
+    for mlp in MealsPerDay.objects.all():
+        mlps.append(mlp.name)
+
+    return mlps
+
+
 def generate_json_file():
     all_data = {
         'utensils': get_utensils(),
         'recipe_categories': get_categories_recipe(),
         'levels': get_levels(),
         'price_scales': get_price_scales(),
+        'seasons': get_seasons(),
+        'meals_per_day': get_meals_per_day(),
         'origins_recipe': get_origins_recipe(),
         'food_groups': get_food_groups(),
         'recipes': get_recipes(),
-        'diets': get_dietary_plan()
+        'diets': get_dietary_plan(),
+        'foods': get_foods()
     }
     file_name = 'database.json'
 
