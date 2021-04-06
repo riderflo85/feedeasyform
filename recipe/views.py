@@ -1,7 +1,10 @@
+import os
+
 from django.http import JsonResponse, FileResponse
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.management import call_command
 
 from .forms import (
     RecipeForm,
@@ -191,6 +194,20 @@ def show_and_update_db(request):
 @login_required
 def download_json_backup(request):
     file_name = generate_zip_file()
+    return FileResponse(
+        open(file_name, 'rb'),
+        as_attachment=True,
+        content_type="application/zip"
+    )
+
+
+@login_required
+def download_dumpdata(request):
+    file_name = "dumpdata.zip"
+    os.system(f"rm {file_name} save_dump_database.json")
+    call_command('dumpdata', indent=4, output='save_dump_database.json')
+    os.system(f"zip {file_name} save_dump_database.json")
+
     return FileResponse(
         open(file_name, 'rb'),
         as_attachment=True,

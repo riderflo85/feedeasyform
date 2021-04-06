@@ -24,7 +24,8 @@
         <!-- <a class="nav-link text-light" href="{% url 'food:new_food' %}">Nouveau aliment</a> -->
         <a class="nav-link text-light" href="{% url 'recipe:databases' %}">Base de données</a>
         {% if user.username == 'managerJR' %}
-        <a class="nav-link text-light" href="{% url 'recipe:backup_db' %}">Télécharger une partie de la base de données</a>
+        <a class="nav-link text-light" href="{% url 'recipe:backup_db' %}">Télécharger les données utiles de la base de données</a>
+        <a class="nav-link text-light" href="{% url 'recipe:backup_dumpdata' %}">Télécharger toute la base de données</a>
         {% endif %}
         <a class="nav-link text-light" href="{% url 'user:logout' %}">Déconnexion</a>
         {% else %}
