@@ -181,7 +181,7 @@ def get_recipes():
             'point': recipe.point,
             'typical_recipe_city': recipe.typical_recipe_city,
             'source': recipe.source,
-            'image': recipe.image.url,
+            'image': recipe.image.url.replace('/media/', '/'),
             'food': foods,
             'categorie': categ,
             'origin': origin,
