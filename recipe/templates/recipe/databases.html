@@ -1,10 +1,14 @@
 {% extends 'recipe/base.html' %}
+{% load static %}
 {% block content %}
 <div class="container-fluid mt-3 d-flex justify-content-center align-items-center">
     <div class="row db-box">
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Groupes d'aliments <button type="button" data-toggle="modal" data-target="#modalDeleteFoodGroup" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Groupes d'aliments</h3>
+                    <button type="button" data-toggle="modal" data-target="#modalDeleteFoodGroup" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
                 <small>Total: {{ food_group|length }}</small>
                 <ul class="listing">
                     {% for f_group in food_group %}
@@ -15,7 +19,10 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Aliments <button type="button" data-toggle="modal" data-target="#modalDeleteFood" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Aliments</h3>
+                    <button type="button" data-toggle="modal" data-target="#modalDeleteFood" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
                 <small>Total: {{ foods|length }}</small>
                 <ul class="listing">
                     {% for food in foods %}
@@ -26,7 +33,10 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Categories de recettes <button type="button" data-toggle="modal" data-target="#modalDeleteRecipeCateg" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Categories de recettes</h3>
+                    <button type="button" data-toggle="modal" data-target="#modalDeleteRecipeCateg" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
                 <small>Total: {{ recipe_categ|length }}</small>
                 <ul class="listing">
                     {% for r_categ in recipe_categ %}
@@ -37,16 +47,18 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3">
             <div class="border-box content-sign_in">
-                <h3>Recettes 
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Recettes 
+                    </h3>
                     <button type="button" data-toggle="modal" data-target="#modalDeleteRecipe" class="btn btn-danger">
                         <i class="fas fa-trash-alt"></i>
                     </button>
-                </h3>
+                </div>
                 <small>Total: {{ recipes|length }}</small>
                 <ul class="listing">
                     {% for recipe in recipes %}
                     <li>
-                        <i class="fas fa-copy text-success mr-2 btn-duplicate-recipe" data-toggle="tooltip" data-placement="left" title="Tooltip on left" data-id-recipe="{{ recipe.pk }}" id="duplicateRecipeBtn-{{ recipe.pk }}"></i>
+                        <i class="fas fa-copy text-success mr-2 btn-duplicate-recipe" data-toggle="tooltip" data-placement="left" title="Dupliquer la recette" data-id-recipe="{{ recipe.pk }}" id="duplicateRecipeBtn-{{ recipe.pk }}"></i>
                         <a href="/recipe/detail/recipe/{{ recipe.pk }}" class="link">{{ recipe }}</a>
                     </li>
                     {% endfor %}
@@ -55,7 +67,10 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
             <div class="border-box content-sign_in">
-                <h3>Ustensiles de cuisine <button type="button" data-toggle="modal" data-target="#modalDeleteUtensil" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Ustensiles de cuisine</h3>
+                    <button type="button" data-toggle="modal" data-target="#modalDeleteUtensil" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
                 <small>Total: {{ utensils|length }}</small>
                 <ul class="listing">
                     {% for utensil in utensils %}
@@ -66,7 +81,10 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
             <div class="border-box content-sign_in">
-                <h3>Origine des recettes <button type="button" data-toggle="modal" data-target="#modalDeleteOrigin" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Origine des recettes</h3>
+                    <button type="button" data-toggle="modal" data-target="#modalDeleteOrigin" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
                 <small>Total: {{ origin_recipes|length }}</small>
                 <ul class="listing">
                     {% for origin in origin_recipes %}
@@ -77,7 +95,10 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
             <div class="border-box content-sign_in">
-                <h3>Régimes alimentaire <button type="button" data-toggle="modal" data-target="#modalDeleteDiet" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Régimes alimentaire</h3>
+                    <button type="button" data-toggle="modal" data-target="#modalDeleteDiet" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
                 <small>Total: {{ diets|length }}</small>
                 <ul class="listing">
                     {% for diet in diets %}
@@ -88,7 +109,10 @@
         </div>
         <div class="col-12 col-sm-3 col-lg-3 mt-3 mb-5">
             <div class="border-box content-sign_in">
-                <h3>Plannings <button type="button" data-toggle="modal" data-target="#modalDeletePlanning" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></h3>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Plannings</h3>
+                    <button type="button" data-toggle="modal" data-target="#modalDeletePlanning" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </div>
                 <small>Total: {{ plannings|length }}</small>
                 <ul class="listing">
                     {% for planning in plannings %}
@@ -340,3 +364,8 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'user/js/secureajax.js' %}"></script>
+<script src="{% static 'user/js/duplicateRecipe.js' %}"></script>
+{% endblock script %}

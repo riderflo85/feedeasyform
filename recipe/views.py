@@ -18,11 +18,25 @@ from .forms import (
     DietaryPlanForm,
     DeleteDietForm,
 )
-from .models import Level, PriceScale, Recipe, CategorieRecipe, Utensil, OriginRecipe, \
-    DietaryPlan, Season
-from .utils.complet_new_recipe import complet_recipe_with_foods_and_utensils,\
-    parse_foods_and_utensils, added_season_and_diet, parse_diets_and_seasons, \
-        updated_recipe_foods_and_utensils, updated_season_and_diet
+from .models import (
+    Level,
+    PriceScale,
+    Recipe,
+    CategorieRecipe,
+    Utensil,
+    OriginRecipe,
+    DietaryPlan,
+    Season
+)
+from .utils.complet_new_recipe import (
+    complet_recipe_with_foods_and_utensils,
+    parse_foods_and_utensils,
+    added_season_and_diet,
+    parse_diets_and_seasons,
+    updated_recipe_foods_and_utensils,
+    updated_season_and_diet
+)
+from .utils.duplicate_recipe import create_recipe_with_template
 from .utils.backup_db import generate_zip_file
 from .list_all_db import list_all_diet, list_all_season
 from food.models import Food, FoodGroup
@@ -229,6 +243,24 @@ def update_food_name(request):
             return JsonResponse({
                 'error': 'already exist',
             })
+
+    else:
+        return JsonResponse({'error': 'bad request type'})
+
+
+@login_required
+def duplicate_recipe(request):
+    if request.method == 'POST':
+        recipe = Recipe.objects.get(
+            pk=int(request.POST['id'])
+        )
+        dup_recipe = Recipe()
+
+        status = {
+            'status': create_recipe_with_template(recipe, dup_recipe)
+        }
+
+        return JsonResponse(status)
 
     else:
         return JsonResponse({'error': 'bad request type'})

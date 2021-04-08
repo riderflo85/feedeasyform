@@ -22,5 +22,6 @@ urlpatterns = [
           views.DietDetailView.as_view(), name="detaildiet"),
      path('backup_database/', views.download_json_backup, name="backup_db"),
      path('update_food_name/', views.update_food_name, name="update_food"),
-     path('backup_all_data/', views.download_dumpdata, name="backup_dumpdata")
+     path('backup_all_data/', views.download_dumpdata, name="backup_dumpdata"),
+     path('duplicate_recipe/', views.duplicate_recipe, name="duplicate_recipe"),
 ]

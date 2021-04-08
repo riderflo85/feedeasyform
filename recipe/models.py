@@ -186,6 +186,15 @@ class Recipe(models.Model):
 
         return foods
 
+    def list_fields_without_verbose_name(self):
+        """
+        Return a iterator for get the all fields 
+        without a verbose name and with values.
+        """
+
+        for field in self._meta.fields:
+            yield (field.name, field.value_to_string(self))
+
 
 class FoodAndQuantity(models.Model):
     recipe = models.ForeignKey(
