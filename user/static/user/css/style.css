@@ -227,3 +227,8 @@ hr {
     border-bottom: 1px solid #dee2e6;
     margin-bottom: 2vh;
 }
+
+.btn-duplicate-recipe:hover {
+    cursor: pointer;
+    color: #1e7b34 !important;
+}

@@ -45,7 +45,10 @@
                 <small>Total: {{ recipes|length }}</small>
                 <ul class="listing">
                     {% for recipe in recipes %}
-                    <li><a href="/recipe/detail/recipe/{{ recipe.pk }}" class="link">{{ recipe }}</a></li>
+                    <li>
+                        <i class="fas fa-copy text-success mr-2 btn-duplicate-recipe" data-toggle="tooltip" data-placement="left" title="Tooltip on left" data-id-recipe="{{ recipe.pk }}" id="duplicateRecipeBtn-{{ recipe.pk }}"></i>
+                        <a href="/recipe/detail/recipe/{{ recipe.pk }}" class="link">{{ recipe }}</a>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
