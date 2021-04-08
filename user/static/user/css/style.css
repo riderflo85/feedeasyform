@@ -232,3 +232,7 @@ hr {
     cursor: pointer;
     color: #1e7b34 !important;
 }
+
+.form-control-plaintext {
+    width: auto !important;
+}

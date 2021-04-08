@@ -1,7 +1,9 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 
 from .forms import FoodForm, FoodGroupForm
+from .models import FoodGroup
 
 
 @login_required
@@ -28,3 +30,20 @@ def create_food(request):
             'form_group': form_group
         }
         return render(request, 'food/new_food.html', context)
+
+
+@login_required
+def set_unit_with_food_group(request):
+    if request.method == 'POST':
+        metric_unit, imperial_unit = request.POST['unit'].split(';')
+        food_group = FoodGroup.objects.get(pk=int(request.POST['id']))
+
+        for food in food_group.food_set.all():
+            food.metric_unit = metric_unit.split(':')[1]
+            food.imperial_unit = imperial_unit.split(':')[1]
+            food.save()
+
+        return JsonResponse({'status': 'ok'})
+
+    else:
+        return JsonResponse({'error': 'http method not accepeted'})
