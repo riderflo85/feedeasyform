@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 
 from .forms import FoodForm, FoodGroupForm
-from .models import FoodGroup
+from .models import Food, FoodGroup
 
 
 @login_required
@@ -42,6 +42,23 @@ def set_unit_with_food_group(request):
             food.metric_unit = metric_unit.split(':')[1]
             food.imperial_unit = imperial_unit.split(':')[1]
             food.save()
+
+        return JsonResponse({'status': 'ok'})
+
+    else:
+        return JsonResponse({'error': 'http method not accepeted'})
+
+
+@login_required
+def update_food_unit(request):
+    if request.method == 'POST':
+        metric_unit, imperial_unit = request.POST['unit'].split(';')
+        food = Food.objects.get(
+            pk=int(request.POST['id'])
+        )
+        food.metric_unit = metric_unit.split(':')[1]
+        food.imperial_unit = imperial_unit.split(':')[1]
+        food.save()
 
         return JsonResponse({'status': 'ok'})
 

@@ -487,18 +487,37 @@
                 {% elif food %}
                 <div class="form-group row">
                     <label for="nameFood" class="col-sm-4 col-form-label"> </label>
-                    <div class="col-sm-8 d-flex justify-content-between align-items-center">
-                        <h3 class="form-control-plaintext" id="nameFood" data-id-food="{{ food.pk }}">{{ food.name }}</h3>
-                        <div class="btn-bloc-edit d-flex justify-content-around align-items-center">
-                            <button type="button" class="btn btn-primary btn-sm" id="btnEditFoodName">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <button type="button" class="btn btn-success btn-sm" id="btnValideData" style="display:none;">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button type="button" class="btn btn-secondary btn-sm" id="btnCancelEdit" style="display:none;">
-                                <i class="fas fa-times"></i>
-                            </button>
+                    <div class="col-sm-8">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="form-control-plaintext" id="nameFood" data-id-food="{{ food.pk }}">{{ food.name }}</h3>
+                            <div class="btn-bloc-edit d-flex justify-content-around align-items-center">
+                                <button type="button" class="btn btn-primary btn-sm" id="btnEditFoodName">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm" id="btnValideData" style="display:none;">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="btnCancelEdit" style="display:none;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <button class="btn btn-primary" id="btnEditUnit">Modifier l'unité de mesure des ingrédients</button>
+                        </div>
+                        <div class="my-3 d-none" id="blocEditUnit">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="selectUnit">Choisissez l'unité</span>
+                                </div>
+                                <select name="unit" id="typeUnit" class="form-control">
+                                    <option value="null">------------</option>
+                                    <option value="fr:g (gramme);en:lb (pound)">Gramme (EN: Pond)</option>
+                                    <option value="fr:l (litre);en:pt (pint)">Litre (EN: Pint)</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center">
+                                <button class="btn btn-secondary mr-4" id="btnCancelEditUnit">Annuler</button>
+                                <button class="btn btn-success" id="btnValideEditUnit">Valider</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -907,6 +926,7 @@
 <script src="{% static 'user/js/updatePlanning.js' %}"></script>
 {% elif food %}
 <script src="{% static 'user/js/updateFood.js' %}"></script>
+<script src="{% static 'user/js/editFoodUnit.js' %}"></script>
 {% elif foodgroup %}
 <script src="{% static 'user/js/editFoodGroupUnit.js' %}"></script>
 {% endif %}
