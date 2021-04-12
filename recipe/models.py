@@ -209,5 +209,9 @@ class FoodAndQuantity(models.Model):
     )
     quantity = models.CharField(
         max_length=100,
-        verbose_name="quantitee de l'ingredient avec l'unite de mesure"
+        verbose_name="quantitee de l'ingredient"
+    )
+    recipe_unity = models.CharField(
+        max_length=20,
+        verbose_name="unité de mesure de l'ingrédient pour la recette"
     )
