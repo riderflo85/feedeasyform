@@ -103,6 +103,11 @@ class Food(models.Model):
         null=True,
         verbose_name="vitamine E (mg/100g)"
     )
+    energie = models.CharField(
+        max_length=15,
+        null=True,
+        verbose_name="energie (kcal/100g)"
+    )
     metric_unit = models.CharField(
         max_length=25,
         default="kg",
