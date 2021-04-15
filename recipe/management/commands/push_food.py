@@ -44,6 +44,7 @@ class Command(BaseCommand):
                     new_food = Food()
                     new_food.name = name_food_parsed
                     new_food.id_group = group
+                    new_food.food_code = food["alim_code"]
                     new_food.proteine = food["Protéines (g/100g)"]
                     new_food.glucide = food["Glucides (g/100g)"]
                     new_food.lipide = food["Lipides (g/100g)"]
@@ -60,6 +61,7 @@ class Command(BaseCommand):
                     new_food.vitamine_c = food["Vitamine C (mg/100g)"]
                     new_food.vitamine_d = food["Vitamine D (µg/100g)"]
                     new_food.vitamine_e = food["Vitamine E (mg/100g)"]
+                    new_food.energie = food["Energie (kcal/100g)"]
                     new_food.save()
 
                     if kwargs['verbose']:
