@@ -18,6 +18,11 @@ class Food(models.Model):
         unique=True,
         verbose_name="nom de l'ingredient"
     )
+    food_code = models.IntegerField(
+        unique=True,
+        null=True,
+        verbose_name="code aliment"
+    )
     id_group = models.ForeignKey(
         FoodGroup,
         on_delete=models.CASCADE,
