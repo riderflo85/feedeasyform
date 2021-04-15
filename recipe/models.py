@@ -133,9 +133,8 @@ class Recipe(models.Model):
         through="FoodAndQuantity",
         verbose_name="ingredients avec quantitees"
     )
-    categorie = models.ForeignKey(
+    categorie = models.ManyToManyField(
         CategorieRecipe,
-        on_delete=models.CASCADE,
         verbose_name="categorie de la recette"
     )
     origin = models.ForeignKey(
