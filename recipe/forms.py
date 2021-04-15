@@ -62,7 +62,7 @@ class RecipeForm(ModelForm):
             'point',
             'image',
             'source',
-            'categorie',
+            # 'categorie',
             'origin',
             'typical_recipe_city',
             'price_scale',

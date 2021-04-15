@@ -1,4 +1,4 @@
-from recipe.models import Food, FoodAndQuantity, Utensil, Season, DietaryPlan
+from recipe.models import CategorieRecipe, Food, FoodAndQuantity, Utensil, Season, DietaryPlan
 
 
 def parse_foods_and_utensils(foods, utensils):
@@ -61,19 +61,33 @@ def parse_diets_and_seasons(diets, seasons):
     return parsed_diets, parsed_seasons
 
 
-def complet_recipe_with_foods_and_utensils(instance_recipe, foods, utensils):
+def parse_categories(categories):
     """
-    Add the foods and utensils in the new recipe.
+    Parsed the categories for the new recipe.
+    categories -> str : '?&c=id&c=id...'
+
+    return categs -> list : [id, ...]
+    """
+    parsed_categs = categories.replace('?&c=', '').split('&c=')
+
+    return parsed_categs
+
+
+def complet_recipe_with_f_u_c(instance_recipe, foods, utensils, categs):
+    """
+    Add the foods, utensils and categories in the new recipe.
     instance_recipe -> <class 'planning.models.Recipe'>
     foods -> list : [
         {'id': int, 'quantity': string},
         ...
     ]
     utensils -> list : [id, ...]
+    categs -> list : [id, ...]
     """
     
     recipe = instance_recipe
     instances_utensil = set()
+    instances_categs = set()
 
     for food in foods:
         f = Food.objects.get(pk=int(food['id_food']))
@@ -87,6 +101,11 @@ def complet_recipe_with_foods_and_utensils(instance_recipe, foods, utensils):
         u = Utensil.objects.get(pk=int(utensil['id_utensil']))
         instances_utensil.add(u)
 
+    for categ in categs:
+        c = CategorieRecipe.objects.get(pk=int(categ))
+        instances_categs.add(c)
+
+    recipe.categories.set(instances_categs)
     recipe.utensils.set(instances_utensil)
     recipe.save()
 

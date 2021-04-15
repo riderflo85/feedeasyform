@@ -1,5 +1,11 @@
-from .models import Recipe, CategorieRecipe, Utensil, OriginRecipe, \
-    DietaryPlan, Season
+from .models import (
+    Recipe,
+    CategorieRecipe,
+    Utensil,
+    OriginRecipe,
+    DietaryPlan,
+    Season
+)
 
 
 def list_all_recipe():

@@ -157,9 +157,16 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">{{ form_recipe.categorie.label }}</label>
+                                        <label class="col-sm-4 col-form-label">{{ categ_field.label }}
+                                            <br>
+                                            <small>(sélection multiple avec la touche Shift / Ctrl / Command)</small>
+                                        </label>
                                         <div class="col-sm-8">
-                                            {{ form_recipe.categorie }}
+                                            <select name="categories" required id="id_categories" multiple class="form-control">
+                                                {% for categ in categ_field.categs %}
+                                                <option value="{{ categ.0 }}">{{ categ.1 }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -177,7 +184,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-4 col-form-label">{{ diet_field.label }}
                                             <br>
-                                            <small>(sélection multiple avec la touche Shift ou Ctrl)</small>
+                                            <small>(sélection multiple avec la touche Shift / Ctrl / Command)</small>
                                         </label>
                                         <div class="col-sm-8">
                                             <select name="dietary_plan" required id="id_dietary_plan" multiple class="form-control">
@@ -190,7 +197,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-4 col-form-label">{{ season_field.label }}
                                             <br>
-                                            <small>(sélection multiple avec la touche Shift ou Ctrl)</small>
+                                            <small>(sélection multiple avec la touche Shift / Ctrl / Command)</small>
                                         </label>
                                         <div class="col-sm-8">
                                             <select name="season" required id="id_season" multiple class="form-control">

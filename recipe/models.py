@@ -133,7 +133,7 @@ class Recipe(models.Model):
         through="FoodAndQuantity",
         verbose_name="ingredients avec quantitees"
     )
-    categorie = models.ManyToManyField(
+    categories = models.ManyToManyField(
         CategorieRecipe,
         verbose_name="categorie de la recette"
     )

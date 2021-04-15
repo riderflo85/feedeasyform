@@ -4,6 +4,7 @@ function formatedDataForRequest(data) {
     let foods = "?";
     let diets = "?";
     let seasons = "?";
+    let categs = "?";
 
     for (const utensil of newData.utensils) {
         utensils = utensils.concat("&u=", utensil);
@@ -22,10 +23,15 @@ function formatedDataForRequest(data) {
         seasons = seasons.concat("&s=", season);
     }
 
+    for (const categ of newData.categories) {
+        categs = categs.concat("&c=", categ);
+    }
+
     newData.foods = foods;
     newData.utensils = utensils;
     newData.dietary_plan = diets;
     newData.season = seasons;
+    newData.categories = categs;
 
     return newData;
 }
