@@ -209,3 +209,23 @@ def updated_season_and_diet(instance_recipe, diets, seasons):
     recipe.season.set(instance_seasons)
 
     recipe.save()
+
+
+def updated_categories(instance_recipe, categs):
+    """
+    Update the categories in the recipe.
+    instance_recipe -> <class 'planning.models.Recipe'>
+    categs -> list : [id, ...]
+    """
+
+    recipe = instance_recipe
+    instance_categ = set()
+    recipe_categs = recipe.categories.all()
+
+    for categ in categs:
+        if categ not in recipe_categs:
+            c = CategorieRecipe.objects.get(pk=int(categ))
+            instance_categ.add(c)
+
+    recipe.categories.set(instance_categ)
+    recipe.save()

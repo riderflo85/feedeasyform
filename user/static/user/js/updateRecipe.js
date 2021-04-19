@@ -94,17 +94,19 @@ function replaceListingByTextarea(listingBalise) {
 }
 
 
-function newFieldCateg(selectedCateg) {
+function newFieldCateg(categBloc) {
     const dataCategs = $("#dataCategs");
-    let field = "<select type='text' name='RecipeCateg' id='id_recipe_categ' required class='form-control'>$forReplaceByAllCategs$</select>";
+    let field = "<select type='text' name='RecipeCateg' id='id_recipe_categ' required class='form-control' multiple>$forReplaceByAllCategs$</select>";
     let options = "";
 
     for (const categ of dataCategs.children()) {
-        if ($(selectedCateg).contents()[0].data != $(categ).data('name')) {
-            options = options.concat(`<option value="${$(categ).data('id')}">${$(categ).data('name')}</option>`);
-        } else {
-            options = options.concat(`<option value="${selectedCateg.data('id_categ')}" selected>${$(categ).data('name')}</option>`);
+        let isSelected = "";
+        for (const liBalise of categBloc.contents().filter(function() {return this.nodeName === 'LI'})) {
+            if ($(liBalise).text() === $(categ).data('name')) {
+                isSelected = "selected";
+            }
         }
+        options = options.concat(`<option value="${$(categ).data('id')}" ${isSelected}>${$(categ).data('name')}</option>`);
     }
 
     return field.replace('$forReplaceByAllCategs$', options);
@@ -270,7 +272,7 @@ function getAllFields() {
             originHTML: tips[0].outerHTML,
             field: tipsField
         },
-        categ: {
+        categories: {
             data: categ,
             originHTML: categ[0].outerHTML,
             field: categField

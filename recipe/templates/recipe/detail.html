@@ -137,7 +137,11 @@
                 <div class="form-group row">
                     <label for="RecipeCateg" class="col-sm-4 col-form-label border-label">Catégorie de la recette</label>
                     <div class="col-sm-8">
-                        <p class="form-control-plaintext" id="RecipeCateg" data-id_categ="{{ recipe.categorie.pk }}">{{ recipe.categorie.name }}</p>
+                        <ul id="RecipeCateg">
+                            {% for categ in recipe.categories.all %}
+                            <li>{{ categ.name }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group row">

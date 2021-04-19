@@ -35,7 +35,8 @@ from .utils.complet_new_recipe import (
     parse_diets_and_seasons,
     parse_categories,
     updated_recipe_foods_and_utensils,
-    updated_season_and_diet
+    updated_season_and_diet,
+    updated_categories
 )
 from .utils.duplicate_recipe import create_recipe_with_template
 from .utils.backup_db import generate_zip_file
@@ -315,9 +316,6 @@ class RecipeDetailView(DetailView):
             recipe.portion = request.POST['portion']
             recipe.typical_recipe_city = request.POST['typical']
             recipe.source = request.POST['source']
-            recipe.categorie = CategorieRecipe.objects.get(
-                pk=int(request.POST['categ'])
-            )
             recipe.price_scale = PriceScale.objects.get(
                 pk=int(request.POST['price'])
             )
@@ -337,8 +335,12 @@ class RecipeDetailView(DetailView):
                 request.POST['dietary_plan'],
                 request.POST['season']
             )
+            categs = parse_categories(
+                request.POST['categories']
+            )
             updated_recipe_foods_and_utensils(recipe, foods, utensils)
             updated_season_and_diet(recipe, diets, seasons)
+            updated_categories(recipe, categs)
 
             return JsonResponse({'test': 'ok'})
 
