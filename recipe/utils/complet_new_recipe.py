@@ -4,14 +4,17 @@ from recipe.models import CategorieRecipe, Food, FoodAndQuantity, Utensil, Seaso
 def parse_foods_and_utensils(foods, utensils):
     """
     Parsed the foods and utensils for the new recipe.
-    foods -> str : '?&f=id:nameFoods:quantityAndUnity&f=id:nameFoods:...'
+    foods -> str : '?&f=id:nameFoods:Quantity:Unity:PurchaseQuant:PurchaseUnity&...'
     utensils -> str : '?&u=id:name&u=id:name&...'
 
     return foods -> list : [
         {
             'id_food': '356',
             'name': 'Fruits rouges',
-            'quantity': '200 g'
+            'recipe_quantity': '200',
+            'recipe_unity': 'g',
+            'purchase_quantity': '200',
+            'purchase_unity': 'g'
         },
         ...
     ]
@@ -33,7 +36,10 @@ def parse_foods_and_utensils(foods, utensils):
         parsed_foods.append({
             'id_food': data[0],
             'name': data[1],
-            'quantity': data[2]
+            'recipe_quantity': data[2],
+            'recipe_unity': data[3],
+            'purchase_quantity': data[4],
+            'purchase_unity': data[5],
         })
 
     for utensil in pre_parsed_utensils:
@@ -92,7 +98,10 @@ def complet_recipe_with_f_u_c(instance_recipe, foods, utensils, categs):
     for food in foods:
         f = Food.objects.get(pk=int(food['id_food']))
         fq = FoodAndQuantity()
-        fq.quantity = food['quantity']
+        fq.recipe_quantity = food['recipe_quantity']
+        fq.recipe_unity = food['recipe_unity']
+        fq.food_purshase_quantity = food['purchase_quantity']
+        fq.food_purshase_unity = food['purchase_unity']
         fq.food = f
         fq.recipe = recipe
         fq.save()
