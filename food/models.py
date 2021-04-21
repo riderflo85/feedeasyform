@@ -13,6 +13,15 @@ class FoodGroup(models.Model):
 
 
 class Food(models.Model):
+    METRIC_UNITS = [
+        ("CL", "Centilitre"),
+        ("GR", "Gramme"),
+    ]
+    IMPERIAL_UNIT = [
+        ("FL OZ", "Fluid Ounce"),
+        ("OZ", "Ounce"),
+    ]
+
     name = models.CharField(
         max_length=255,
         unique=True,
@@ -115,12 +124,14 @@ class Food(models.Model):
     )
     metric_unit = models.CharField(
         max_length=25,
-        default="kg",
+        choices=METRIC_UNITS,
+        default="not defined",
         verbose_name="unité métrique de base"
     )
     imperial_unit = models.CharField(
         max_length=25,
-        default="lb",
+        choices=IMPERIAL_UNIT,
+        default="not defined",
         verbose_name="unité impériale de base"
     )
 

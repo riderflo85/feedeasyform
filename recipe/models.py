@@ -196,6 +196,17 @@ class Recipe(models.Model):
 
 
 class FoodAndQuantity(models.Model):
+    UNITS = [
+        ("Null", "Not defined"),
+        # ("CUP", "Cup"),
+        ("CaS", "Cuillère à soupe"),
+        ("CaC", "Cuillère à café"),
+        ("CL", "Centilitre"),
+        ("GR", "Gramme"),
+        # ("FL OZ", "Fluid Ounce"),
+        # ("OZ", "Ounce"),
+    ]
+
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
@@ -206,11 +217,42 @@ class FoodAndQuantity(models.Model):
         on_delete=models.CASCADE,
         verbose_name="ingredient"
     )
-    quantity = models.CharField(
+    recipe_quantity = models.CharField(
         max_length=100,
-        verbose_name="quantitee de l'ingredient"
+        verbose_name="quantitée de l'ingredient pour la recette"
     )
     recipe_unity = models.CharField(
         max_length=20,
+        choices=UNITS,
         verbose_name="unité de mesure de l'ingrédient pour la recette"
     )
+    food_purshase_quantity = models.CharField(
+        max_length=100,
+        verbose_name="quantitée de l'ingredient pour la liste d'achats"
+    )
+    food_purshase_unity = models.CharField(
+        max_length=35,
+        choices=UNITS,
+        default=UNITS[0][1],
+        verbose_name="unité de mesure de l'ingrédient pour la liste d'achats"
+    )
+
+    def set_purchase_quantity(self):
+        """
+        Set the purchase quantity with a type of unity.
+        """
+        quant = float(self.recipe_quantity)
+        unity = self.recipe_unity
+        purchase_quant = 0.0
+
+        if unity == "CaS":
+            purchase_quant = quant * 1.5
+
+        elif unity == "CaC":
+            purchase_quant = quant * 0.5
+        
+        else:
+            purchase_quant = quant
+        
+        self.food_purshase_quantity = str(purchase_quant)
+        self.save()
