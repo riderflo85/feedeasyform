@@ -44,13 +44,40 @@ function displayQuantityForm(foods) {
 
     for (const food of foods) {
         const formatedFood = food.split(':');
-        const newForm = `<label for="food-${formatedFood[0]}">${formatedFood[1]}</label>\n
-        <input type="text" class="form-control mb-3" name="quantity" id="food-${formatedFood[0]}" data-id="${formatedFood[0]}">`;
+        const newForm = `
+        <label for="food-${formatedFood[0]}">${formatedFood[1]}</label>\n
+        <div class="border border-primary rounded-lg mt-2 mb-3 pt-1 pb-3 px-3">
+        <p class="pb-2">Quantité et unité pour la recette</p>
+        <input type="number" class="form-control mb-3" name="recipe-quantity" id="quantFoodRecipe-${formatedFood[0]}" data-id="${formatedFood[0]}" placeholder="quantité">\n
+        <select name="unity" class="form-control" id="unityFoodRecipe-${formatedFood[0]}" require>\n
+        <option value="null" selected disabled>Choisissez une unité pour la recette</option>\n
+        <option value="CL">Centilitre</option>\n
+        <option value="GR">Gramme</option>\n
+        <option value="CaS">Cuillère à soupe</option>\n
+        <option value="CaC">Cuillère à café</option>\n
+        <option value="U">Unité</option>\n
+        </select>
+        </div>
+        <div class="border border-info rounded-lg pt-1 pb-3 px-3 mb-3">
+        <p class="pb-2">Quantité et unité pour la liste d'achat</p>
+        <input type="number" class="form-control mb-3" name="purchase-quantity" id="quantFoodPurchase-${formatedFood[0]}" data-id="${formatedFood[0]}" placeholder="quantité">\n
+        <select name="unity" class="form-control" id="unityFoodPurchase-${formatedFood[0]}" require>\n
+        <option value="null" selected disabled>Choisissez une unité pour la liste d'achat</option>\n
+        <option value="CL">Centilitre</option>\n
+        <option value="GR">Gramme</option>\n
+        <option value="U">Unité</option>\n
+        </select>
+        </div>
+        `;
 
         $(newForm).appendTo(parentNode);
         inputFields.push({
+            idFood: formatedFood[0],
             label: formatedFood[1],
-            input: $(`#food-${formatedFood[0]}`)
+            inputQuantRecipe: $(`#quantFoodRecipe-${formatedFood[0]}`),
+            inputQuantPurchase: $(`#quantFoodPurchase-${formatedFood[0]}`),
+            selectUnitRecipe: $(`#unityFoodRecipe-${formatedFood[0]}`),
+            selectUnitPurchase: $(`#unityFoodPurchase-${formatedFood[0]}`)
         });
     }
     parentNode.slideDown(500);
@@ -61,26 +88,34 @@ function displayQuantityForm(foods) {
 
 function displayFoodsAndQuantity(parentNode, fieldsInput) {
     for (const field of fieldsInput) {
-        const parsedData = field.input.val().split(';');
+        const quantRecipe = field.inputQuantRecipe.val();
+        const quantPurchase = field.inputQuantPurchase.val();
+        const unitRecipe = field.selectUnitRecipe.val();
+        const unitPurchase = field.selectUnitPurchase.val();
         const item = `
-        <tr id="${field.input.data('id')}" data-id="${field.input.data('id')}">
+        <tr id="${field.idFood}" data-id="${field.idFood}">
             <td data-name="${field.label}">${field.label}</td>
-            <td data-quantity="${parsedData[0].trim()}">${parsedData[0].trim()}</td>
-            <td data-unity="${parsedData[1].trim()}">${parsedData[1].trim()}</td>
+            <td data-recipe-quantity="${quantRecipe.trim()}">${quantRecipe.trim()}</td>
+            <td data-recipe-unity="${unitRecipe.trim()}">${unitRecipe.trim()}</td>
+            <td data-purchase-quant="${quantPurchase.trim()}">${quantPurchase.trim()}</td>
+            <td data-purchase-unity="${unitPurchase.trim()}">${unitPurchase.trim()}</td>
             <td>
-                <button class="btn btn-danger btn-sm" id="clearFoodTable-${field.input.data('id')}">
+                <button class="btn btn-danger btn-sm" id="clearFoodTable-${field.idFood}">
                     <i class="fas fa-minus"></i>
                 </button>
             </td>
         </tr>`;
 
         $(item).appendTo(parentNode);
-        field.input.attr('disabled', 'true');
+        field.inputQuantPurchase.attr('disabled', 'true');
+        field.inputQuantRecipe.attr('disabled', 'true');
+        field.selectUnitPurchase.attr('disabled', 'true');
+        field.selectUnitRecipe.attr('disabled', 'true');
 
-        const btnClearFoodTable = $(`#clearFoodTable-${field.input.data('id')}`);
+        const btnClearFoodTable = $(`#clearFoodTable-${field.idFood}`);
 
         btnClearFoodTable.on('click', () => {
-            const thisField = $(`#${field.input.data('id')}`);
+            const thisField = $(`#${field.idFood}`);
             thisField.fadeOut(500, () => {
                 thisField.remove();
             }); 
@@ -99,7 +134,7 @@ function saveSearchFoods() {
             id: $(tr).data('id'),
         };
 
-        for (const td of $(tr).children().slice(0,3)) {
+        for (const td of $(tr).children().slice(0,5)) {
             const dataAttr = Object.entries($(td).data())[0];
             foodInformations[dataAttr[0]] = dataAttr[1];
         }
@@ -115,8 +150,10 @@ function displayResultSearchFood(parentNode, foods) {
         const item = `
         <tr id="recap-${food.id}" data-id="${food.id}">
             <td data-name="${food.name}">${food.name}</td>
-            <td data-quantity="${food.quantity}">${food.quantity}</td>
-            <td data-unity="${food.unity}">${food.unity}</td>
+            <td data-recipe-quantity="${food.recipeQuantity}">${food.recipeQuantity}</td>
+            <td data-recipe-unity="${food.recipeUnity}">${food.recipeUnity}</td>
+            <td data-purchase-quant="${food.purchaseQuant}">${food.purchaseQuant}</td>
+            <td data-purchase-unity="${food.purchaseUnity}">${food.purchaseUnity}</td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm" id="clearFoodTableRecap-${food.id}">
                     <i class="fas fa-minus"></i>
@@ -160,7 +197,7 @@ $(document).ready(() => {
     const btnValideFormQuantity = $("#btnValideFormQuantity");
     const selectArea = $("#foodsResult");
     const formQuantity = $("#quantityFormBloc");
-    let quantityInput;
+    let quantityAndUnitFields;
 
 
     selectArea.focus(() => {
@@ -192,7 +229,7 @@ $(document).ready(() => {
 
 
     btnAddFood.on('click', () => {
-        quantityInput = displayQuantityForm(selectArea.val());
+        quantityAndUnitFields = displayQuantityForm(selectArea.val());
         btnAddFood.attr('disabled', 'true');
         btnValideFormQuantity.removeAttr('disabled');
     });
@@ -204,7 +241,7 @@ $(document).ready(() => {
 
 
     btnValideFormQuantity.on('click', (event) => {
-        displayFoodsAndQuantity(listingFood, quantityInput);
+        displayFoodsAndQuantity(listingFood, quantityAndUnitFields);
         btnAddFood.attr('disabled', 'true');
         $(event.target).attr('disabled', 'true');
     });

@@ -203,6 +203,7 @@ class FoodAndQuantity(models.Model):
         ("CaC", "Cuillère à café"),
         ("CL", "Centilitre"),
         ("GR", "Gramme"),
+        ("U", "Unité"),
         # ("FL OZ", "Fluid Ounce"),
         # ("OZ", "Ounce"),
     ]

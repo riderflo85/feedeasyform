@@ -208,13 +208,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-4 col-form-label">
-                                            <label class="col-form-label">Ustensiles nécessaire à la recette</label>
-                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#utensilModal">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <div class="col-sm-8 food-col" id="contentUtensilCol">
+                                        <div class="col-12 food-col" id="contentUtensilCol">
+                                            <div class="d-flex align-item-center justify-content-center mb-3">
+                                                <label class="col-form-label mr-3">Ustensiles nécessaire à la recette</label>
+                                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#utensilModal">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
                                             <table class="table table-bordered table-sm">
                                                 <thead class="thead-light">
                                                     <tr>
@@ -229,19 +229,21 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-sm-4 col-form-label">
-                                            <label class="col-form-label">Ingrédients</label>
-                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#searchFoodModal">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <div class="col-sm-8 food-col" id="contentFoodsCol">
+                                        <div class="col-12 food-col" id="contentFoodsCol">
+                                            <div class="d-flex align-item-center justify-content-center mb-3">
+                                                <label class="col-form-label mr-3">Ingrédients</label>
+                                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#searchFoodModal">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
                                             <table class="table table-bordered table-sm">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th scope="col">Nom</th>
-                                                        <th scope="col">Quantité</th>
-                                                        <th scope="col">Unité</th>
+                                                        <th scope="col">Quantité Recette</th>
+                                                        <th scope="col">Unité Recette</th>
+                                                        <th scope="col">Quantité Achat</th>
+                                                        <th scope="col">Unité Achat</th>
                                                         <th scope="col">#</th>
                                                     </tr>
                                                 </thead>
@@ -402,16 +404,6 @@
                             <label for="quantityFormBloc">
                                 Quantité souhaitée 
                                 <small>(la saisie sera possible une fois que vous aurez validé votre sélection via le bouton bleu)</small>
-                                <small class="text-danger"> merci de séparer la quantité et l'unité par un point virgule. ';'</small>
-                                <br/>
-                                <br/>
-                                exemple:
-                                <br/> 
-                                <strong class="text-success">500 ; g</strong>
-                                <br/> 
-                                <strong class="text-success">10 ; l</strong> <small>(litre)</small>
-                                <br/> 
-                                <strong class="text-success">3 ; u</strong> <small>(u = unité)</small>
                             </label>
                             <button class="btn btn-success btn-valid-quantity" id="btnValideFormQuantity" disabled>Valider</button>
                         </div>
@@ -420,16 +412,16 @@
 
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-5">
-                            <p>Ingédients ajoutés</p>
-                        </div>
-                        <div class="col-sm-8 mt-5">
+                        <div class="col-12 mt-5">
+                            <p class="text-center mb-3 lead">Ingédients ajoutés</p>
                             <table class="table table-bordered table-sm">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Nom</th>
-                                        <th scope="col">Quantité</th>
-                                        <th scope="col">Unité</th>
+                                        <th scope="col">Quantité Recette</th>
+                                        <th scope="col">Unité Recette</th>
+                                        <th scope="col">Quantité Achat</th>
+                                        <th scope="col">Unité Achat</th>
                                         <th scope="col">#</th>
                                     </tr>
                                 </thead>

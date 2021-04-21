@@ -6,7 +6,7 @@ function getFoods(table) {
             id: $(tr).data('id'),
         };
 
-        for (const td of $(tr).children().slice(0,3)) {
+        for (const td of $(tr).children().slice(0,5)) {
             const dataAttr = Object.entries($(td).data())[0];
             foodInformations[dataAttr[0]] = dataAttr[1];
         }
@@ -14,7 +14,10 @@ function getFoods(table) {
         foodInformations = {
             id: foodInformations.id,
             name: foodInformations.name,
-            quantity: foodInformations.quantity+" "+foodInformations.unity
+            recipeQuantity: foodInformations.recipeQuantity,
+            recipeUnity: foodInformations.recipeUnity,
+            purchaseQuant: foodInformations.purchaseQuant,
+            purchaseUnity: foodInformations.purchaseUnity
         };
         foods.push(foodInformations);
     }

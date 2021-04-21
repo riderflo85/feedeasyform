@@ -11,7 +11,7 @@ function formatedDataForRequest(data) {
     }
 
     for (const food of newData.foods) {
-        const foodInformations = `${food.id}:${food.name}:${food.quantity}`;
+        const foodInformations = `${food.id}:${food.name}:r-${food.recipeQuantity}:r-${food.recipeUnity}:p-${food.purchaseQuant}:p-${food.purchaseUnity}`;
         foods = foods.concat("&f=", foodInformations);
     }
 
