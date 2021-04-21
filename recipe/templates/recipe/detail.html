@@ -96,15 +96,17 @@
                     <div class="col-sm-8" id="divFoods">
                         <ul id="listingFoods">
                             {% for r_food in recipe.get_all_foods %}
-                            <li id="li-{{ r_food.food.pk }}" data-food_id="{{ r_food.food.pk }}"><a href="/recipe/detail/food/{{ r_food.food.pk }}">{{ r_food.food.name }}</a> <strong>{{ r_food.quantity }}</strong></li>
+                            <li id="li-{{ r_food.food.pk }}" data-food-id="{{ r_food.food.pk }}" data-recipe-quant="{{ r_food.recipe_quantity }}" data-recipe-unit="{{ r_food.recipe_unity }}" data-purchase-quant="{{ r_food.food_purchase_quantity }}" data-purchase-unit="{{ r_food.food_purchase_unity }}"><a href="/recipe/detail/food/{{ r_food.food.pk }}">{{ r_food.food.name }}</a> <strong>{{ r_food.recipe_quantity }} {{ r_food.recipe_unity }}</strong></li>
                             {% endfor %}
                         </ul>
                         <table class="table table-bordered table-sm d-none" id="allUsedFoods">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Nom</th>
-                                    <th scope="col">Quantité</th>
-                                    <th scope="col">Unité</th>
+                                    <th scope="col">Quantité Recette</th>
+                                    <th scope="col">Unité Recette</th>
+                                    <th scope="col">Quantité Achat</th>
+                                    <th scope="col">Unité Achat</th>
                                     <th scope="col">#</th>
                                 </tr>
                             </thead>
@@ -344,16 +346,6 @@
                                         <label for="quantityFormBloc">
                                             Quantité souhaitée 
                                             <small>(la saisie sera possible une fois que vous aurez validé votre sélection via le bouton bleu)</small>
-                                            <small class="text-danger"> merci de séparer la quantité et l'unité par un point virgule. ';'</small>
-                                            <br/>
-                                            <br/>
-                                            exemple:
-                                            <br/> 
-                                            <strong class="text-success">500 ; g</strong>
-                                            <br/> 
-                                            <strong class="text-success">10 ; l</strong> <small>(litre)</small>
-                                            <br/> 
-                                            <strong class="text-success">3 ; u</strong> <small>(u = unité)</small>
                                         </label>
                                         <button class="btn btn-success btn-valid-quantity" id="btnValideFormQuantity" disabled>Valider</button>
                                     </div>
@@ -362,16 +354,16 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-sm-4 mt-5">
-                                        <p>Ingédients ajoutés</p>
-                                    </div>
-                                    <div class="col-sm-8 mt-5">
+                                    <div class="col-12 mt-5">
+                                        <p class="text-center mb-3 lead">Ingédients ajoutés</p>
                                         <table class="table table-bordered table-sm">
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th scope="col">Nom</th>
-                                                    <th scope="col">Quantité</th>
-                                                    <th scope="col">Unité</th>
+                                                    <th scope="col">Quantité Recette</th>
+                                                    <th scope="col">Unité Recette</th>
+                                                    <th scope="col">Quantité Achat</th>
+                                                    <th scope="col">Unité Achat</th>
                                                     <th scope="col">#</th>
                                                 </tr>
                                             </thead>

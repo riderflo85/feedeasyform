@@ -227,11 +227,11 @@ class FoodAndQuantity(models.Model):
         choices=UNITS,
         verbose_name="unité de mesure de l'ingrédient pour la recette"
     )
-    food_purshase_quantity = models.CharField(
+    food_purchase_quantity = models.CharField(
         max_length=100,
         verbose_name="quantitée de l'ingredient pour la liste d'achats"
     )
-    food_purshase_unity = models.CharField(
+    food_purchase_unity = models.CharField(
         max_length=35,
         choices=UNITS,
         default=UNITS[0][1],
@@ -255,5 +255,5 @@ class FoodAndQuantity(models.Model):
         else:
             purchase_quant = quant
         
-        self.food_purshase_quantity = str(purchase_quant)
+        self.food_purchase_quantity = str(purchase_quant)
         self.save()

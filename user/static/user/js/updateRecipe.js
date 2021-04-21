@@ -2,12 +2,15 @@ function getFoodsAndQuantity(foodsBloc) {
     let data = [];
 
     for (const ulBalise of foodsBloc.children()) {
+        const jQeryUlBalise = $(ulBalise);
         const food = $(`#${$(ulBalise)[0].id} a`).text() // $(ulBalise)[0].innerText.replace($(ulBalise).children()[0].innerText, "");
-        const quantAndUnit = $(ulBalise).children()[1].innerText;
         data.push({
-            id: $(ulBalise).data('food_id'),
+            id: jQeryUlBalise.data('food-id'),
             foodName: food,
-            quantAndUnit: quantAndUnit
+            rQuant: jQeryUlBalise.data('recipe-quant'),
+            rUnit: jQeryUlBalise.data('recipe-unit'),
+            pQuant: jQeryUlBalise.data('purchase-quant'),
+            pUnit: jQeryUlBalise.data('purchase-unit'),
         });
     }
 
@@ -35,12 +38,13 @@ function newFieldFoodsAndQuantity(foodsBloc) {
     let manyIdBtnAndContentTable = [];
 
     for (const foodQuant of getFoodsAndQuantity(foodsBloc)) {
-        const quantAndUnit = foodQuant.quantAndUnit.split(' ');
         const trTable = `
             <tr id="foodTableRecapResult-${foodQuant.id}" data-id="${foodQuant.id}">
                 <td data-name="${foodQuant.foodName}">${foodQuant.foodName}</td>
-                <td data-quantity="${quantAndUnit[0]}">${quantAndUnit[0]}</td>
-                <td data-unity="${quantAndUnit[1]}">${quantAndUnit[1]}</td>
+                <td data-recipe-quantity="${foodQuant.rQuant}">${foodQuant.rQuant}</td>
+                <td data-recipe-unity="${foodQuant.rUnit}">${foodQuant.rUnit}</td>
+                <td data-purchase-quant="${foodQuant.pQuant}">${foodQuant.pQuant}</td>
+                <td data-purchase-unity="${foodQuant.pUnit}">${foodQuant.pUnit}</td>
                 <td>
                     <button type="button" class="btn btn-danger btn-sm" id="clearFoodTableRecap-${foodQuant.id}">
                         <i class="fas fa-minus"></i>

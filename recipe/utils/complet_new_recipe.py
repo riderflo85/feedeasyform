@@ -100,8 +100,8 @@ def complet_recipe_with_f_u_c(instance_recipe, foods, utensils, categs):
         fq = FoodAndQuantity()
         fq.recipe_quantity = food['recipe_quantity']
         fq.recipe_unity = food['recipe_unity']
-        fq.food_purshase_quantity = food['purchase_quantity']
-        fq.food_purshase_unity = food['purchase_unity']
+        fq.food_purchase_quantity = food['purchase_quantity']
+        fq.food_purchase_unity = food['purchase_unity']
         fq.food = f
         fq.recipe = recipe
         fq.save()
@@ -168,11 +168,17 @@ def updated_recipe_foods_and_utensils(instance_recipe, foods, utensils):
         foods_request.append(f)
         try:
             fq_exist = foods_quant_in_recipe.filter(food=f)[0]
-            fq_exist.quantity = food['quantity']
+            fq_exist.recipe_quantity = food['recipe_quantity']
+            fq_exist.recipe_unity = food['recipe_unity']
+            fq_exist.food_purchase_quantity = food['purchase_quantity']
+            fq_exist.food_purchase_unity = food['purchase_unity']
             fq_exist.save()
         except:
             fq = FoodAndQuantity()
-            fq.quantity = food['quantity']
+            fq.recipe_quantity = food['recipe_quantity']
+            fq.recipe_unity = food['recipe_unity']
+            fq.food_purchase_quantity = food['purchase_quantity']
+            fq.food_purchase_unity = food['purchase_unity']
             fq.food = f
             fq.recipe = recipe
             fq.save()
