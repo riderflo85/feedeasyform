@@ -24,7 +24,6 @@ def create_recipe_with_template(recipe_template, recipe_duplicated):
     r_d.typical_recipe_city = r_t.typical_recipe_city
     r_d.source = r_t.source
     r_d.image = r_t.image
-    r_d.categorie = r_t.categorie
     r_d.origin = r_t.origin
     r_d.price_scale = r_t.price_scale
     r_d.level = r_t.level
@@ -33,13 +32,17 @@ def create_recipe_with_template(recipe_template, recipe_duplicated):
     r_d.utensils.set(r_t.utensils.all())
     r_d.season.set(r_t.season.all())
     r_d.dietary_plan.set(r_t.dietary_plan.all())
+    r_d.categories.set(r_t.categories.all())
 
     food_and_quant = set()
     for f_q in r_t.foodandquantity_set.all():
         new_f_q = FoodAndQuantity()
         new_f_q.recipe = r_d
         new_f_q.food = f_q.food
-        new_f_q.quantity = f_q.quantity
+        new_f_q.recipe_quantity = f_q.recipe_quantity
+        new_f_q.recipe_unity = f_q.recipe_unity
+        new_f_q.food_purchase_quantity = f_q.food_purchase_quantity
+        new_f_q.food_purchase_unity = f_q.food_purchase_unity
         new_f_q.save()
         food_and_quant.add(new_f_q)
 

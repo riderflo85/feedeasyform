@@ -134,7 +134,7 @@ def get_recipes():
             },
             ...
         ],
-        'categorie': '...',
+        'categories': [name_categorie, ...],
         'origin': '...',
         'price_scale': '...',
         'level': '...',
@@ -148,28 +148,22 @@ def get_recipes():
 
     for recipe in Recipe.objects.all():
         foods = []
-        utensils = []
-        seasons = []
-        diets = []
-        categ = CategorieRecipe.objects.get(pk=recipe.categorie.pk).name
+        utensils = [x.name for x in recipe.utensils.all()]
+        seasons = [x.name for x in recipe.season.all()]
+        diets = [x.name for x in recipe.dietary_plan.all()]
+        categs = [x.name for x in recipe.categories.all()]
         origin = OriginRecipe.objects.get(pk=recipe.origin.pk).name
         price_scale = PriceScale.objects.get(pk=recipe.price_scale.pk).name
         level = Level.objects.get(pk=recipe.level.pk).name
 
-        for utensil in recipe.utensils.all():
-            utensils.append(utensil.name)
-
         for food in recipe.foodandquantity_set.all():
             foods.append({
                 'name': food.food.name,
-                'quantity': food.quantity
+                'recipe_quantity': food.recipe_quantity,
+                'recipe_unity': food.recipe_unity,
+                'purchase_quantity': food.purchase_quantity,
+                'purchase_unity': food.purchase_unity
             })
-
-        for season in recipe.season.all():
-            seasons.append(season.name)
-
-        for diet in recipe.dietary_plan.all():
-            diets.append(diet.name)
 
         data = {
             'name': recipe.name,
@@ -183,7 +177,7 @@ def get_recipes():
             'source': recipe.source,
             'image': recipe.image.url.replace('/media/', '/'),
             'food': foods,
-            'categorie': categ,
+            'categories': categs,
             'origin': origin,
             'price_scale': price_scale,
             'level': level,
