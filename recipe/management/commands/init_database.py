@@ -5,16 +5,15 @@ from django.core.management.base import BaseCommand
 from recipe.models import (
     CategorieRecipe,
     DietaryPlan,
-    FoodGroup,
     Level,
     OriginRecipe,
     PriceScale,
     Recipe,
-    Food,
     FoodAndQuantity,
     Season,
     Utensil
 )
+from food.models import Food, FoodGroup
 from planning.models import MealsPerDay
 
 
@@ -189,7 +188,7 @@ ajouté à la base de données"
                 )
 
                 categories = set()
-                for categ in recipe['categories']:
+                for categ in recipe['categorie']:
                     c = CategorieRecipe.objects.get(name=categ)
                     categories.add(c)
 
