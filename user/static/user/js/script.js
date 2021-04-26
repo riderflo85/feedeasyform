@@ -55,6 +55,7 @@ function displayQuantityForm(foods) {
         <option value="GR">Gramme</option>\n
         <option value="CaS">Cuillère à soupe</option>\n
         <option value="CaC">Cuillère à café</option>\n
+        <option value="Pincee">Pincée</option>\n
         <option value="U">Unité</option>\n
         </select>
         </div>

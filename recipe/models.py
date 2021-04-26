@@ -204,6 +204,7 @@ class FoodAndQuantity(models.Model):
         ("CL", "Centilitre"),
         ("GR", "Gramme"),
         ("U", "Unité"),
+        ("Pincee", "Pincée"),
         # ("FL OZ", "Fluid Ounce"),
         # ("OZ", "Ounce"),
     ]
