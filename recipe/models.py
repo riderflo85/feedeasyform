@@ -1,6 +1,6 @@
 from django.db import models
 
-from food.models import Food
+from food.models import Food, Allergie
 
 
 class Season(models.Model):
@@ -163,6 +163,10 @@ class Recipe(models.Model):
     dietary_plan = models.ManyToManyField(
         DietaryPlan,
         verbose_name="régime alimentaire de la recette"
+    )
+    allergies = models.ManyToManyField(
+        Allergie,
+        verbose_name="allergies possible dans la recette"
     )
 
     def __str__(self):

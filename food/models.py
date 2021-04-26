@@ -154,3 +154,15 @@ class Food(models.Model):
 
         for field in self._meta.fields:
             yield (field.name, field.value_to_string(self))
+
+
+class Allergie(models.Model):
+    name = models.CharField(
+        max_length=70,
+        null=True,
+        unique=True,
+        verbose_name="allergie"
+    )
+
+    def __str__(self):
+        return self.name
