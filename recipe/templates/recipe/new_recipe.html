@@ -213,7 +213,7 @@
                                             <small>(sélection multiple avec la touche Shift / Ctrl / Command)</small>
                                         </label>
                                         <div class="col-sm-8">
-                                            <select name="allergies" required id="id_allergies" multiple class="form-control">
+                                            <select name="allergies" id="id_allergies" multiple class="form-control">
                                                 {% for allergie in allerg_field.allergies %}
                                                 <option value="{{ allergie.0 }}">{{ allergie.1 }}</option>
                                                 {% endfor %}

@@ -29,7 +29,8 @@ from .models import (
     Season
 )
 from .utils.complet_new_recipe import (
-    complet_recipe_with_f_u_c_a,
+    complet_recipe_with_f_u_c,
+    complet_recipe_with_allergies,
     parse_allergie,
     parse_foods_and_utensils,
     added_season_and_diet,
@@ -70,13 +71,16 @@ def create_recipe(request):
                     request.POST['season']
                 )
                 categs = parse_categories(request.POST['categories'])
-                allergs = parse_allergie(request.POST['allergies'])
-                complet_recipe_with_f_u_c_a(
+
+                if 'allergies' in request.POST.keys():
+                    allergs = parse_allergie(request.POST['allergies'])
+                    complet_recipe_with_allergies(new_recipe, allergs)
+
+                complet_recipe_with_f_u_c(
                     new_recipe,
                     foods,
                     utensils,
                     categs,
-                    allergs
                 )
                 added_season_and_diet(new_recipe, diets, seasons)
                 return JsonResponse({'success': True})
@@ -353,13 +357,16 @@ class RecipeDetailView(DetailView):
             categs = parse_categories(
                 request.POST['categories']
             )
-            allergs = parse_allergie(
-                request.POST['allergies']
-            )
+
+            if 'allergies' in request.POST.keys():
+                allergs = parse_allergie(
+                    request.POST['allergies']
+                )
+                updated_allergies(recipe, allergs)
+
             updated_recipe_foods_and_utensils(recipe, foods, utensils)
             updated_season_and_diet(recipe, diets, seasons)
             updated_categories(recipe, categs)
-            updated_allergies(recipe, allergs)
 
             return JsonResponse({'test': 'ok'})
 

@@ -189,7 +189,7 @@ function newFieldSeason(seasonBloc) {
 
 function newFieldAllergies(allergBloc) {
     const dataAllerg = $('#dataAllergies');
-    let field = "<select name='AllergiesRecipe' id='id_allergies' required class='form-control' multiple>$forReplaceByAllAllergies$</select>";
+    let field = "<select name='AllergiesRecipe' id='id_allergies' class='form-control' multiple>$forReplaceByAllAllergies$</select>";
     let options = "";
 
     for (const allerg of dataAllerg.children()) {
@@ -433,7 +433,7 @@ function validateUpdatedData(fields) {
             if (el.val().length > 0) {
                 data[field] = el.val();
             } else {
-                if (field === 'typical') {
+                if (field === 'typical' || field === 'allergies') {
                     data[field] = "";
                 } else {
                     const invalid = $(`#${el.attr('id')}`).addClass('is-invalid');

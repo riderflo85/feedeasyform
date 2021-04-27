@@ -95,7 +95,7 @@ def parse_allergie(allergies):
     return allergies.replace('?&a=', '').split('&a=')
 
 
-def complet_recipe_with_f_u_c_a(instance_recipe, foods, utensils, categs, allergs):
+def complet_recipe_with_f_u_c(instance_recipe, foods, utensils, categs):
     """
     Add the foods, utensils and categories in the new recipe.
     instance_recipe -> <class 'planning.models.Recipe'>
@@ -105,13 +105,11 @@ def complet_recipe_with_f_u_c_a(instance_recipe, foods, utensils, categs, allerg
     ]
     utensils -> list : [id, ...]
     categs -> list : [id, ...]
-    allergs -> list : [id, ...]
     """
     
     recipe = instance_recipe
     instances_utensil = set()
     instances_categs = set()
-    instance_allergs = set()
 
     for food in foods:
         f = Food.objects.get(pk=int(food['id_food']))
@@ -132,14 +130,27 @@ def complet_recipe_with_f_u_c_a(instance_recipe, foods, utensils, categs, allerg
         c = CategorieRecipe.objects.get(pk=int(categ))
         instances_categs.add(c)
 
-    for allergie in allergs:
-        a = Allergie.objects.get(pk=int(allergie))
-        instance_allergs.add(a)
-
     recipe.categories.set(instances_categs)
     recipe.utensils.set(instances_utensil)
-    recipe.allergies.set(instance_allergs)
     recipe.save()
+
+
+def complet_recipe_with_allergies(instance_recipe, allergies):
+    """
+    Add the allergie(s) in the new recipe.
+    instance_recipe -> <class 'planning.models.Recipe'>
+    allergies -> list : [id, ...]
+    """
+
+    instance_allergies = set()
+
+    for allergie in allergies:
+        instance_allergies.add(
+            Allergie.objects.get(pk=int(allergie))
+        )
+
+    instance_recipe.allergies.set(instance_allergies)
+    instance_recipe.save()
 
 
 def added_season_and_diet(instance_recipe, diets, seasons):
