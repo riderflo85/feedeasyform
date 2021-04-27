@@ -13,7 +13,7 @@ from recipe.models import (
     Season,
     Utensil
 )
-from food.models import Food, FoodGroup
+from food.models import Food, FoodGroup, Allergie
 from planning.models import MealsPerDay
 
 
@@ -173,6 +173,18 @@ ajouté à la base de données"
                     if kwargs['verbose']:
                         self.stdout.write(
                             f"{self.style.SUCCESS(new_d.name)} \
+ajouté à la base de données"
+                        )
+
+            for allergie in data['allergies']:
+                try:
+                    Allergie.objects.get(name=allergie)
+                except:
+                    new_a = Allergie(name=allergie)
+                    new_a.save()
+                    if kwargs['verbose']:
+                        self.stdout.write(
+                            f"{self.style.SUCCESS(new_a.name)} \
 ajouté à la base de données"
                         )
 

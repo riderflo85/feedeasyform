@@ -48,6 +48,11 @@
                         <i data-id="{{ diet.pk }}" data-name="{{ diet.name }}"></i>
                         {% endfor %}
                     </div>
+                    <div id="dataAllergies">
+                        {% for allergie in allergies %}
+                        <i data-id="{{ allergie.pk }}" data-name="{{ allergie.name }}"></i>
+                        {% endfor %}
+                    </div>
                     <div id="dataSeasons">
                         {% for season in seasons %}
                         <i data-id="{{ season.pk }}" data-name="{{ season.name }}"></i>
@@ -204,6 +209,16 @@
                         <ul id="RecipeDiet">
                             {% for diet in recipe.dietary_plan.all %}
                             <li>{{ diet.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RecipeAllerg" class="col-sm-4 col-form-label border-label">Allergie(s) possible pour la recette</label>
+                    <div class="col-sm-8">
+                        <ul id="RecipeAllerg">
+                            {% for allergie in recipe.allergies.all %}
+                            <li>{{ allergie.name }}</li>
                             {% endfor %}
                         </ul>
                     </div>

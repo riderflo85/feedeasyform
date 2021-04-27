@@ -29,19 +29,26 @@ from .models import (
     Season
 )
 from .utils.complet_new_recipe import (
-    complet_recipe_with_f_u_c,
+    complet_recipe_with_f_u_c_a,
+    parse_allergie,
     parse_foods_and_utensils,
     added_season_and_diet,
     parse_diets_and_seasons,
     parse_categories,
     updated_recipe_foods_and_utensils,
     updated_season_and_diet,
-    updated_categories
+    updated_categories,
+    updated_allergies
+)
+from .list_all_db import (
+    list_all_diet,
+    list_all_season,
+    list_all_categ,
+    list_all_allegies
 )
 from .utils.duplicate_recipe import create_recipe_with_template
 from .utils.backup_db import generate_zip_file
-from .list_all_db import list_all_diet, list_all_season, list_all_categ
-from food.models import Food, FoodGroup
+from food.models import Allergie, Food, FoodGroup
 from food.forms import DeleteFoodForm, DeleteFoodGroupForm
 from planning.models import Planning
 from planning.forms import DeletePlanningForm
@@ -63,11 +70,13 @@ def create_recipe(request):
                     request.POST['season']
                 )
                 categs = parse_categories(request.POST['categories'])
-                complet_recipe_with_f_u_c(
+                allergs = parse_allergie(request.POST['allergies'])
+                complet_recipe_with_f_u_c_a(
                     new_recipe,
                     foods,
                     utensils,
-                    categs
+                    categs,
+                    allergs
                 )
                 added_season_and_diet(new_recipe, diets, seasons)
                 return JsonResponse({'success': True})
@@ -112,6 +121,10 @@ def create_recipe(request):
             'label': "Saison de la recette",
             'seasons': list_all_season()
         }
+        form_recipe_allergies_field = {
+            'label': "Allergies possible dans la recette",
+            'allergies': list_all_allegies()
+        }
         context = {
             'form_recipe': form_recipe,
             'form_categ': form_categorie,
@@ -122,7 +135,8 @@ def create_recipe(request):
             'form_origin_recipe': form_origin_recipe,
             'diet_field': form_recipe_diet_field,
             'season_field': form_recipe_season_field,
-            'categ_field': form_recipe_categ_field
+            'categ_field': form_recipe_categ_field,
+            'allerg_field': form_recipe_allergies_field
         }
         return render(request, 'recipe/new_recipe.html', context)
 
@@ -289,6 +303,7 @@ class RecipeDetailView(DetailView):
         context['origins'] = OriginRecipe.objects.all()
         context['diets'] = DietaryPlan.objects.all()
         context['seasons'] = Season.objects.all()
+        context['allergies'] = Allergie.objects.all()
 
         return context
 
@@ -338,9 +353,13 @@ class RecipeDetailView(DetailView):
             categs = parse_categories(
                 request.POST['categories']
             )
+            allergs = parse_allergie(
+                request.POST['allergies']
+            )
             updated_recipe_foods_and_utensils(recipe, foods, utensils)
             updated_season_and_diet(recipe, diets, seasons)
             updated_categories(recipe, categs)
+            updated_allergies(recipe, allergs)
 
             return JsonResponse({'test': 'ok'})
 

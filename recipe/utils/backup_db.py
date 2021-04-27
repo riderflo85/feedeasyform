@@ -11,7 +11,7 @@ from recipe.models import (
     Recipe,
     DietaryPlan
 )
-from food.models import FoodGroup, Food
+from food.models import FoodGroup, Food, Allergie
 from planning.models import MealsPerDay
 
 
@@ -273,7 +273,8 @@ def generate_json_file():
         'food_groups': get_food_groups(),
         'recipes': get_recipes(),
         'diets': get_dietary_plan(),
-        'foods': get_foods()
+        'foods': get_foods(),
+        'allergies': [x.name for x in Allergie.objects.all()]
     }
     file_name = 'database.json'
 

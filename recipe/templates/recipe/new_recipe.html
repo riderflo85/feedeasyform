@@ -208,6 +208,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">{{ allerg_field.label }}
+                                            <br>
+                                            <small>(sélection multiple avec la touche Shift / Ctrl / Command)</small>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <select name="allergies" required id="id_allergies" multiple class="form-control">
+                                                {% for allergie in allerg_field.allergies %}
+                                                <option value="{{ allergie.0 }}">{{ allergie.1 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <div class="col-12 food-col" id="contentUtensilCol">
                                             <div class="d-flex align-item-center justify-content-center mb-3">
                                                 <label class="col-form-label mr-3">Ustensiles nécessaire à la recette</label>

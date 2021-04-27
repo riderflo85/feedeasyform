@@ -1,4 +1,12 @@
-from recipe.models import CategorieRecipe, Food, FoodAndQuantity, Utensil, Season, DietaryPlan
+from recipe.models import (
+    CategorieRecipe,
+    Food,
+    FoodAndQuantity,
+    Utensil,
+    Season,
+    DietaryPlan,
+    Allergie
+)
 
 
 def parse_foods_and_utensils(foods, utensils):
@@ -74,12 +82,20 @@ def parse_categories(categories):
 
     return categs -> list : [id, ...]
     """
-    parsed_categs = categories.replace('?&c=', '').split('&c=')
-
-    return parsed_categs
+    return categories.replace('?&c=', '').split('&c=')
 
 
-def complet_recipe_with_f_u_c(instance_recipe, foods, utensils, categs):
+def parse_allergie(allergies):
+    """
+    Parsed the allergies for the new recipe.
+    allergies -> str : '?&a=id&a=id...'
+
+    return allergs -> list : [id, ...]
+    """
+    return allergies.replace('?&a=', '').split('&a=')
+
+
+def complet_recipe_with_f_u_c_a(instance_recipe, foods, utensils, categs, allergs):
     """
     Add the foods, utensils and categories in the new recipe.
     instance_recipe -> <class 'planning.models.Recipe'>
@@ -89,11 +105,13 @@ def complet_recipe_with_f_u_c(instance_recipe, foods, utensils, categs):
     ]
     utensils -> list : [id, ...]
     categs -> list : [id, ...]
+    allergs -> list : [id, ...]
     """
     
     recipe = instance_recipe
     instances_utensil = set()
     instances_categs = set()
+    instance_allergs = set()
 
     for food in foods:
         f = Food.objects.get(pk=int(food['id_food']))
@@ -114,8 +132,13 @@ def complet_recipe_with_f_u_c(instance_recipe, foods, utensils, categs):
         c = CategorieRecipe.objects.get(pk=int(categ))
         instances_categs.add(c)
 
+    for allergie in allergs:
+        a = Allergie.objects.get(pk=int(allergie))
+        instance_allergs.add(a)
+
     recipe.categories.set(instances_categs)
     recipe.utensils.set(instances_utensil)
+    recipe.allergies.set(instance_allergs)
     recipe.save()
 
 
@@ -244,3 +267,22 @@ def updated_categories(instance_recipe, categs):
 
     recipe.categories.set(instance_categ)
     recipe.save()
+
+
+def updated_allergies(instance_recipe, allergs):
+    """
+    Updated the allergies in the recipe.
+    instance_recipe -> <class 'planning.models.Recipe'>
+    allergs -> list : [id, ...]
+    """
+
+    instance_allergs = set()
+    recipe_allergs = instance_recipe.allergies.all()
+
+    for allerg in allergs:
+        if allerg not in recipe_allergs:
+            a = Allergie.objects.get(pk=int(allerg))
+            instance_allergs.add(a)
+
+    instance_recipe.allergies.set(instance_allergs)
+    instance_recipe.save()

@@ -170,7 +170,7 @@ function newFieldOrigin(selectOrigin) {
 
 function newFieldSeason(seasonBloc) {
     const dataSeason = $("#dataSeasons");
-    let field = "<select type='text' name='SeasonRecipe' id='id_season' required class='form-control' multiple>$forReplaceByAllSeason$</select>";
+    let field = "<select name='SeasonRecipe' id='id_season' required class='form-control' multiple>$forReplaceByAllSeason$</select>";
     let options = "";
 
     for (const season of dataSeason.children()) {
@@ -183,7 +183,27 @@ function newFieldSeason(seasonBloc) {
         options = options.concat(`<option value="${$(season).data('id')}" ${isSelected}>${$(season).data('name')}</option>`);
     }
 
-    return field.replace('$forReplaceByAllSeason$', options)
+    return field.replace('$forReplaceByAllSeason$', options);
+}
+
+
+function newFieldAllergies(allergBloc) {
+    const dataAllerg = $('#dataAllergies');
+    let field = "<select name='AllergiesRecipe' id='id_allergies' required class='form-control' multiple>$forReplaceByAllAllergies$</select>";
+    let options = "";
+
+    for (const allerg of dataAllerg.children()) {
+        let isSelected = "";
+        for (const liBalise of allergBloc.contents().filter(function() {return this.nodeName === 'LI'})) {
+            if ($(liBalise).text() === $(allerg).data('name')) {
+                isSelected = "selected";
+            }
+        }
+        options = options.concat(`<option value="${$(allerg).data('id')}" ${isSelected}>${$(allerg).data('name')}</option>`);
+    }
+
+    return field.replace('$forReplaceByAllAllergies$', options);
+
 }
 
 
@@ -241,6 +261,8 @@ function getAllFields() {
     const seasonField = newFieldSeason(season);
     const diet = $('#RecipeDiet');
     const dietField = newFieldDiet(diet);
+    const allerg = $('#RecipeAllerg');
+    const allergField = newFieldAllergies(allerg);
     const utensil = $('#RecipeUtensils');
     const [utensilField, idBtnAndTr] = newFieldUtensils(utensil);
 
@@ -325,6 +347,11 @@ function getAllFields() {
             data: diet,
             originHTML: diet[0].outerHTML,
             field: dietField
+        },
+        allergies: {
+            data: allerg,
+            originHTML: allerg[0].outerHTML,
+            field: allergField
         },
         utensil: {
             data: utensil,

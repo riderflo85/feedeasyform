@@ -4,7 +4,8 @@ from .models import (
     Utensil,
     OriginRecipe,
     DietaryPlan,
-    Season
+    Season,
+    Allergie
 )
 
 
@@ -55,3 +56,6 @@ def list_all_season():
         seasons.append((season.pk, season.name))
     
     return seasons
+
+def list_all_allegies():
+    return [(x.pk, x.name) for x in Allergie.objects.all()]
