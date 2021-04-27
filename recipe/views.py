@@ -72,7 +72,7 @@ def create_recipe(request):
                 )
                 categs = parse_categories(request.POST['categories'])
 
-                if 'allergies' in request.POST.keys():
+                if request.POST['allergies'] != '?':
                     allergs = parse_allergie(request.POST['allergies'])
                     complet_recipe_with_allergies(new_recipe, allergs)
 
@@ -358,11 +358,14 @@ class RecipeDetailView(DetailView):
                 request.POST['categories']
             )
 
-            if 'allergies' in request.POST.keys():
+            if request.POST['allergies'] != '?':
                 allergs = parse_allergie(
                     request.POST['allergies']
                 )
                 updated_allergies(recipe, allergs)
+            else:
+                recipe.allergies.set(())
+                recipe.save()
 
             updated_recipe_foods_and_utensils(recipe, foods, utensils)
             updated_season_and_diet(recipe, diets, seasons)
