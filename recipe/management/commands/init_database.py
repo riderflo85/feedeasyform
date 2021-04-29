@@ -200,7 +200,7 @@ ajouté à la base de données"
                 )
 
                 categories = set()
-                for categ in recipe['categorie']:
+                for categ in recipe['categories']:
                     c = CategorieRecipe.objects.get(name=categ)
                     categories.add(c)
 
