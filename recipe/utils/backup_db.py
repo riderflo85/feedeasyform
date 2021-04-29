@@ -161,8 +161,8 @@ def get_recipes():
                 'name': food.food.name,
                 'recipe_quantity': food.recipe_quantity,
                 'recipe_unity': food.recipe_unity,
-                'purchase_quantity': food.purchase_quantity,
-                'purchase_unity': food.purchase_unity
+                'purchase_quantity': food.food_purchase_quantity,
+                'purchase_unity': food.food_purchase_unity
             })
 
         data = {
