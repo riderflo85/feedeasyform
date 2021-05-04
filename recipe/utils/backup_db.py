@@ -152,6 +152,7 @@ def get_recipes():
         seasons = [x.name for x in recipe.season.all()]
         diets = [x.name for x in recipe.dietary_plan.all()]
         categs = [x.name for x in recipe.categories.all()]
+        allergs = [x.name for x in recipe.allergies.all()]
         origin = OriginRecipe.objects.get(pk=recipe.origin.pk).name
         price_scale = PriceScale.objects.get(pk=recipe.price_scale.pk).name
         level = Level.objects.get(pk=recipe.level.pk).name
@@ -183,7 +184,8 @@ def get_recipes():
             'level': level,
             'utensils': utensils,
             'season': seasons,
-            'dietary_plan': diets
+            'dietary_plan': diets,
+            'allergies': allergs
         }
 
         recipes.append(data)
