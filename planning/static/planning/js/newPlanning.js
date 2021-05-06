@@ -171,7 +171,7 @@ function sendDataForNewPlanning(data, btnObject) {
         success: (data) => {
             loading.addClass('d-none');
             btnObject.removeAttr('disabled');
-            
+            window.location.reload();            
         },
         error: (error) => {
             loading.addClass('d-none');

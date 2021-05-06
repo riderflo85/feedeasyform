@@ -1,3 +1,4 @@
+import os, json
 from django.http import JsonResponse
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
@@ -117,3 +118,156 @@ class PlanningDetailView(DetailView):
         context['meals_per_day'] = MealsPerDay.objects.all()
 
         return context
+
+
+@login_required
+def download_planning(request):
+    data = {"plannings": []}
+
+    for planning in Planning.objects.all():
+        planning_data = {
+            "name": planning.name,
+            "mon_pti_dej": [x.name for x in
+                planning.monday.daymealsperday_set.filter(
+                    meal_per_day=MealsPerDay.objects.get(
+                        name="petit déjeuner"
+                    )
+                )[0].recipes.all()],
+            "mon_def": [x.name for x in
+                planning.monday.daymealsperday_set.filter(
+                    meal_per_day=MealsPerDay.objects.get(
+                        name="déjeuner"
+                    )
+            )[0].recipes.all()],
+            "mon_gout": [x.name for x in
+                planning.monday.daymealsperday_set.filter(
+                    meal_per_day=MealsPerDay.objects.get(
+                        name="collation 16h"
+                    )
+            )[0].recipes.all()],
+            "mon_din": planning.monday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="dîner"
+                )
+            )[0].recipes.all(),
+            "tue_pti_dej": planning.tuesday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="petit déjeuner"
+                )
+            )[0].recipes.all(),
+            "tue_def": planning.tuesday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="déjeuner"
+                )
+            )[0].recipes.all(),
+            "tue_gout": planning.tuesday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="collation 16h"
+                )
+            )[0].recipes.all(),
+            "tue_din": planning.tuesday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="dîner"
+                )
+            )[0].recipes.all(),
+            "wed_pti_dej": planning.wednesday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="petit déjeuner"
+                )
+            )[0].recipes.all(),
+            "wed_def": planning.wednesday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="déjeuner"
+                )
+            )[0].recipes.all(),
+            "wed_gout": planning.wednesday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="collation 16h"
+                )
+            )[0].recipes.all(),
+            "wed_din": planning.wednesday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="dîner"
+                )
+            )[0].recipes.all(),
+            "thu_pti_dej": planning.thursday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="petit déjeuner"
+                )
+            )[0].recipes.all(),
+            "thu_def": planning.thursday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="déjeuner"
+                )
+            )[0].recipes.all(),
+            "thu_gout": planning.thursday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="collation 16h"
+                )
+            )[0].recipes.all(),
+            "thu_din": planning.thursday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="dîner"
+                )
+            )[0].recipes.all(),
+            "fri_pti_dej": planning.friday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="petit déjeuner"
+                )
+            )[0].recipes.all(),
+            "fri_def": planning.friday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="déjeuner"
+                )
+            )[0].recipes.all(),
+            "fri_gout": planning.friday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="collation 16h"
+                )
+            )[0].recipes.all(),
+            "fri_din": planning.friday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="dîner"
+                )
+            )[0].recipes.all(),
+            "sat_pti_dej": planning.saturday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="petit déjeuner"
+                )
+            )[0].recipes.all(),
+            "sat_def": planning.saturday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="déjeuner"
+                )
+            )[0].recipes.all(),
+            "sat_gout": planning.saturday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="collation 16h"
+                )
+            )[0].recipes.all(),
+            "sat_din": planning.saturday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="dîner"
+                )
+            )[0].recipes.all(),
+            "sun_pti_dej": planning.sunday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="petit déjeuner"
+                )
+            )[0].recipes.all(),
+            "sun_def": planning.sunday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="déjeuner"
+                )
+            )[0].recipes.all(),
+            "sun_gout": planning.sunday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="collation 16h"
+                )
+            )[0].recipes.all(),
+            "sun_din": planning.sunday.daymealsperday_set.filter(
+                meal_per_day=MealsPerDay.objects.get(
+                    name="dîner"
+                )
+            )[0].recipes.all(),
+        }
