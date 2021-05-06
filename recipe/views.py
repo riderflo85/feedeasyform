@@ -190,6 +190,12 @@ def show_and_update_db(request):
                 diet = form.cleaned_data['diet']
                 DietaryPlan.objects.get(pk=int(diet)).delete()
 
+        elif request.POST['identifiant'] == 'planning':
+            form = DeletePlanningForm(request.POST)
+            if form.is_valid():
+                planning = form.cleaned_data['planning']
+                Planning.objects.get(pk=int(planning)).delete()
+
         return redirect(reverse('recipe:databases'))
 
     else:

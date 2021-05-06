@@ -236,3 +236,8 @@ hr {
 .form-control-plaintext {
     width: auto !important;
 }
+
+.disabled-a {
+    pointer-events: none;
+    cursor: default;
+}

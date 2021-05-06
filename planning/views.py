@@ -94,9 +94,9 @@ def search_recipe_by_filter(request):
             dietary_plan=DietaryPlan.objects.get(pk=int(diet))
         )
     if categ != '':
-        recipes_done = recipes_done.filter(
-            categorie=int(categ)
-        )
+        recipes_done = CategorieRecipe.objects.get(
+            pk=int(categ)
+        ).recipe_set.all()
 
     return JsonResponse({
         'recipes': recipe_serializer(recipes_done)
