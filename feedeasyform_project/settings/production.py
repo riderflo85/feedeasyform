@@ -37,6 +37,8 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
 
+MEDIA_ROOT = '/home/adminflo/media/'
+
 sentry_sdk.init(
     dsn="https://e88ae8aa21d84c2f90035f52ac66b507@o279273.ingest.sentry.io/5703372",
     integrations=[DjangoIntegration()],
