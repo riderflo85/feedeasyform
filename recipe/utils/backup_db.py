@@ -32,13 +32,21 @@ def get_utensils():
 def get_categories_recipe():
     """
     Get all recipe categories in the database.
-    return ['name_categ', ...]
+    return [{
+            "name": categ_name,
+            "image_active": categ_image_active_url,
+            "image_not_active": categ_image_not_active_url
+        }, ...]
     """
 
     categs = []
 
     for categ in CategorieRecipe.objects.all():
-        categs.append(categ.name)
+        categs.append({
+            "name": categ.name,
+            "image_active": categ.image_active.url,
+            "image_not_active": categ.image_not_active.url
+        })
 
     return categs
 

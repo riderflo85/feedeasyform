@@ -45,6 +45,18 @@ class CategorieRecipe(models.Model):
         unique=True,
         verbose_name="nom de la catégorie de recette"
     )
+    image_active = models.ImageField(
+        upload_to="recipe/pictures",
+        blank=True,
+        null=True,
+        verbose_name="image active de la categorie"
+    )
+    image_not_active = models.ImageField(
+        upload_to="recipe/pictures",
+        blank=True,
+        null=True,
+        verbose_name="image non active de la categorie"
+    )
 
     def __str__(self):
         return self.name

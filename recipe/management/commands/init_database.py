@@ -94,9 +94,12 @@ ajouté à la base de données"
 
             for categ in data['recipe_categories']:
                 try:
-                    CategorieRecipe.objects.get(name=categ)
+                    CategorieRecipe.objects.get(name=categ['name'])
                 except:
-                    new_categ = CategorieRecipe(name=categ)
+                    new_categ = CategorieRecipe()
+                    new_categ.name = categ['name']
+                    new_categ.image_active = categ['image_active']
+                    new_categ.image_not_active = categ['image_not_active']
                     new_categ.save()
                     if kwargs['verbose']:
                         self.stdout.write(
