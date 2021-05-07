@@ -1,4 +1,4 @@
-from .models import MealsPerDay, Recipe, DayMealsPerDay, Day, Planning
+from ..models import MealsPerDay, Recipe, DayMealsPerDay, Day, Planning
 
 
 def parse_data_new_planning(request_data):

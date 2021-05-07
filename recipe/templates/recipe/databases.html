@@ -113,9 +113,9 @@
                     <h3>Plannings</h3>
                     {% if user.username == 'managerJR' %}
                         {% if plannings|length == 0 %}
-                        <a href="#" class="btn btn-secondary disabled-a"><i class="fas fa-download text-white"></i></a>
+                        <a class="btn btn-secondary disabled-a"><i class="fas fa-download text-white"></i></a>
                         {% else %}
-                        <a class="btn btn-success"><i class="fas fa-download text-white"></i></a>
+                        <a href="{% url 'planning:download' %}" class="btn btn-success"><i class="fas fa-download text-white"></i></a>
                         {% endif %}
                     {% endif %}
                     <button type="button" data-toggle="modal" data-target="#modalDeletePlanning" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>

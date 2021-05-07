@@ -13,4 +13,5 @@ urlpatterns = [
     path('search/', views.search_recipe_by_text, name="search_recipe"),
     path('filter/', views.search_recipe_by_filter, name="filter_recipe"),
     path('updated/', views.update_planning, name="update_planning"),
+    path('download/', views.download_planning, name="download"),
 ]
