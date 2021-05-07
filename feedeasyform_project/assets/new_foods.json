@@ -1,0 +1,25 @@
+[
+    {
+        "food_code": 17702,
+        "categorie_name": "huiles et graisses végétales",
+        "source AJOUT": "https://www.lanutrition.fr/huile-de-noix-de-coco",
+        "name": "Huile de coco",
+        "energie": "863",
+        "proteine": "0",
+        "glucide": "0",
+        "lipide": "100",
+        "sucre": "0",
+        "fibre": "0",
+        "acide_gras_sature": "-",
+        "cholesterol": "0",
+        "sel_chlorure_de_sodium": "0",
+        "calcium": "0",
+        "fer": "0",
+        "magnesium": "0",
+        "potassium": "0",
+        "zinc": "0",
+        "vitamine_c": "0",
+        "vitamine_d": "0",
+        "vitamine_e": "0"
+    }
+]
