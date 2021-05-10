@@ -51,12 +51,12 @@ function displayQuantityForm(foods) {
         <input type="number" class="form-control mb-3" name="recipe-quantity" id="quantFoodRecipe-${formatedFood[0]}" data-id="${formatedFood[0]}" placeholder="quantité">\n
         <select name="unity" class="form-control" id="unityFoodRecipe-${formatedFood[0]}" require>\n
         <option value="null" selected disabled>Choisissez une unité pour la recette</option>\n
-        <option value="CL">Centilitre</option>\n
-        <option value="GR">Gramme</option>\n
-        <option value="CaS">Cuillère à soupe</option>\n
-        <option value="CaC">Cuillère à café</option>\n
-        <option value="Pincee">Pincée</option>\n
-        <option value="U">Unité</option>\n
+        <option value="Cl">Centilitre</option>\n
+        <option value="Gr">Gramme</option>\n
+        <option value="Cuillère à soupe">Cuillère à soupe</option>\n
+        <option value="Cuillère à café">Cuillère à café</option>\n
+        <option value="Pincée">Pincée</option>\n
+        <option value="Unité">Unité</option>\n
         </select>
         </div>
         <div class="border border-info rounded-lg pt-1 pb-3 px-3 mb-3">
@@ -64,9 +64,9 @@ function displayQuantityForm(foods) {
         <input type="number" class="form-control mb-3" name="purchase-quantity" id="quantFoodPurchase-${formatedFood[0]}" data-id="${formatedFood[0]}" placeholder="quantité">\n
         <select name="unity" class="form-control" id="unityFoodPurchase-${formatedFood[0]}" require>\n
         <option value="null" selected disabled>Choisissez une unité pour la liste d'achat</option>\n
-        <option value="CL">Centilitre</option>\n
-        <option value="GR">Gramme</option>\n
-        <option value="U">Unité</option>\n
+        <option value="Cl">Centilitre</option>\n
+        <option value="Gr">Gramme</option>\n
+        <option value="Unité">Unité</option>\n
         </select>
         </div>
         `;

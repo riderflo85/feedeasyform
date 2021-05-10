@@ -215,12 +215,12 @@ class FoodAndQuantity(models.Model):
     UNITS = [
         ("Null", "Not defined"),
         # ("CUP", "Cup"),
-        ("CaS", "Cuillère à soupe"),
-        ("CaC", "Cuillère à café"),
-        ("CL", "Centilitre"),
-        ("GR", "Gramme"),
-        ("U", "Unité"),
-        ("Pincee", "Pincée"),
+        ("Cuillère à soupe", "Cuillère à soupe"),
+        ("Cuillère à café", "Cuillère à café"),
+        ("Cl", "Centilitre"),
+        ("Gr", "Gramme"),
+        ("Unité", "Unité"),
+        ("Pincée", "Pincée"),
         # ("FL OZ", "Fluid Ounce"),
         # ("OZ", "Ounce"),
     ]
