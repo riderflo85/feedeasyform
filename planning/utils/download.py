@@ -7,7 +7,7 @@ def parse_day_recipe(day_instance):
     """
     Get and parse all recipe planning per day.
     """
-    mlps = {}
+    mlps = {"fr_name_day": day_instance.name}
 
     for day in day_instance.daymealsperday_set.all():
         name_mlp = day.meal_per_day.name
