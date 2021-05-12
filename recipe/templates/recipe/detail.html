@@ -550,12 +550,40 @@
                 <div class="form-group row">
                     <label for="namePlanning" class="col-sm-4 col-form-label">Nom du planning de recette</label>
                     <div class="col-sm-8 d-flex justify-content-center align-items-center">
-                        <h3 class="form-control-plaintext" id="namePlanning" data-id-planning="{{ planning.pk }}">{{ planning.name }}</h3>
+                        <h3 class="form-control-plaintext mr-5" id="namePlanning" data-id-planning="{{ planning.pk }}">{{ planning.name }}</h3>
                         <button class="btn btn-success mr-3" id="confirmPlanning" disabled><span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id="loading"></span> <i class="fas fa-check"></i></button>
                         <button class="btn btn-primary" id="editPlanning"><i class="fas fa-pencil-alt"></i></button>
                     </div>
                 </div>
-                <table class="table table-striped">
+                <div class="form-group row">
+                    <label for="id_season_planning" class="col-sm-4 col-form-label border-label">Saison</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="id_season_planning" data-id-season="{{ planning.season.pk }}">{{ planning.season }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="id_origin_planning" class="col-sm-4 col-form-label border-label">Origine</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="id_origin_planning" data-id-origin="{{ planning.origin.pk }}">{{ planning.origin }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="id_diet_planning" class="col-sm-4 col-form-label border-label">Régime alimentaire</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-plaintext" id="id_diet_planning" data-id-diet="{{ planning.dietary_plan.pk }}">{{ planning.dietary_plan }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="id_premium_planning" class="col-sm-4 col-form-label border-label">Version pour membre abonné</label>
+                    <div class="col-sm-8">
+                        {% if planning.premium %}
+                        <p class="form-control-plaintext" id="id_premium_planning" data-id-premium="{{ planning.premium }}"><i class="fas fa-check-circle text-success"></i></p>
+                        {% else %}
+                        <p class="form-control-plaintext" id="id_premium_planning" data-id-premium="{{ planning.premium }}"><i class="fas fa-times-circle text-danger"></i></p>
+                        {% endif %}
+                    </div>
+                </div>
+                <table class="table table-striped mt-5">
                     <thead>
                         <tr>
                             <th scope="col"></th>
