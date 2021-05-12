@@ -1,5 +1,5 @@
 from django.db import models
-from recipe.models import Recipe
+from recipe.models import Recipe, OriginRecipe, Season, DietaryPlan
 
 
 class MealsPerDay(models.Model):
@@ -48,7 +48,27 @@ class DayMealsPerDay(models.Model):
 class Planning(models.Model):
     name = models.CharField(
         max_length=150,
+        unique=True,
         verbose_name="nom du planning"
+    )
+    premium = models.BooleanField(
+        default=False,
+        verbose_name="réservé aux membres abonnés"
+    )
+    season = models.ForeignKey(
+        Season,
+        on_delete=models.CASCADE,
+        verbose_name="saison du planning"
+    )
+    origin = models.ForeignKey(
+        OriginRecipe,
+        on_delete=models.CASCADE,
+        verbose_name="origine du planning"
+    )
+    dietary_plan = models.ForeignKey(
+        DietaryPlan,
+        on_delete=models.CASCADE,
+        verbose_name="régime alimentaire du planning"
     )
     monday = models.ForeignKey(
         Day,
