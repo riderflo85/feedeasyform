@@ -21,7 +21,14 @@ from recipe.models import CategorieRecipe, DietaryPlan, OriginRecipe, Recipe, Se
 def create_planning(request):
     if request.method == 'POST':
         parsed_data = parse_data_new_planning(request.POST)
-        state = create_new_planning(parsed_data, request.POST['name'])
+        other_data = {
+            "name": request.POST['name'],
+            "season": int(request.POST['season']),
+            "origin": int(request.POST['origin']),
+            "diet": int(request.POST['dietary_plan']),
+            "premium": request.POST['premium']
+        }
+        state = create_new_planning(parsed_data, other_data)
 
         return JsonResponse({'success': state})
     else:

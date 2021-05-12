@@ -182,8 +182,14 @@ function sendDataForNewPlanning(data, btnObject) {
 }
 
 
-function getAllRecipeInPlanning(planningName) {
+function getAllDataForNewPlanning() {
     const tableTR = $('tbody tr');
+    const planningName = $('#namePlanning');
+    const season = $('#id_season');
+    const origin = $('#id_origin');
+    const diet = $('#id_dietary_plan');
+    const isPremium = $('#id_premium');
+    const fieldsError = [];
 
     const data = {};
     let planningIsCompleted = false;
@@ -212,14 +218,41 @@ function getAllRecipeInPlanning(planningName) {
         }
     }
 
-    if (planningName != "" && planningIsCompleted) {
+    if (planningName.val() != "" && planningIsCompleted) {
         planningIsCompleted = true;
-        data['name'] = planningName;
+        data['name'] = planningName.val();
     } else {
         planningIsCompleted = false;
+        if (planningName.val() === "") {fieldsError.push(planningName)};
+    } 
+    
+    if (season.val() != "" && planningIsCompleted) {
+        planningIsCompleted = true;
+        data['season'] = season.val();
+    } else {
+        planningIsCompleted = false;
+        if (planningName.val() === "") {fieldsError.push(season)};
+    }
+    
+    if (origin.val() != "" && planningIsCompleted) {
+        planningIsCompleted = true;
+        data['origin'] = origin.val();
+    } else {
+        planningIsCompleted = false;
+        if (planningName.val() === "") {fieldsError.push(origin)};
+    }
+    
+    if (diet.val() != "" && planningIsCompleted) {
+        planningIsCompleted = true;
+        data['dietary_plan'] = diet.val();
+    } else {
+        planningIsCompleted = false;
+        if (planningName.val() === "") {fieldsError.push(diet)};
     }
 
-    return [data, planningIsCompleted];
+    data['premium'] = isPremium.prop('checked');
+
+    return [data, planningIsCompleted, fieldsError];
 }
 
 
@@ -237,7 +270,6 @@ $(document).ready(() => {
     const btnValideFilter = $('#valideFilter');
     const errorMsgPlanning = $('#errorMsgPlanningNotComplet');
     const btnValideNewPlanning = $('#valideNewPlanning');
-    const inputNamePlanning = $('#namePlanning');
 
     let csrftoken = getCookie('csrftoken');
 
@@ -310,13 +342,19 @@ $(document).ready(() => {
     });
 
     btnValideNewPlanning.on('click', function() {
-        const [data, isCompleted] = getAllRecipeInPlanning(inputNamePlanning.val());
+        const [data, isCompleted, fieldsError] = getAllDataForNewPlanning();
         
         if (isCompleted) {
             $(this).attr('disabled', true);
             sendDataForNewPlanning(data, $(this));
         } else {
             errorMsgPlanning.removeClass('d-none');
+            for (const field of fieldsError) {
+                field.addClass('is-invalid');
+                field.on('focus', function() {
+                    field.removeClass('is-invalid');
+                });
+            }
         }
     });
 });
