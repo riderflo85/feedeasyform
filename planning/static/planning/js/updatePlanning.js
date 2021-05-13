@@ -271,6 +271,117 @@ function getAllRecipeInPlanning(planningName, planningId) {
 }
 
 
+function newOriginField(selectOrigin) {
+    const dataOrigin = $("#dataOrigins");
+    let field = "<select type='text' name='OriginPlanning' id='id_origin_planning' required class='form-control mr-5'>'>$forReplaceByAllOrigin$</select>";
+    let options = "";
+
+    for (const origin of dataOrigin.children()) {
+        if ($(selectOrigin).contents()[0].data != $(origin).data('name')) {
+            options = options.concat(`<option value="${$(origin).data('id')}">${$(origin).data('name')}</option>`);
+        } else {
+            options = options.concat(`<option value="${$(origin).data('id')}" selected>${$(origin).data('name')}</option>`);
+        }
+    }
+
+    return field.replace('$forReplaceByAllOrigin$', options);
+}
+
+
+function newSeasonField(selectSeason) {
+    const dataSeason = $("#dataSeasons");
+    let field = "<select type='text' name='SeasonPlanning' id='id_season_planning' required class='form-control mr-5'>'>$forReplaceSeason$</select>";
+    let options = "";
+
+    for (const season of dataSeason.children()) {
+        if ($(selectSeason).contents()[0].data != $(season).data('name')) {
+            options = options.concat(`<option value="${$(season).data('id')}">${$(season).data('name')}</option>`);
+        } else {
+            options = options.concat(`<option value="${$(season).data('id')}" selected>${$(season).data('name')}</option>`);
+        }
+    }
+
+    return field.replace('$forReplaceSeason$', options);
+}
+
+
+function newDietField(selectDiet) {
+    const dataDiet = $("#dataDiets");
+    let field = "<select type='text' name='DietPlanning' id='id_diet_planning' required class='form-control mr-5'>'>$forReplaceDiet$</select>";
+    let options = "";
+
+    for (const diet of dataDiet.children()) {
+        if ($(selectDiet).contents()[0].data != $(diet).data('name')) {
+            options = options.concat(`<option value="${$(diet).data('id')}">${$(diet).data('name')}</option>`);
+        } else {
+            options = options.concat(`<option value="${$(diet).data('id')}" selected>${$(diet).data('name')}</option>`);
+        }
+    }
+
+    return field.replace('$forReplaceDiet$', options);
+}
+
+
+function newPremiumField(premiumStateJqObject) {
+    let state = '';
+    if (premiumStateJqObject.data('is-premium') === 'True') {
+        state = 'checked';
+    }
+    
+    return `<input type="checkbox" name="premium" id="is_premium_planning" class="form-control mr-5" ${state}>`
+}
+
+
+function displayAllFieldsInformations() {
+    const name = $('#namePlanning');
+    const season = $('#id_season_planning');
+    const origin = $('#id_origin_planning');
+    const diet = $('#id_diet_planning');
+    const premium = $('#is_premium_planning');
+
+    const nameField = `<input type='text' name='namePlanning' id='namePlanning' required class='form-control mr-5' value="${name.contents()[0].data}" data-id-planning="${name.data('id-planning')}">`;
+    const seasonField = newSeasonField(season);
+    const originField = newOriginField(origin);
+    const dietField = newDietField(diet);
+    const premiumField = newPremiumField(premium);
+
+    name.replaceWith(nameField);
+    season.replaceWith(seasonField);
+    origin.replaceWith(originField);
+    diet.replaceWith(dietField);
+    premium.replaceWith(premiumField);
+}
+
+
+function getAllManyInformations() {
+    const name = $('#namePlanning');
+    const season = $('#id_season_planning');
+    const origin = $('#id_origin_planning');
+    const diet = $('#id_diet_planning');
+    const premium = $('#is_premium_planning');
+    let done = true;
+
+    if (name.val() === "") {
+        done = false;
+        name.addClass('is-invalid');
+        name.on('focus', function() {
+            name.removeClass('is-invalid');
+        });
+    }
+
+    const data = {
+        name: name.val(),
+        season: season.val(),
+        origin: origin.val(),
+        diet: diet.val(),
+        premium: premium.prop('checked')
+    };
+
+    return [data, done];
+
+}
+
+
 $(document).ready(() => {
     const btnEdit = $('#editPlanning');
     const btnValid = $('#confirmPlanning');
@@ -316,16 +427,19 @@ $(document).ready(() => {
             $(this).attr('disabled', 'true');
         });
         btnValid.removeAttr('disabled');
+        displayAllFieldsInformations();
     });
 
     btnValid.on('click', function() {
         const loadingSpinner = $('#loading');
         loadingSpinner.removeClass('d-none');
         $(this).attr('disabled', true);
-        const [recipes, state] = getAllRecipeInPlanning($('#namePlanning').text(), $('#namePlanning').data('id-planning'));
-        
-        if (state) {
-            sendUpdatedData(recipes, function() {loadingSpinner.addClass('d-none');});
+        const [recipes, state1] = getAllRecipeInPlanning($('#namePlanning').val(), $('#namePlanning').data('id-planning'));
+        const [manyData, state2] = getAllManyInformations();
+
+        if (state1 && state2) {
+            const dataForRequest = Object.assign(recipes, manyData);
+            sendUpdatedData(dataForRequest, function() {loadingSpinner.addClass('d-none');});
         }
     });
 

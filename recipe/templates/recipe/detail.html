@@ -547,6 +547,23 @@
                 </div>
                 {% endfor %}
                 {% elif planning %}
+                <div class="d-none">
+                    <div id="dataOrigins">
+                        {% for origin in origins %}
+                        <i data-id="{{ origin.pk }}" data-name="{{ origin.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="dataDiets">
+                        {% for diet in diets %}
+                        <i data-id="{{ diet.pk }}" data-name="{{ diet.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    <div id="dataSeasons">
+                        {% for season in seasons %}
+                        <i data-id="{{ season.pk }}" data-name="{{ season.name }}"></i>
+                        {% endfor %}
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="namePlanning" class="col-sm-4 col-form-label">Nom du planning de recette</label>
                     <div class="col-sm-8 d-flex justify-content-center align-items-center">
@@ -577,9 +594,9 @@
                     <label for="id_premium_planning" class="col-sm-4 col-form-label border-label">Version pour membre abonné</label>
                     <div class="col-sm-8">
                         {% if planning.premium %}
-                        <p class="form-control-plaintext" id="id_premium_planning" data-id-premium="{{ planning.premium }}"><i class="fas fa-check-circle text-success"></i></p>
+                        <p class="form-control-plaintext" id="is_premium_planning" data-is-premium="{{ planning.premium }}"><i class="fas fa-check-circle text-success"></i></p>
                         {% else %}
-                        <p class="form-control-plaintext" id="id_premium_planning" data-id-premium="{{ planning.premium }}"><i class="fas fa-times-circle text-danger"></i></p>
+                        <p class="form-control-plaintext" id="is_premium_planning" data-is-premium="{{ planning.premium }}"><i class="fas fa-times-circle text-danger"></i></p>
                         {% endif %}
                     </div>
                 </div>
@@ -962,7 +979,7 @@
 <script src="{% static 'user/js/updateRecipeImage.js' %}"></script>
 <script src="{% static 'user/js/addUtensils.js' %}"></script>
 {% elif planning%}
-<script src="{% static 'user/js/updatePlanning.js' %}"></script>
+<script src="{% static 'planning/js/updatePlanning.js' %}"></script>
 {% elif food %}
 <script src="{% static 'user/js/updateFood.js' %}"></script>
 <script src="{% static 'user/js/editFoodUnit.js' %}"></script>

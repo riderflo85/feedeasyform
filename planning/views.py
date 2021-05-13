@@ -10,8 +10,8 @@ from .serializers import recipe_serializer
 from .utils.create_update import (
     parse_data_new_planning,
     create_new_planning,
-    parse_data_update_planning,
-    update_planning_recipes
+    parse_recipes_update_planning,
+    update_planning_data
 )
 from .utils import download
 from recipe.models import CategorieRecipe, DietaryPlan, OriginRecipe, Recipe, Season
@@ -58,8 +58,16 @@ def create_planning(request):
 def update_planning(request):
     if request.method == 'POST':
         planning = Planning.objects.get(pk=int(request.POST['id']))
-        parsed_data = parse_data_update_planning(request.POST)
-        state = update_planning_recipes(planning, parsed_data)
+        parsed_recipes = parse_recipes_update_planning(request.POST)
+        many_data = {
+            "name": request.POST['name'],
+            "season": Season.objects.get(pk=int(request.POST['season'])),
+            "origin": OriginRecipe.objects.get(pk=int(request.POST['origin'])),
+            "diet": DietaryPlan.objects.get(pk=int(request.POST['diet'])),
+            "is_premium": request.POST['premium']
+        }
+        print(many_data)
+        state = update_planning_data(planning, parsed_recipes, many_data)
 
         return JsonResponse({'status': state})
 

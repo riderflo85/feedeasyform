@@ -81,15 +81,16 @@ def create_new_planning(parsed_recipes, planning_other_data):
     return is_good
 
 
-def parse_data_update_planning(request_data):
+def parse_recipes_update_planning(request_data):
     """
     Parsed the request string data to the python object for updated a planning.
     """
     recipes_by_days = []
+    skip_keys = ["name", "id", "season", "origin", "diet", "premium"]
     index = 0
 
     for key, value in request_data.items():
-        if key != "name" and key != "id":
+        if key not in skip_keys:
             mlp_and_recipes = value.split('?&')[1].split('&')
             recipes_by_days.append({key: {}})
             for mlp_recipe in mlp_and_recipes:
@@ -109,9 +110,9 @@ def parse_data_update_planning(request_data):
     return recipes_by_days
 
 
-def update_planning_recipes(planning_instance, new_recipes):
+def update_planning_data(planning_instance, new_recipes, new_data):
     """
-    Update the recipes in the day in a planning instance.
+    Update the recipes in the day in a planning instance and many informaitons.
     """
     day_instances = []
     is_good = False
@@ -138,6 +139,14 @@ def update_planning_recipes(planning_instance, new_recipes):
         planning_instance.friday = day_instances[4]
         planning_instance.saturday = day_instances[5]
         planning_instance.sunday = day_instances[6]
+        planning_instance.name = new_data['name']
+        planning_instance.season = new_data['season']
+        planning_instance.origin = new_data['origin']
+        planning_instance.dietary_plan = new_data['diet']
+        if new_data['is_premium'] == 'true':
+            planning_instance.premium = True
+        elif new_data['is_premium'] == 'false':
+            planning_instance.premium = False
         planning_instance.save()
         is_good = True
     except:
