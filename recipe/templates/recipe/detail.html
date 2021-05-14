@@ -439,6 +439,17 @@
                 </div>
                 {% elif categorierecipe %}
                 <div class="form-group row">
+                    <div class="col-sm-4 col-form-label">
+                        <div id="imgPictoCategRecipeBloc" class="img-bloc img-bloc-picto d-flex justify-content-around">
+                            <img src="{{ categorierecipe.try_get_image_active }}" alt="{{ categorierecipe.try_get_image_active }}" class="img-picto-active" id="pictoRecipe">
+                            <img src="{{ categorierecipe.try_get_image_not_active }}" alt="{{ categorierecipe.try_get_image_not_active }}" class="img-picto" id="pictoRecipe">
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <button type="button" class="btn btn-primary btn-sm" id="btnChangeImageCategRecipe"><i class="fas fa-image"></i> <i class="fas fa-sync-alt"></i></button>
+                            <button type="button" class="btn btn-secondary btn-sm d-none" id="btnCancleNewImageCategRecipe"><i class="fas fa-times"></i></button>
+                            <button type="button" class="btn btn-success btn-sm d-none" id="btnSaveNewImageCategRecipe"><i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
                     <label for="nameGroup" class="col-sm-4 col-form-label"> </label>
                     <div class="col-sm-8">
                         <h3 class="form-control-plaintext" id="nameGroup">{{ categorierecipe.name }}</h3>
@@ -985,6 +996,8 @@
 <script src="{% static 'user/js/editFoodUnit.js' %}"></script>
 {% elif foodgroup %}
 <script src="{% static 'user/js/editFoodGroupUnit.js' %}"></script>
+{% elif categorierecipe %}
+<script src="{% static 'user/js/updatePictoCategRecipe.js' %}"></script>
 {% endif %}
 <script src="{% static 'user/js/script.js' %}"></script>
 {% endblock script %}

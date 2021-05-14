@@ -1,6 +1,6 @@
 import os
 
-from django.http import JsonResponse, FileResponse
+from django.http import JsonResponse, FileResponse, request
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
@@ -323,7 +323,6 @@ class RecipeDetailView(DetailView):
 
         if request.POST.get('postType') != None:
             if request.POST['postType'] == 'update image':
-                print(request.POST, request.FILES)
                 recipe.image = request.FILES['image']
                 recipe.save()
                 return JsonResponse({'status': 'done'})
@@ -383,6 +382,20 @@ class RecipeDetailView(DetailView):
 class CategorieDetailView(DetailView):
     model = CategorieRecipe
     template_name = "recipe/detail.html"
+
+    def post(self, *args, **kwargs):
+        request = self.request
+        categ = CategorieRecipe.objects.get(pk=kwargs['pk'])
+
+        if request.POST.get('postType') != None:
+            if request.POST['postType'] == 'update image':
+                categ.image_active = request.FILES['image_active']
+                categ.image_not_active = request.FILES['image_not_active']
+                categ.save()
+                return JsonResponse({'status': 'done'})
+
+            else:
+                return JsonResponse({'status': 'error'})
 
 
 class UtensilDetailView(DetailView):

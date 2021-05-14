@@ -61,6 +61,18 @@ class CategorieRecipe(models.Model):
     def __str__(self):
         return self.name
 
+    def try_get_image_active(self):
+        try:
+            return self.image_active.url
+        except:
+            return "aucun picto trouvé"
+
+    def try_get_image_not_active(self):
+        try:
+            return self.image_not_active.url
+        except:
+            return "aucun picto trouvé"
+
 
 class Level(models.Model):
     name = models.CharField(
