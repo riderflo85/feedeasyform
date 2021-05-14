@@ -18,12 +18,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         unit_conversion = {
-            "U": "Unité",
-            "GR": "Gr",
-            "CL": "Cl",
-            "CaC": "Cuillère à café",
-            "CaS": "Cuillère à soupe",
-            "Pincee": "Pincéé"
+            # "U": "Unité",
+            # "GR": "Gr",
+            # "CL": "Cl",
+            # "CaC": "Cuillère à café",
+            # "CaS": "Cuillère à soupe",
+            "Pincéé": "Pincée"
         }
 
         for recipe in Recipe.objects.all():
