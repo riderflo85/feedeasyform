@@ -25,6 +25,10 @@ def parse_planning_data():
     for planning in Planning.objects.all():
         planning_data = {
             "name": planning.name,
+            "premium": planning.premium,
+            "season": planning.season.name,
+            "origin": planning.origin.name,
+            "dietary_plan": planning.dietary_plan.name,
             "monday": parse_day_recipe(planning.monday),
             "tuesday": parse_day_recipe(planning.tuesday),
             "wednesday": parse_day_recipe(planning.wednesday),
