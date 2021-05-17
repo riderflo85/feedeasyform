@@ -169,9 +169,11 @@ ajouté à la base de données"
 
             for diet in data['diets']:
                 try:
-                    DietaryPlan.objects.get(name=diet)
+                    DietaryPlan.objects.get(name=diet['name'])
                 except:
-                    new_d = DietaryPlan(name=diet)
+                    new_d = DietaryPlan(
+                        name=diet['name'], description=diet['desc']
+                    )
                     new_d.save()
                     if kwargs['verbose']:
                         self.stdout.write(

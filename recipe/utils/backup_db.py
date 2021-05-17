@@ -102,7 +102,10 @@ def get_dietary_plan():
     diets = []
 
     for diet in DietaryPlan.objects.all():
-        diets.append(diet.name)
+        diets.append({
+            'name': diet.name,
+            'desc': diet.description
+        })
 
     return diets
 
