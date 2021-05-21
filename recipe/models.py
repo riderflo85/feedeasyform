@@ -113,6 +113,12 @@ class Recipe(models.Model):
         unique=True,
         verbose_name="nom de la recette"
     )
+    name_en = models.CharField(
+        max_length=55,
+        unique=True,
+        null=True,
+        verbose_name="nom de la recette en anglais"
+    )
     preparation_time = models.CharField(
         max_length=10,
         verbose_name="temps de préparation"
@@ -124,8 +130,20 @@ class Recipe(models.Model):
     step = models.TextField(
         verbose_name="étapes de préparation de la recette"
     )
+    step_en = models.TextField(
+        null=True,
+        verbose_name="étapes de préparation de la recette en anglais"
+    )
     tip = models.TextField(
         verbose_name="astuces divers"
+    )
+    tip_en = models.TextField(
+        null=True,
+        verbose_name="astuces divers en anglais"
+    )
+    is_translate = models.BooleanField(
+        default=False,
+        verbose_name="recette traduite ?"
     )
     portion = models.IntegerField(
         verbose_name="nombre de portions pour la recette",
