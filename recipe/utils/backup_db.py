@@ -44,8 +44,8 @@ def get_categories_recipe():
     for categ in CategorieRecipe.objects.all():
         categs.append({
             "name": categ.name,
-            "image_active": categ.image_active.url,
-            "image_not_active": categ.image_not_active.url
+            "image_active": categ.image_active.url.replace('/media/', '/'),
+            "image_not_active": categ.image_not_active.url.replace('/media/', '/')
         })
 
     return categs
