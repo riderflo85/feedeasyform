@@ -8,6 +8,10 @@
     <link rel="icon" type="image/png" href="{% static 'user/img/logo.png' %}" width="40px" height="40px">
     <link rel="stylesheet" href="{% static 'betacom/css/style.css' %}">
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Lora:ital@1&family=Open+Sans:wght@400;600;700&display=swap">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -24,10 +28,17 @@
         <div class="container-fluid for-center">
             <div class="row">
                 <div class="col-12">
-                    <div class="d-flex flex-sm-column align-items-center justify-content-center bloc-form">
+                    <div class="d-flex flex-sm-column align-items-center justify-content-center">
                         <h2>Les inscriptions sont ouvertes !</h2>
-                        <h3>Participez au lancement de Feed Easy en rejoignant nos bêta testeurs</h3>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores maiores sunt quo aliquam adipisci! Nisi possimus placeat at consectetur magnam odit accusantium! Nihil repellendus ducimus molestiae mollitia vitae minus consequatur.</p>
+                        <h3 class="my-4">Participez au lancement de Feed Easy en rejoignant nos bêtas testeurs</h3>
+                        <p class="text-center para">Faite partie de l'équipe des bêtas testeurs et rejoigner l'aventure Feed Easy. <br>Obtenez l'application en accès anticiper, partager nous votre expérience et proposez des améliorations. <br>Inscrivez-vous sur la liste d'attente en remplissant le formulaire.</p>
+                        <div class="form-bloc">
+                            <label for="email">Votre adresse e-mail</label>
+                            <div class="input-form d-flex justify-content-center align-items-center">
+                                <input class="input-email" type="email" name="email" id="email" placeholder="Saisissez votre e-mail">
+                                <button class="btn-submit" type="submit">S'INSCRIRE</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

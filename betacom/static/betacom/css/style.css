@@ -1,6 +1,48 @@
+@font-face {
+    font-family: 'Museo300';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Museo300'), url('../fonts/Museo300-Regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Museo500';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Museo500'), url('../fonts/Museo500-Regular.otf') format('otf');
+}
+@font-face {
+    font-family: 'Museo700';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Museo700'), url('../fonts/Museo700-Regular.otf') format('otf');
+}
+
+
+
 body {
     min-height: 100vh;
     background-color: white;
+}
+
+p, h2, h3, label, input {
+    color: #031033;
+}
+
+h2 {
+    font-family: 'Open Sans';
+    font-weight: bold !important;
+    font-size: 30px !important;
+}
+
+h3 {
+    font-family: 'Lora';
+    font-size: 30px !important;
+}
+
+p, label, input {
+    font-family: 'Museo300';
+    font-weight: 300 !important;
+    font-size: 16px !important;
 }
 
 .content {
@@ -23,9 +65,40 @@ body {
 }
 
 .for-center {
-    margin-top: 35vh;
+    margin-top: 30vh;
 }
 
-.bloc-form {
+.para {
     width: 50vw;
+}
+
+.form-bloc {
+    margin-top: 4vh;
+}
+
+.input-email {
+    height: 50px;
+    width: 22.2vw;
+    border: 2px solid #22B14C;
+    border-radius: 30px;
+    background-color: white;
+    padding-left: 1vw;    
+}
+
+.input-email:focus {
+    border: 2px solid #22B14C;
+    border-radius: 30px;
+    background-color: white;
+}
+
+.btn-submit {
+    height: 50px; /* 4vh */
+    width: 106px; /* 6vw */
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    background-color: #22B14C;
+    border: 2px solid white;
+    border-radius: 25px;
+    margin-left: 1vw;
 }
