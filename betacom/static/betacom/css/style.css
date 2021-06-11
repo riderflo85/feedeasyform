@@ -86,9 +86,12 @@ p, label, input {
 }
 
 .input-email:focus {
+    box-shadow: 0 0 0 3px #94ebae;
+    transition: 180ms box-shadow ease-in-out;
     border: 2px solid #22B14C;
     border-radius: 30px;
     background-color: white;
+    outline: 2px solid transparent;
 }
 
 .btn-submit {
@@ -98,7 +101,39 @@ p, label, input {
     font-weight: bold;
     color: white;
     background-color: #22B14C;
-    border: 2px solid white;
+    border: 0;
     border-radius: 25px;
     margin-left: 1vw;
+    transition-property: border, background-color, color;
+    transition: 180ms ease-in;
+    outline: 2px solid transparent;
+}
+
+.btn-submit:hover {
+    background-color: white;
+    color: #22B14C;
+    border: 2px solid #22B14C;
+    transition-property: all;
+    transition: 180ms ease-in-out;
+}
+
+.btn-submit:focus {
+    outline: 0;
+    height: 45px;
+    width: 101px;
+}
+
+.img-fade {
+    position: absolute;
+    height: 35vh;
+    width: auto;
+    bottom: 90px;
+    left: 80px;
+}
+
+.img-fade2 {
+    position: absolute;
+    height: 30vh;
+    width: auto;
+    right: 30px;
 }
