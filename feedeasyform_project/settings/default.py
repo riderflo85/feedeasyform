@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'food',
     'recipe',
     'planning',
+    'betacom',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

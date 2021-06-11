@@ -1,0 +1,31 @@
+body {
+    min-height: 100vh;
+    background-color: white;
+}
+
+.content {
+    height: 100vh;
+    width: auto;
+    background-image: url('../img/Trace4499.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.header {
+    padding-left: 7vw;
+    padding-top: 2vh;
+}
+
+.logo {
+    height: 4vh;
+    width: auto;
+}
+
+.for-center {
+    margin-top: 35vh;
+}
+
+.bloc-form {
+    width: 50vw;
+}
