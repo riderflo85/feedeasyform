@@ -8,13 +8,13 @@
     font-family: 'Museo500';
     font-style: normal;
     font-weight: normal;
-    src: local('Museo500'), url('../fonts/Museo500-Regular.otf') format('otf');
+    src: local('Museo500'), url('../fonts/Museo500.otf') format('otf');
 }
 @font-face {
     font-family: 'Museo700';
     font-style: normal;
     font-weight: normal;
-    src: local('Museo700'), url('../fonts/Museo700-Regular.otf') format('otf');
+    src: local('Museo700'), url('../fonts/Museo700.otf') format('otf');
 }
 
 
