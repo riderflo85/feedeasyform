@@ -137,3 +137,31 @@ p, label, input {
     width: auto;
     right: 30px;
 }
+
+.msg-box {
+    position: absolute;
+    display: none;
+    top: -290px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 25px;
+}
+
+.error-bg {
+    background-color: #fde8e8;
+    border: 2px solid #ED3B37;
+}
+
+.error-bg > p {
+    color: #ED3B37;
+    margin: 0;
+}
+
+.success-bg {
+    background-color: #d4f7df;
+    border: 2px solid #22B14C;
+}
+
+.success-bg > p {
+    color: #22B14C;
+    margin: 0;
+}
