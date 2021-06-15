@@ -1,7 +1,8 @@
-import re
+import re, csv, os
 
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import BetaUser
 
@@ -31,3 +32,20 @@ def register_beta(request):
 
     else:
         return JsonResponse({'error': 'error with http method'})
+
+
+@login_required
+def download(request):
+    u = request.user
+    if u.username == 'managerJR' or u.username == 'prestMBcom':
+        file_path = './listing-beta-utilisateurs.csv'
+        with open(file_path, "w") as csvfile:
+            spamwriter = csv.writer(csvfile, delimiter=' ',
+                quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            spamwriter.writerow(['adresses email'])
+            for beta_user in BetaUser.objects.all():
+                spamwriter.writerow([beta_user.email])
+        return FileResponse(
+            open(file_path, 'rb'),
+            as_attachment=True,
+        )

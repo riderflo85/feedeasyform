@@ -22,8 +22,13 @@
 </head>
 <body>
     <div class="content">
-        <div class="header">
+        <div class="header d-flex align-items-center">
             <img src="{% static 'betacom/img/logo_home_page.png' %}" alt="logo_feed_easy" class="logo">
+            {% if user.is_authenticated %}
+                {% if user.username == 'prestMBcom' or user.username == 'managerJR' %}
+                    <a class="ml-5" href="{% url 'beta:download' %}"><i class="fas fa-download"></i> Télécharger la liste</a>
+                {% endif %}
+            {% endif %}
         </div>
         <img class="img-fade" src="{% static 'betacom/img/Groupe1454.png' %}" alt="img-fade">
         <img class="img-fade2" src="{% static 'betacom/img/Page-1x.png' %}" alt="img-fade2">
@@ -35,7 +40,7 @@
                         </div>
                         <h2>Les inscriptions sont ouvertes !</h2>
                         <h3 class="my-4">Participez au lancement de Feed Easy en rejoignant nos bêtas testeurs</h3>
-                        <p class="text-center para">Faite partie de l'équipe des bêtas testeurs et rejoigner l'aventure Feed Easy. <br>Obtenez l'application en accès anticiper, partager nous votre expérience et proposez des améliorations. <br>Inscrivez-vous sur la liste d'attente en remplissant le formulaire.</p>
+                        <p class="text-center para">Faite partie de l'équipe des bêtas testeurs et rejoignez l'aventure Feed Easy. <br>Obtenez l'application en accès anticipé, partager nous votre expérience et proposez des améliorations. <br>Inscrivez-vous sur la liste d'attente en remplissant le formulaire.</p>
                         <div class="form-bloc">
                             <label for="email">Votre adresse e-mail</label>
                             <div class="input-form d-flex justify-content-center align-items-center">
@@ -43,7 +48,7 @@
                                 <button class="btn-submit" type="submit" id="btnSubmit">S'INSCRIRE</button>
                             </div>
                         </div>
-                        <p class="small-text-infos">En renseignant votre adresse email vous acceptez de recevoir des emails de Feed Easy.</p>
+                        <p class="small-text-infos">En renseignant votre adresse e-mail vous acceptez de recevoir des e-mails de Feed Easy.</p>
                     </div>
                 </div>
             </div>

@@ -13,13 +13,13 @@ $(document).ready(() => {
     const inputEmail = $('#email');
     const btnValid = $('#btnSubmit');
     const errorMsgInvalid = `
-        <p><i class="fas fa-info-circle"></i> Votre adresse email n'est pas une adresse valide. Merci de corriger cela.</p>
+        <p><i class="fas fa-info-circle"></i> Votre adresse e-mail n'est pas une adresse valide. Merci de corriger cela.</p>
     `;
     const errorMsgUserAlreadyExist = `
-        <p><i class="fas fa-info-circle"></i> Votre adresse email est déjà enregistrée en liste d'attente. Vous receverrez sous peut un email contenant toute les informations nécessaire à l'installation de la version bêta.</p>
+        <p><i class="fas fa-info-circle"></i> Votre adresse e-mail est déjà enregistrée en liste d'attente. Vous recevrez sous peu un e-mail contenant toutes les informations nécessaires à l'installation de la version bêta.</p>
     `;
     const successMsg = `
-        <p><i class="fas fa-check-circle"></i> Féliciation, vous venez d'être enregistré sur la liste d'attente. Un email de confirmation viens de vous être envoyé.</p>
+        <p><i class="fas fa-check-circle"></i> Félicitation, vous venez d'être enregistré sur la liste d'attente. Un e-mail de confirmation vous sera prochainement envoyé.</p>
     `;
 
     inputEmail.on('focus', function() {
