@@ -25,7 +25,7 @@ def register_beta(request):
                 new_beta.save()
                 # Envoyer un mail de confirmation
 
-                return JsonResponse({'state': 'done'})
+                return JsonResponse({'done': True})
         else:
             return JsonResponse({'error': 'Please enter a valid email'})
 

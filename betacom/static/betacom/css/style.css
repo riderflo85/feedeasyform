@@ -60,12 +60,12 @@ p, label, input {
 }
 
 .logo {
-    height: 4vh;
+    height: 8vh;
     width: auto;
 }
 
 .for-center {
-    margin-top: 30vh;
+    margin-top: 23vh;
 }
 
 .para {
@@ -109,12 +109,18 @@ p, label, input {
     outline: 2px solid transparent;
 }
 
-.btn-submit:hover {
+.btn-submit:hover:not(:disabled) {
     background-color: white;
     color: #22B14C;
     border: 2px solid #22B14C;
     transition-property: all;
     transition: 180ms ease-in-out;
+}
+
+.btn-submit:disabled {
+    background-color: grey;
+    transition: none;
+    transition-property: none;
 }
 
 .btn-submit:focus {
@@ -133,14 +139,16 @@ p, label, input {
 
 .img-fade2 {
     position: absolute;
-    height: 30vh;
+    height: 27vh;
     width: auto;
     right: 30px;
+    top: 4vh;
 }
 
 .msg-box {
     position: absolute;
     display: none;
+    width: 50vw;
     top: -290px;
     padding: 10px 15px 10px 15px;
     border-radius: 25px;
@@ -164,4 +172,10 @@ p, label, input {
 .success-bg > p {
     color: #22B14C;
     margin: 0;
+}
+
+.small-text-infos {
+    font-size: 13px !important;
+    margin-top: 30px;
+    color: #778F99;
 }
