@@ -18,7 +18,6 @@
 }
 
 
-
 body {
     min-height: 100vh;
     background-color: white;
@@ -31,18 +30,31 @@ p, h2, h3, label, input {
 h2 {
     font-family: 'Open Sans';
     font-weight: bold !important;
-    font-size: 30px !important;
+    font-size: 25px !important;
 }
 
 h3 {
     font-family: 'Lora';
-    font-size: 30px !important;
+    font-size: 18px !important;
 }
 
 p, label, input {
     font-family: 'Museo300';
     font-weight: 300 !important;
-    font-size: 16px !important;
+    font-size: 13px !important;
+}
+
+a {
+    font-family: 'Open Sans';
+    font-size: 12px;
+    color: #031033 !important;
+    text-decoration: none !important;
+    margin-left: 0;
+    margin-top: 0.5rem;
+}
+
+a:hover {
+    font-weight: bold !important;
 }
 
 .content {
@@ -60,16 +72,17 @@ p, label, input {
 }
 
 .logo {
-    height: 4vh;
+    height: 8vh;
     width: auto;
+    align-self: flex-start;
 }
 
 .for-center {
-    margin-top: 30vh;
+    margin-top: 6vh;
 }
 
 .para {
-    width: 50vw;
+    width: 90vw;
 }
 
 .form-bloc {
@@ -77,12 +90,12 @@ p, label, input {
 }
 
 .input-email {
-    height: 50px;
-    width: 22.2vw;
+    height: 30px;
+    width: 80vw;
     border: 2px solid #22B14C;
     border-radius: 30px;
     background-color: white;
-    padding-left: 1vw;    
+    padding-left: 2vw;    
 }
 
 .input-email:focus {
@@ -95,26 +108,33 @@ p, label, input {
 }
 
 .btn-submit {
-    height: 50px; /* 4vh */
-    width: 106px; /* 6vw */
-    font-size: 12px;
+    height: 30px;
+    width: 95px;
+    margin-top: 1.5vh;
+    align-self: flex-end !important;
+    font-size: 11px;
     font-weight: bold;
     color: white;
     background-color: #22B14C;
     border: 0;
     border-radius: 25px;
-    margin-left: 1vw;
     transition-property: border, background-color, color;
     transition: 180ms ease-in;
     outline: 2px solid transparent;
 }
 
-.btn-submit:hover {
+.btn-submit:hover:not(:disabled) {
     background-color: white;
     color: #22B14C;
     border: 2px solid #22B14C;
     transition-property: all;
     transition: 180ms ease-in-out;
+}
+
+.btn-submit:disabled {
+    background-color: grey;
+    transition: none;
+    transition-property: none;
 }
 
 .btn-submit:focus {
@@ -128,12 +148,107 @@ p, label, input {
     height: 35vh;
     width: auto;
     bottom: 90px;
-    left: 80px;
+    left: 5vw;
 }
 
 .img-fade2 {
     position: absolute;
-    height: 30vh;
     width: auto;
-    right: 30px;
+    display: none;
+}
+
+.msg-box {
+    position: absolute;
+    /* display: none; */
+    width: 90vw;
+    top: -30px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 25px;
+}
+
+.error-bg {
+    background-color: rgba(253, 232, 232, 0.94);
+    border: 2px solid #ED3B37;
+}
+
+.error-bg > p {
+    color: #ED3B37;
+    margin: 0;
+}
+
+.success-bg {
+    background-color: rgba(212, 247, 223, 0.95);
+    border: 2px solid #22B14C;
+}
+
+.success-bg > p {
+    color: #22B14C;
+    margin: 0;
+}
+
+.small-text-infos {
+    font-size: 13px !important;
+    margin-top: 30px;
+    color: #778F99;
+}
+
+@media screen and (min-width: 48em) {
+    .img-fade {
+        left: 3vw;
+    }
+
+    .img-fade2 {
+        display: block;
+        height: 27vh;
+        right: 30px;
+        top: 4vh;
+    }
+
+    h2, h3 {
+        font-size: 30px !important;
+    }
+
+    p, label, input {
+        font-size: 16px !important;
+    }
+
+    a {
+        font-size: 14px;
+        margin: 3rem;
+    }
+
+    .for-center {
+        margin-top: 23vh;
+    }
+
+    .para {
+        width: 50vw;
+    }
+
+    .input-email {
+        height: 50px;
+        width: 22.2vw;
+        padding-left: 1vw;
+    }
+
+    .btn-submit {
+        height: 50px;
+        width: 106px;
+        font-size: 12px;
+        margin-left: 1vw;
+        margin-top: 0;
+    }
+
+    .msg-box {
+        width: 50vw;
+        top: -180px;
+    }
+
+    .error-bg {
+        background-color: #fde8e8;
+    }
+
+    .success-bg {
+        background-color: #d4f7df;
+    }
 }

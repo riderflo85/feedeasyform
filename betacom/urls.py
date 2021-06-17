@@ -4,5 +4,7 @@ from . import views
 
 app_name = "beta"
 urlpatterns = [
-    path('', views.register_beta, name="register_beta"),
+    path('', views.index, name="index_beta"),
+    path('register', views.register_beta, name="register"),
+    path('download', views.download, name="download")
 ]

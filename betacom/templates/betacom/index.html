@@ -22,29 +22,42 @@
 </head>
 <body>
     <div class="content">
-        <div class="header">
+        <div class="header d-flex flex-column flex-md-row align-items-center">
             <img src="{% static 'betacom/img/logo_home_page.png' %}" alt="logo_feed_easy" class="logo">
+            {% if user.is_authenticated %}
+                {% if user.username == 'prestMBcom' or user.username == 'managerJR' %}
+                    <a href="{% url 'beta:download' %}"><i class="fas fa-download"></i> Télécharger la liste</a>
+                {% endif %}
+            {% endif %}
         </div>
         <img class="img-fade" src="{% static 'betacom/img/Groupe1454.png' %}" alt="img-fade">
         <img class="img-fade2" src="{% static 'betacom/img/Page-1x.png' %}" alt="img-fade2">
         <div class="container-fluid for-center">
             <div class="row">
                 <div class="col-12">
-                    <div class="d-flex flex-sm-column align-items-center justify-content-center">
-                        <h2>Les inscriptions sont ouvertes !</h2>
-                        <h3 class="my-4">Participez au lancement de Feed Easy en rejoignant nos bêtas testeurs</h3>
-                        <p class="text-center para">Faite partie de l'équipe des bêtas testeurs et rejoigner l'aventure Feed Easy. <br>Obtenez l'application en accès anticiper, partager nous votre expérience et proposez des améliorations. <br>Inscrivez-vous sur la liste d'attente en remplissant le formulaire.</p>
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <div class="msg-box">
+                        </div>
+                        <h2 class="text-center">Les inscriptions sont ouvertes !</h2>
+                        <h3 class="text-center my-4">Participez au lancement de Feed Easy en rejoignant nos bêtas testeurs</h3>
+                        <p class="text-center para">Faite partie de l'équipe des bêtas testeurs et rejoignez l'aventure Feed Easy. <br>Obtenez l'application en accès anticipé, partager nous votre expérience et proposez des améliorations. <br>Inscrivez-vous sur la liste d'attente en remplissant le formulaire.</p>
                         <div class="form-bloc">
                             <label for="email">Votre adresse e-mail</label>
-                            <div class="input-form d-flex justify-content-center align-items-center">
+                            <div class="d-flex flex-md-row flex-column justify-content-center align-items-center">
                                 <input class="input-email" type="email" name="email" id="email" placeholder="Saisissez votre e-mail">
-                                <button class="btn-submit" type="submit">S'INSCRIRE</button>
+                                <button class="btn-submit" type="submit" id="btnSubmit">S'INSCRIRE</button>
                             </div>
                         </div>
+                        <p class="small-text-infos text-center">En renseignant votre adresse e-mail vous acceptez de recevoir des e-mails de Feed Easy.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{% static 'user/js/secureajax.js' %}"></script>
+    <script src="{% static 'betacom/js/script.js' %}"></script>
 </body>

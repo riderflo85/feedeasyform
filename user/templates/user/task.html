@@ -4,10 +4,20 @@
     <div class="row h-100">
         <div class="col-12 d-flex justify-content-center align-items-center">
             <div class="text-center">
+                {% if user.username != 'prestMBcom' %}
                 <h1 class="mb-5">Que voulez-vous faire ?</h3>
+                {% endif %}
                 <div class="d-flex justify-content-center align-items-center">
+                    {% if user.username == 'prestMBcom' %}
+                    <a href="{% url 'beta:index_beta' %}" class="btn btn-primary mr-5">Formulaire d'enregistrement des bêta utilisateurs <i class="ml-2 fas fa-arrow-alt-circle-right"></i></a>
+                    {% elif user.username == 'managerJR' %}
+                    <a href="{% url 'recipe:databases' %}" class="btn btn-warning mr-5">Consulter la base de données</a>
+                    <a href="{% url 'recipe:new_recipe' %}" class="btn btn-danger mr-5">Ajouter des recettes</a>
+                    <a href="{% url 'beta:index_beta' %}" class="btn btn-primary mr-5">Formulaire d'enregistrement des bêta utilisateurs <i class="ml-2 fas fa-arrow-alt-circle-right"></i></a>
+                    {% else %}
                     <a href="{% url 'recipe:databases' %}" class="btn btn-warning mr-5">Consulter la base de données</a>
                     <a href="{% url 'recipe:new_recipe' %}" class="btn btn-danger">Ajouter des recettes</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
