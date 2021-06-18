@@ -231,6 +231,12 @@ class Recipe(models.Model):
 
         return foods
 
+    def get_image(self):
+        try:
+            return self.image.url
+        except:
+            return "Aucune image trouvée"
+
     def list_fields_without_verbose_name(self):
         """
         Return a iterator for get the all fields 
