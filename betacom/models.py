@@ -6,3 +6,7 @@ class BetaUser(models.Model):
         unique=True,
         verbose_name="adresse email du beta testeur"
     )
+    accept_term = models.BooleanField(
+        default=False,
+        verbose_name="accepte de recevoir des e-mails"
+    )

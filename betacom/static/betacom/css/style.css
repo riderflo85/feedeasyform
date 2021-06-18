@@ -186,10 +186,19 @@ a:hover {
     margin: 0;
 }
 
+.term {
+    margin-top: 10px;
+}
+
 .small-text-infos {
     font-size: 13px !important;
-    margin-top: 30px;
-    color: #778F99;
+    color: #577480;
+    margin-bottom: 0 !important;
+    margin-left: 0.5rem;
+}
+
+.bold {
+    font-weight: bold !important;
 }
 
 @media screen and (min-width: 48em) {
@@ -250,5 +259,9 @@ a:hover {
 
     .success-bg {
         background-color: #d4f7df;
+    }
+
+    .term {
+        margin-top: 30px;
     }
 }
