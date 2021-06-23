@@ -124,7 +124,7 @@ def get_food_groups():
     return groups
 
 
-def get_recipes():
+def get_recipes(forcsvfile=False):
     """
     Get all recipes in the database.
     return [{
@@ -157,7 +157,7 @@ def get_recipes():
 
     recipes = []
 
-    for recipe in Recipe.objects.all():
+    for recipe in Recipe.objects.all().order_by('pk'):
         foods = []
         utensils = [x.name for x in recipe.utensils.all()]
         seasons = [x.name for x in recipe.season.all()]
@@ -176,28 +176,43 @@ def get_recipes():
                 'purchase_quantity': food.food_purchase_quantity,
                 'purchase_unity': food.food_purchase_unity
             })
-
-        data = {
-            'name': recipe.name,
-            'preparation_time': recipe.preparation_time,
-            'cooking_time': recipe.cooking_time,
-            'step': recipe.step,
-            'tip': recipe.tip,
-            'portion': recipe.portion,
-            'point': recipe.point,
-            'typical_recipe_city': recipe.typical_recipe_city,
-            'source': recipe.source,
-            'image': recipe.image.url.replace('/media/', '/'),
-            'food': foods,
-            'categories': categs,
-            'origin': origin,
-            'price_scale': price_scale,
-            'level': level,
-            'utensils': utensils,
-            'season': seasons,
-            'dietary_plan': diets,
-            'allergies': allergs
-        }
+        if forcsvfile:
+            c = str(categs).replace('[', "").replace(']', "").replace("'", "")
+            s = str(seasons).replace('[', "").replace(']', "").replace("'", "")
+            d = str(diets).replace('[', "").replace(']', "").replace("'", "")
+            data = {
+                'Id de la recette (non contractuel)': recipe.pk,
+                'Nom de la recette': recipe.name,
+                'Catégories': c,
+                'Saison': s,
+                'Régime alimentaire': d,
+                'Ingrédients': foods,
+                'Source': recipe.source,
+                'Fourchette de prix': price_scale,
+                'Niveau de difficulté': level,
+            }
+        else:
+            data = {
+                'name': recipe.name,
+                'preparation_time': recipe.preparation_time,
+                'cooking_time': recipe.cooking_time,
+                'step': recipe.step,
+                'tip': recipe.tip,
+                'portion': recipe.portion,
+                'point': recipe.point,
+                'typical_recipe_city': recipe.typical_recipe_city,
+                'source': recipe.source,
+                'image': recipe.image.url.replace('/media/', '/'),
+                'food': foods,
+                'categories': categs,
+                'origin': origin,
+                'price_scale': price_scale,
+                'level': level,
+                'utensils': utensils,
+                'season': seasons,
+                'dietary_plan': diets,
+                'allergies': allergs
+            }
 
         recipes.append(data)
     

@@ -1,4 +1,4 @@
-import os
+import os, csv
 
 from django.http import JsonResponse, FileResponse, request
 from django.views.generic.detail import DetailView
@@ -48,7 +48,7 @@ from .list_all_db import (
     list_all_allegies
 )
 from .utils.duplicate_recipe import create_recipe_with_template
-from .utils.backup_db import generate_zip_file
+from .utils.backup_db import generate_zip_file, get_recipes
 from food.models import Allergie, Food, FoodGroup
 from food.forms import DeleteFoodForm, DeleteFoodGroupForm
 from planning.models import Planning
@@ -260,6 +260,25 @@ def download_dumpdata(request):
         as_attachment=True,
         content_type="application/zip"
     )
+
+
+@login_required
+def download_csv_data(request):
+    recipes_data = get_recipes(forcsvfile=True)
+    u = request.user
+    if u.username == 'managerJR':
+        file_name = './listing-recipes.csv'
+        with open(file_name, "w") as csvfile:
+            fieldnames = recipes_data[0].keys()
+            spamwriter = csv.DictWriter(csvfile, fieldnames)
+            spamwriter.writeheader()
+
+            for recipe in recipes_data:
+                spamwriter.writerow(recipe)
+        return FileResponse(
+            open(file_name, 'rb'),
+            as_attachment=True
+        )
 
 
 @login_required

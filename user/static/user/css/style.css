@@ -26,6 +26,17 @@ body {
     background-image: linear-gradient(to bottom, #ffbf00, #ff4000);
 }
 
+.wait-dl-msg {
+    display: none;
+    padding: 0.5em;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    background-color: white;
+    border-radius: 30px;
+}
+
 .h-100vh {
     height: calc(100vh - 40px);
 }
