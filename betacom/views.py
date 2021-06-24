@@ -8,32 +8,41 @@ from .models import BetaUser
 
 
 def index(request):
-    return render(request, 'betacom/index.html')
+    count_beta_u = len(BetaUser.objects.all())
+    context = {
+        "total_register": count_beta_u,
+        "available": 500 - count_beta_u
+    }
+
+    return render(request, 'betacom/index.html', context)
 
 
 def register_beta(request):
     if request.method == 'POST':
-        regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
-        email_user = request.POST['email']
-        if request.POST['acceptTerm'] == 'true':
-            accept = True
-        else:
-            accept = False
-        if (re.search(regex, email_user)):
-            try:
-                BetaUser.objects.get(email=email_user)
-                return JsonResponse({'error': 'User already exist'})
+        if len(BetaUser.objects.all()) < 501:
+            regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+            email_user = request.POST['email']
+            if request.POST['acceptTerm'] == 'true':
+                accept = True
+            else:
+                accept = False
+            if (re.search(regex, email_user)):
+                try:
+                    BetaUser.objects.get(email=email_user)
+                    return JsonResponse({'error': 'User already exist'})
 
-            except BetaUser.DoesNotExist:
-                new_beta = BetaUser()
-                new_beta.email = email_user
-                new_beta.accept_term = accept
-                new_beta.save()
-                # Envoyer un mail de confirmation
+                except BetaUser.DoesNotExist:
+                    new_beta = BetaUser()
+                    new_beta.email = email_user
+                    new_beta.accept_term = accept
+                    new_beta.save()
+                    # Envoyer un mail de confirmation
 
-                return JsonResponse({'done': True})
+                    return JsonResponse({'done': True})
+            else:
+                return JsonResponse({'error': 'Please enter a valid email'})
         else:
-            return JsonResponse({'error': 'Please enter a valid email'})
+            return JsonResponse({'error': 'the wait list is full'})
 
     else:
         return JsonResponse({'error': 'error with http method'})

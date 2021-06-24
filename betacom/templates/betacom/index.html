@@ -27,6 +27,7 @@
             {% if user.is_authenticated %}
                 {% if user.username == 'prestMBcom' or user.username == 'managerJR' %}
                     <a href="{% url 'beta:download' %}"><i class="fas fa-download"></i> Télécharger la liste</a>
+                    <p style="margin: 0;">Total inscrit: <strong style="font-weight: bold;">{{ total_register }}</strong></p>
                 {% endif %}
             {% endif %}
         </div>
@@ -38,9 +39,14 @@
                     <div class="d-flex flex-column align-items-center justify-content-center">
                         <div class="msg-box">
                         </div>
+                        {% if total_register < 500 %}
                         <h2 class="text-center">Les inscriptions sont ouvertes !</h2>
+                        {% else %}
+                        <h2 class="text-center">Les inscriptions sont fermées</h2>
+                        {% endif %}
                         <h3 class="text-center my-4">Participez au lancement de Feed Easy en rejoignant nos bêtas testeurs</h3>
-                        <p class="text-center para">Faites partie de l'équipe des bêtas testeurs et rejoignez l'aventure Feed Easy. <br>Obtenez l'application en accès anticipé, partagez-nous votre expérience et proposez des améliorations. <br>Inscrivez-vous sur la liste d'attente en remplissant le formulaire.</p>
+                        <p class="text-center para">Faites partie de l'équipe des bêtas testeurs et rejoignez l'aventure Feed Easy. <br>Obtenez l'application en accès anticipé, partagez-nous votre expérience et proposez des améliorations. <br>Inscrivez-vous sur la liste d'attente en remplissant le formulaire.<br>Il reste <strong style="font-weight: bold;">{{ available }} </strong>places !</p>
+                        {% if total_register < 500 %}
                         <div class="form-bloc">
                             <label for="email">Votre adresse e-mail</label>
                             <div class="d-flex flex-md-row flex-column justify-content-center align-items-center">
@@ -52,7 +58,19 @@
                             <input type="checkbox" name="accept" id="acceptTerm">
                             <p class="small-text-infos text-center">J'accepte de recevoir des e-mails de la part de Feed Easy.</p>
                         </div>
-
+                        {% else %}
+                        <div class="form-bloc">
+                            <label for="email">Votre adresse e-mail</label>
+                            <div class="d-flex flex-md-row flex-column justify-content-center align-items-center">
+                                <input class="input-email" type="email" name="email" id="email" placeholder="Saisissez votre e-mail" disabled>
+                                <button class="btn-submit" type="submit" id="btnSubmit" disabled>S'INSCRIRE</button>
+                            </div>
+                        </div>
+                        <div class="term d-flex align-items-center">
+                            <input type="checkbox" name="accept" id="acceptTerm" disabled>
+                            <p class="small-text-infos text-center">J'accepte de recevoir des e-mails de la part de Feed Easy.</p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
