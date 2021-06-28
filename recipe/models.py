@@ -145,6 +145,10 @@ class Recipe(models.Model):
         default=False,
         verbose_name="recette traduite ?"
     )
+    is_check = models.BooleanField(
+        default=False,
+        verbose_name="recette vérifiée ?"
+    )
     portion = models.IntegerField(
         verbose_name="nombre de portions pour la recette",
         default=1

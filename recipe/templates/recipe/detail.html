@@ -83,11 +83,23 @@
                     </div>
                     <div class="col-sm-8 d-flex justify-content-between align-items-center">
                         <h3 class="form-control-plaintext" id="nameRecipe">{{ recipe.name }}</h3>
+                        {% if not recipe.is_check %}
                         <div class="btn-bloc-edit d-flex justify-content-around align-items-center">
                             <button type="button" class="btn btn-primary btn-sm" id="btnEditRecipe">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                         </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="isCheck" class="col-sm-4 col-form-label border-label">Recette validée ? (case à cocher)<br> <small>permet d'activer ou de désactiver la modification</small></label>
+                    <div class="col-sm-8">
+                        {% if recipe.is_check %}
+                        <input type="checkbox" name="isCheckRecipe" id="recipeIsCheck" checked>
+                        {% else %}
+                        <input type="checkbox" name="isCheckRecipe" id="recipeIsCheck">
+                        {% endif %}
                     </div>
                 </div>
                 <div class="form-group row">
@@ -995,6 +1007,7 @@
 <script src="{% static 'user/js/secureajax.js' %}"></script>
 <script src="{% static 'user/js/parsedRequestData.js' %}"></script>
 {% if recipe %}
+<script src="{% static 'user/js/recipeIsCheck.js' %}"></script>
 <script src="{% static 'user/js/getFoodsTable.js' %}"></script>
 <script src="{% static 'user/js/getUtensilsTable.js' %}"></script>
 <script src="{% static 'user/js/updateRecipe.js' %}"></script>

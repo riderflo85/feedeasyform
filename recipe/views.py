@@ -346,6 +346,15 @@ class RecipeDetailView(DetailView):
                 recipe.save()
                 return JsonResponse({'status': 'done'})
 
+            elif request.POST['postType'] == 'toggle_check':
+                if request.POST['is_checked'] == 'true':
+                    state_check = True
+                elif request.POST['is_checked'] == 'false':
+                    state_check = False
+                recipe.is_check = state_check
+                recipe.save()
+                return JsonResponse({'status': 'done'})
+
             else:
                 return JsonResponse({'status': 'error'})
 
