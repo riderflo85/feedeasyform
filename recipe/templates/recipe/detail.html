@@ -460,6 +460,72 @@
                         </ul>
                     </div>
                 </div>
+                {% elif storerack %}
+                <div class="form-group row">
+                    <div class="col-sm-4 col-form-label">
+                        <div id="imgPictoCategRecipeBloc" class="img-bloc img-bloc-picto d-flex justify-content-around">
+                            <img src="{{ storerack.try_get_image_active }}" alt="{{ storerack.try_get_image_active }}" class="img-picto-active" id="pictoRecipe">
+                            <img src="{{ storerack.try_get_image_not_active }}" alt="{{ storerack.try_get_image_not_active }}" class="img-picto" id="pictoRecipe">
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <button type="button" class="btn btn-primary btn-sm" id="btnChangeImageCategRecipe"><i class="fas fa-image"></i> <i class="fas fa-sync-alt"></i></button>
+                            <button type="button" class="btn btn-secondary btn-sm d-none" id="btnCancleNewImageCategRecipe"><i class="fas fa-times"></i></button>
+                            <button type="button" class="btn btn-success btn-sm d-none" id="btnSaveNewImageCategRecipe"><i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
+                    <label for="nameRack" class="col-sm-0 col-form-label"> </label>
+                    <div class="col-sm-8">
+                        <div class="d-flex justify-content-between align-items-center h-100">
+                            <h3 class="form-control-plaintext" id="nameRack" data-id-rack="{{ storerack.pk }}">{{ storerack.name }}</h3>
+                            <div class="d-flex flex-column">
+                                <button class="btn btn-primary mb-3" id="btnAddGroupInRack">Ajouter un groupe d'aliment au rayon</button>
+                                {% if count_foodgroup_already_set > 0 %}
+                                <button class="btn btn-danger" id="btnDeleteGroupInRack">Retirer un groupe d'aliment au rayon</button>
+                                {% else %}
+                                <button class="btn btn-danger" id="btnDeleteGroupInRack" disabled>Retirer un groupe d'aliment au rayon</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="food-group-rack" id="forAddFoodGroupRack">
+                    <ul id="forAddListingFoodgroup">
+                        {% for fg in foraddfoodgroup %}
+                        <li class="d-flex align-items-center my-2">
+                            <input type="checkbox" name="useThisFg-{{ fg.pk }}" id="checkBoxFg{{ fg.pk }}" data-fg-id="{{ fg.pk }}" class="my-small-checkbox">
+                            {{ fg.name }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="d-flex justify-content-end group-btn-rack">
+                        <button type="button" class="btn btn-secondary" id="btnCancleNewFoodGroupRack"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn btn-success ml-3" id="btnSaveNewFoodGroupRack"><i class="fas fa-check"></i></button>
+                    </div>
+                </div>
+                <div class="food-group-rack" id="forDelFoodGroupRack">
+                    <ul id="forDelListingFoodgroup">
+                        {% for fg in storerack.foodgroup_set.all %}
+                        <li class="d-flex align-items-center my-2">
+                            <input type="checkbox" name="useThisFg-{{ fg.pk }}" id="checkBoxFg{{ fg.pk }}" data-fg-id="{{ fg.pk }}" class="my-small-checkbox" checked>
+                            {{ fg.name }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="d-flex justify-content-end group-btn-rack">
+                        <button type="button" class="btn btn-secondary" id="btnCancleDelFoodGroupRack"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn btn-success ml-3" id="btnSaveDelFoodGroupRack"><i class="fas fa-check"></i></button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="StoreRack" class="col-sm-4 col-form-label border-label">Groupe d'aliments pour ce rayon de magasin</label>
+                    <div class="col-sm-8">
+                        <ul>
+                            {% for rack in storerack.foodgroup_set.all %}
+                            <li><a href="/recipe/detail/group/{{ rack.pk }}" class="lead">{{ rack.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
                 {% elif categorierecipe %}
                 <div class="form-group row">
                     <div class="col-sm-4 col-form-label">
@@ -1020,6 +1086,8 @@
 <script src="{% static 'user/js/editFoodUnit.js' %}"></script>
 {% elif foodgroup %}
 <script src="{% static 'user/js/editFoodGroupUnit.js' %}"></script>
+{% elif storerack %}
+<script src="{% static 'user/js/addfoodgroupinrack.js' %}"></script>
 {% elif categorierecipe %}
 <script src="{% static 'user/js/updatePictoCategRecipe.js' %}"></script>
 {% endif %}

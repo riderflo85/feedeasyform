@@ -279,3 +279,22 @@ hr {
     border: 2px solid #ff3333;
     border-radius: 25px;
 }
+
+.food-group-rack {
+    border: 2px solid #17a2b8;
+    border-radius: 25px;
+    margin-bottom: 2vh;
+    display: none;
+}
+
+.my-small-checkbox {
+    height: auto !important;
+    width: auto !important;
+    margin-right: 1vw !important;
+}
+
+.group-btn-rack {
+    margin-right: 2vw;
+    margin-bottom: 2vh;
+    margin-top: -4vh;
+}

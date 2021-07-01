@@ -1,4 +1,4 @@
-from .models import Food, FoodGroup
+from .models import Food, FoodGroup, StoreRack
 
 
 def list_all_food():
@@ -16,3 +16,11 @@ def list_all_group():
         groups.append((group.pk, group.name))
 
     return groups
+
+def list_all_racks():
+    store_racks = []
+
+    for sr in StoreRack.objects.all():
+        store_racks.append((sr.pk, sr.name))
+
+    return store_racks

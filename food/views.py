@@ -1,9 +1,9 @@
 from django.http.response import JsonResponse
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, resolve_url, reverse
 from django.contrib.auth.decorators import login_required
 
-from .forms import FoodForm, FoodGroupForm
-from .models import Food, FoodGroup
+from .forms import FoodForm, FoodGroupForm, StoreRackForm
+from .models import Food, FoodGroup, StoreRack
 
 
 @login_required
@@ -64,3 +64,32 @@ def update_food_unit(request):
 
     else:
         return JsonResponse({'error': 'http method not accepeted'})
+
+
+@login_required
+def store_rack(request):
+    context = {
+        'rack_form': StoreRackForm()
+    }
+    if request.method == 'POST':
+        if request.POST.get('postType'):
+            st_rack = StoreRack.objects.get(pk=int(request.POST['idRack']))
+
+            for fg_id in eval(request.POST['idFoodGroup']):
+                print(fg_id)
+                fg = FoodGroup.objects.get(pk=fg_id)
+                fg.store_rack = st_rack
+                fg.save()
+            
+            return JsonResponse({"state": "done"})
+        else:
+            form = StoreRackForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse("food:store_rack"))
+            else:
+                context['rack_form'] = form
+            return render(request, 'food/new_rack.html', context)
+
+    else:
+        return render(request, 'food/new_rack.html', context)
