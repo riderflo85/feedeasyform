@@ -74,13 +74,15 @@ def store_rack(request):
     if request.method == 'POST':
         if request.POST.get('postType'):
             st_rack = StoreRack.objects.get(pk=int(request.POST['idRack']))
-
-            for fg_id in eval(request.POST['idFoodGroup']):
-                print(fg_id)
-                fg = FoodGroup.objects.get(pk=fg_id)
-                fg.store_rack = st_rack
-                fg.save()
-            
+            if request.POST['postType'] == 'add':
+                for fg_id in eval(request.POST['idFoodGroup']):
+                    fg = FoodGroup.objects.get(pk=fg_id)
+                    fg.store_rack = st_rack
+                    fg.save()
+            elif request.POST['postType'] == 'delete':
+                for fg_id in eval(request.POST['idFoodGroup']):
+                    fg = FoodGroup.objects.get(pk=fg_id)
+                    st_rack.foodgroup_set.remove(fg)
             return JsonResponse({"state": "done"})
         else:
             form = StoreRackForm(request.POST, request.FILES)

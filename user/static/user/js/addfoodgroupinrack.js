@@ -11,6 +11,37 @@ function getNewFoodGroup() {
 }
 
 
+function getForDeleteFoodGroup() {
+    const delFoodGroups = $('#forDelListingFoodgroup > li > input:not(:checked)');
+
+    let delFoodGroupsId = [];
+
+    for (const data of delFoodGroups) {
+        delFoodGroupsId.push($(data).data('fg-id'));
+    }
+
+    return delFoodGroupsId;
+}
+
+
+function sendData(data) {
+    $.ajax({
+        url: "/food/rack/",
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        success: (response) => {
+            if (response.state === 'done') {
+                setTimeout(() => window.location.reload(), 500);
+            }
+        },
+        error: (err) => {
+            console.warn(err);
+        }
+    });
+}
+
+
 $(document).ready(() => {
     const idRack = $('#nameRack').data('id-rack');
     const btnAdd = $('#btnAddGroupInRack');
@@ -20,6 +51,7 @@ $(document).ready(() => {
     const btnCancelAdd = $('#btnCancleNewFoodGroupRack');
     const btnCancelDel = $('#btnCancleDelFoodGroupRack');
     const forAddFoodGroupBloc = $('#forAddFoodGroupRack');
+    const forDeleteFoodGroupBloc = $('#forDelFoodGroupRack');
     let csrftoken = getCookie('csrftoken');
 
     $.ajaxSetup({
@@ -30,9 +62,11 @@ $(document).ready(() => {
         }
     });
 
-
+    /* For add new food group */
     btnAdd.on('click', function() {
         $(this).prop('disabled', true);
+        btnDelete.prop('disabled', false);
+        forDeleteFoodGroupBloc.slideUp();
         forAddFoodGroupBloc.slideToggle();
     });
 
@@ -48,17 +82,42 @@ $(document).ready(() => {
         btnAdd.prop('disabled', false);
 
         const ids = getNewFoodGroup();
-        $.ajax({
-            url: "/food/rack/",
-            type: 'POST',
-            dataType: 'json',
-            data: {postType: 'put', idRack: idRack, idFoodGroup: JSON.stringify(ids)},
-            success: (response) => {
-                if (response.state === 'done') {
-                    setTimeout(() => window.location.reload(), 500);
-                }
-            },
-        });
+        const dataRequest = {
+            postType: 'add',
+            idRack: idRack,
+            idFoodGroup: JSON.stringify(ids)
+        };
+        sendData(dataRequest);
+    });
+    /* ********************************************* */
+
+
+    /* For delete food group */
+    btnDelete.on('click', function() {
+        $(this).prop('disabled', true);
+        btnAdd.prop('disabled', false);
+        forAddFoodGroupBloc.slideUp();
+        forDeleteFoodGroupBloc.slideToggle();
     });
 
+
+    btnCancelDel.on('click', function() {
+        forDeleteFoodGroupBloc.slideToggle();
+        btnDelete.prop('disabled', false);
+    });
+
+
+    btnValidDel.on('click', function() {
+        forDeleteFoodGroupBloc.slideToggle();
+        btnDelete.prop('disabled', false);
+
+        const ids = getForDeleteFoodGroup();
+        const dataRequest = {
+            postType: 'delete',
+            idRack: idRack,
+            idFoodGroup: JSON.stringify(ids)
+        };
+        sendData(dataRequest);
+    });
+    /* ********************************************* */
 });

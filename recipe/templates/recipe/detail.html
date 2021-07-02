@@ -504,7 +504,7 @@
                 </div>
                 <div class="food-group-rack" id="forDelFoodGroupRack">
                     <ul id="forDelListingFoodgroup">
-                        {% for fg in storerack.foodgroup_set.all %}
+                        {% for fg in foodgroup_already_set %}
                         <li class="d-flex align-items-center my-2">
                             <input type="checkbox" name="useThisFg-{{ fg.pk }}" id="checkBoxFg{{ fg.pk }}" data-fg-id="{{ fg.pk }}" class="my-small-checkbox" checked>
                             {{ fg.name }}
@@ -520,7 +520,7 @@
                     <label for="StoreRack" class="col-sm-4 col-form-label border-label">Groupe d'aliments pour ce rayon de magasin</label>
                     <div class="col-sm-8">
                         <ul>
-                            {% for rack in storerack.foodgroup_set.all %}
+                            {% for rack in foodgroup_already_set %}
                             <li><a href="/recipe/detail/group/{{ rack.pk }}" class="lead">{{ rack.name }}</a></li>
                             {% endfor %}
                         </ul>

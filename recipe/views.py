@@ -466,12 +466,13 @@ class StoreRackDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         obj = kwargs['object']
         foodgroup_already_set = obj.foodgroup_set.all()
+        context['foodgroup_already_set'] = foodgroup_already_set.order_by(
+            'name')
         context['count_foodgroup_already_set'] = len(foodgroup_already_set)
         if len(foodgroup_already_set) == 0:
             context['foraddfoodgroup'] = FoodGroup.objects.order_by('name')
         else:
             context['foraddfoodgroup'] = FoodGroup.objects.all().difference(
                 foodgroup_already_set).order_by('name')
-            print(context['foraddfoodgroup'])
 
         return context
