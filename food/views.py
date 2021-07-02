@@ -83,6 +83,10 @@ def store_rack(request):
                 for fg_id in eval(request.POST['idFoodGroup']):
                     fg = FoodGroup.objects.get(pk=fg_id)
                     st_rack.foodgroup_set.remove(fg)
+            elif request.POST['postType'] == 'update image':
+                st_rack.image_active = request.FILES['image_active']
+                st_rack.image_not_active = request.FILES['image_not_active']
+                st_rack.save()
             return JsonResponse({"state": "done"})
         else:
             form = StoreRackForm(request.POST, request.FILES)

@@ -470,7 +470,7 @@
                         <div class="d-flex justify-content-around">
                             <button type="button" class="btn btn-primary btn-sm" id="btnChangeImageCategRecipe"><i class="fas fa-image"></i> <i class="fas fa-sync-alt"></i></button>
                             <button type="button" class="btn btn-secondary btn-sm d-none" id="btnCancleNewImageCategRecipe"><i class="fas fa-times"></i></button>
-                            <button type="button" class="btn btn-success btn-sm d-none" id="btnSaveNewImageCategRecipe"><i class="fas fa-check"></i></button>
+                            <button type="button" class="btn btn-success btn-sm d-none" id="btnSaveNewImageCategRecipe" data-url="/food/rack/"><i class="fas fa-check"></i></button>
                         </div>
                     </div>
                     <label for="nameRack" class="col-sm-0 col-form-label"> </label>
@@ -1088,6 +1088,7 @@
 <script src="{% static 'user/js/editFoodGroupUnit.js' %}"></script>
 {% elif storerack %}
 <script src="{% static 'user/js/addfoodgroupinrack.js' %}"></script>
+<script src="{% static 'user/js/updatePictoCategRecipe.js' %}"></script>
 {% elif categorierecipe %}
 <script src="{% static 'user/js/updatePictoCategRecipe.js' %}"></script>
 {% endif %}

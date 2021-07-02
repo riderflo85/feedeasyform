@@ -52,22 +52,31 @@ $(document).ready(() => {
         const baliseInputImgActive = $('#id_image_active');
         const baliseInputImgNotActive = $('#id_image_not_active');
         let formData = new FormData();
-
+        
         formData.append('postType', 'update image');
         formData.append('image_active', baliseInputImgActive[0].files[0]);
         formData.append('image_not_active', baliseInputImgNotActive[0].files[0]);
 
+        /* Is used for change the StoreRack picto */
+        let url = $(this).data('url');
+        if (url === undefined) {
+            url = window.location.pathname;
+        } else {
+            formData.append('idRack', $('#nameRack').data('id-rack'));
+        }
+        /* ******************************************** */
+
         addLoadingToBtn($(this), btnCancelImage);
 
         $.ajax({
-            url: window.location.pathname,
+            url: url,
             type: 'POST',
             dataType: 'json',
             data: formData,
             processData: false,
 			contentType: false,
             success: (response) => {
-                if (response.status === 'done') {
+                if (response.status === 'done' || response.state === 'done') {
                     $(this).addClass('d-none');
                     btnValidNewImage.addClass('d-none');
                     btnEditImage.removeClass('d-none');
