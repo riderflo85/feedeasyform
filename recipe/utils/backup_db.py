@@ -310,12 +310,15 @@ def get_seasons():
 def get_meals_per_day():
     """
     Get all meals per day in the database.
-    return [name_mlp, ...]
+    return [{"name": name_mlp, "weight": weight_mlp}, ...]
     """
     mlps = []
 
     for mlp in MealsPerDay.objects.all():
-        mlps.append(mlp.name)
+        mlps.append({
+            "name": mlp.name,
+            "weight": mlp.weight
+        })
 
     return mlps
 

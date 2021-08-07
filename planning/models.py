@@ -8,6 +8,10 @@ class MealsPerDay(models.Model):
         null=True,
         verbose_name='nom du repas'
     )
+    weight = models.IntegerField(
+        default=0,
+        verbose_name='poids du type de repas (pour définir un filtre)'
+    )
 
 
 class Day(models.Model):
