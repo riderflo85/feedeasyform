@@ -44,7 +44,7 @@ def create_planning(request):
         context = {
             'form_planning': PlanningForm(),
             'week': days,
-            'meals_per_day': MealsPerDay.objects.all(),
+            'meals_per_day': MealsPerDay.objects.all().order_by('weight'),
             'recipes': Recipe.objects.all(),
             'categs': CategorieRecipe.objects.order_by('name'),
             'origins': OriginRecipe.objects.order_by('name'),
@@ -131,7 +131,7 @@ class PlanningDetailView(DetailView):
         context['diets'] = DietaryPlan.objects.order_by('name')
         context['seasons'] = Season.objects.order_by('name')
         context['recipes'] = Recipe.objects.all()
-        context['meals_per_day'] = MealsPerDay.objects.all()
+        context['meals_per_day'] = MealsPerDay.objects.all().order_by('weight')
 
         return context
 

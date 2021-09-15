@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 from django.utils.functional import lazy
-from .models import Food, FoodGroup
-from .list_all_db import list_all_food, list_all_group
+from .models import Food, FoodGroup, StoreRack
+from .list_all_db import list_all_food, list_all_group, list_all_racks
 
 
 class FoodForm(ModelForm):
@@ -33,6 +33,13 @@ class FoodGroupForm(ModelForm):
         fields = ['name', 'identifiant']
 
 
+class StoreRackForm(ModelForm):
+
+    class Meta:
+        model = StoreRack
+        fields = '__all__'
+
+
 class DeleteFoodForm(forms.Form):
     food = forms.ChoiceField(
         label='Supprimer un aliment',
@@ -59,6 +66,22 @@ class DeleteFoodGroupForm(forms.Form):
     )
     identifiant = forms.CharField(
         initial='group',
+        widget=forms.TextInput(
+                attrs={'class': 'd-none'}
+        ),
+    )
+
+
+class DeleteStoreRackForm(forms.Form):
+    rack = forms.ChoiceField(
+        label="Supprimer un rayon de magasin",
+        choices=lazy(list_all_racks, tuple),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    identifiant = forms.CharField(
+        initial='store_rack',
         widget=forms.TextInput(
                 attrs={'class': 'd-none'}
         ),

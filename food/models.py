@@ -1,11 +1,52 @@
 from django.db import models
 
 
+class StoreRack(models.Model):
+    name = models.CharField(
+        max_length=35,
+        unique=True,
+        verbose_name="nom du rayon"
+    )
+    image_active = models.ImageField(
+        upload_to="store_rack/pictures",
+        # blank=True,
+        # null=True,
+        verbose_name="image active du rayon de magasin"
+    )
+    image_not_active = models.ImageField(
+        upload_to="store_rack/pictures",
+        # blank=True,
+        # null=True,
+        verbose_name="image non active du rayon de magasin"
+    )
+
+    def __str__(self):
+        return self.name
+
+    def try_get_image_active(self):
+        try:
+            return self.image_active.url
+        except:
+            return "aucun picto trouvé"
+
+    def try_get_image_not_active(self):
+        try:
+            return self.image_not_active.url
+        except:
+            return "aucun picto trouvé"
+
+
 class FoodGroup(models.Model):
     name = models.CharField(
         max_length=60,
         unique=True,
         verbose_name="nom du groupe d'ingredient"
+    )
+    store_rack = models.ForeignKey(
+        StoreRack,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name="rayon de magasin du groupe alimentaire"
     )
 
     def __str__(self):

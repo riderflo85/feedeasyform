@@ -11,7 +11,7 @@ from recipe.models import (
     Recipe,
     DietaryPlan
 )
-from food.models import FoodGroup, Food, Allergie
+from food.models import FoodGroup, Food, Allergie, StoreRack
 from planning.models import MealsPerDay
 
 
@@ -33,10 +33,10 @@ def get_categories_recipe():
     """
     Get all recipe categories in the database.
     return [{
-            "name": categ_name,
-            "image_active": categ_image_active_url,
-            "image_not_active": categ_image_not_active_url
-        }, ...]
+        "name": categ_name,
+        "image_active": categ_image_active_url,
+        "image_not_active": categ_image_not_active_url
+    }, ...]
     """
 
     categs = []
@@ -50,6 +50,27 @@ def get_categories_recipe():
 
     return categs
 
+
+def get_store_rack():
+    """
+    Get all store rack in the database.
+    return [{
+        "name": rack_name,
+        "image_active": rack_image_active_url,
+        "image_not_active": rack_image_not_active_url
+    }, ...]
+    """
+
+    st_rack = []
+
+    for rack in StoreRack.objects.all():
+        st_rack.append({
+            "name": rack.name,
+            "image_active": rack.image_active.url.replace('/media/', '/'),
+            "image_not_active": rack.image_not_active.url.replace('/media/', '/')
+        })
+
+    return st_rack
 
 def get_levels():
     """
@@ -113,13 +134,23 @@ def get_dietary_plan():
 def get_food_groups():
     """
     Get all food group in the database.
-    return ['name_food_group', ...]
+    return [{
+        'name': name_food_group,
+        'store_rack': store_rack_fk
+    }, ...]
     """
 
     groups = []
 
     for f_g in FoodGroup.objects.all():
-        groups.append(f_g.name)
+        try:
+            name_rack = f_g.store_rack.name
+        except:
+            name_rack = "not defined"
+        groups.append({
+            'name': f_g.name,
+            'store_rack': name_rack
+        })
 
     return groups
 
@@ -279,12 +310,15 @@ def get_seasons():
 def get_meals_per_day():
     """
     Get all meals per day in the database.
-    return [name_mlp, ...]
+    return [{"name": name_mlp, "weight": weight_mlp}, ...]
     """
     mlps = []
 
     for mlp in MealsPerDay.objects.all():
-        mlps.append(mlp.name)
+        mlps.append({
+            "name": mlp.name,
+            "weight": mlp.weight
+        })
 
     return mlps
 
@@ -299,6 +333,7 @@ def generate_json_file():
         'meals_per_day': get_meals_per_day(),
         'origins_recipe': get_origins_recipe(),
         'food_groups': get_food_groups(),
+        'store_racks': get_store_rack(),
         'recipes': get_recipes(),
         'diets': get_dietary_plan(),
         'foods': get_foods(),

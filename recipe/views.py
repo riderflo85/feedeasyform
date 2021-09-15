@@ -1,6 +1,6 @@
 import os, csv
 
-from django.http import JsonResponse, FileResponse, request
+from django.http import JsonResponse, FileResponse
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth.decorators import login_required
@@ -49,8 +49,8 @@ from .list_all_db import (
 )
 from .utils.duplicate_recipe import create_recipe_with_template
 from .utils.backup_db import generate_zip_file, get_recipes
-from food.models import Allergie, Food, FoodGroup
-from food.forms import DeleteFoodForm, DeleteFoodGroupForm
+from food.models import Allergie, Food, FoodGroup, StoreRack
+from food.forms import DeleteFoodForm, DeleteFoodGroupForm, DeleteStoreRackForm
 from planning.models import Planning
 from planning.forms import DeletePlanningForm
 
@@ -196,6 +196,12 @@ def show_and_update_db(request):
                 planning = form.cleaned_data['planning']
                 Planning.objects.get(pk=int(planning)).delete()
 
+        elif request.POST['identifiant'] == 'store_rack':
+            form = DeleteStoreRackForm(request.POST)
+            if form.is_valid():
+                store_rack = form.cleaned_data['rack']
+                StoreRack.objects.get(pk=int(store_rack)).delete()
+
         return redirect(reverse('recipe:databases'))
 
     else:
@@ -207,6 +213,7 @@ def show_and_update_db(request):
         origin_recipes = OriginRecipe.objects.order_by('name')
         dietarys_plan = DietaryPlan.objects.order_by('name')
         plannings = Planning.objects.order_by('id')
+        store_racks = StoreRack.objects.order_by('name')
         form_del_food = DeleteFoodForm()
         form_del_group = DeleteFoodGroupForm()
         form_del_recipe = DeleteRecipeForm()
@@ -215,6 +222,7 @@ def show_and_update_db(request):
         form_del_origin = DeleteOriginRecipe()
         form_del_diet = DeleteDietForm()
         form_del_planning = DeletePlanningForm()
+        form_del_rack = DeleteStoreRackForm()
 
         context = {
             'foods': foods,
@@ -225,6 +233,7 @@ def show_and_update_db(request):
             'origin_recipes': origin_recipes,
             'diets': dietarys_plan,
             'plannings': plannings,
+            'store_rack': store_racks,
             'del_food': form_del_food,
             'del_group': form_del_group,
             'del_recipe': form_del_recipe,
@@ -232,7 +241,8 @@ def show_and_update_db(request):
             'del_utensil': form_del_utensil,
             'del_origin': form_del_origin,
             'del_diet': form_del_diet,
-            'del_planning': form_del_planning
+            'del_planning': form_del_planning,
+            'del_store_rack': form_del_rack
         }
 
         return render(request, 'recipe/databases.html', context)
@@ -446,3 +456,23 @@ class OriginRecipeDetailView(DetailView):
 class DietDetailView(DetailView):
     model = DietaryPlan
     template_name = "recipe/detail.html"
+
+
+class StoreRackDetailView(DetailView):
+    model = StoreRack
+    template_name = "recipe/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = kwargs['object']
+        foodgroup_already_set = obj.foodgroup_set.all()
+        context['foodgroup_already_set'] = foodgroup_already_set.order_by(
+            'name')
+        context['count_foodgroup_already_set'] = len(foodgroup_already_set)
+        if len(foodgroup_already_set) == 0:
+            context['foraddfoodgroup'] = FoodGroup.objects.order_by('name')
+        else:
+            context['foraddfoodgroup'] = FoodGroup.objects.all().difference(
+                foodgroup_already_set).order_by('name')
+
+        return context

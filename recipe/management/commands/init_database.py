@@ -53,10 +53,10 @@ en cours. Merci de patienter...")
 
             for mlp in data['meals_per_day']:
                 try:
-                    MealsPerDay.objects.get(name=mlp)
+                    MealsPerDay.objects.get(name=mlp['name'])
                 except:
-                    new_mlp = MealsPerDay(name=mlp)
-                    new_mlp.save()
+                    new_mlp = MealsPerDay(name=mlp['name'])
+                    new_mlp.weight = mlp['weight']
                     if kwargs['verbose']:
                         self.stdout.write(
                             f"{self.style.SUCCESS(new_mlp.name)} \
